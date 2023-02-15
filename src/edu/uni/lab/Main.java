@@ -1,7 +1,6 @@
 package edu.uni.lab;
 
-import edu.uni.lab.Manager;
-import edu.uni.lab.Developer;
+import edu.uni.lab.Habitat;
 
 public class Main {
     public static void main(String[] args) {
