@@ -8,6 +8,6 @@ public class Manager extends Employee {
 	}
 
 	public static void setRatio(double ratio) {
-		self.ratio = ratio;
+		Manager.ratio = ratio;
 	}
 }

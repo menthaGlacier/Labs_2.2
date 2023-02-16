@@ -4,10 +4,10 @@ public class Developer extends Employee {
 	private static double probability;
 
 	public static double getProbability() {
-		return generationProbability;
+		return probability;
 	}
 
 	public static void setProbability(double probability) {
-		self.probability = probability;
+		Developer.probability = probability;
 	}
 }

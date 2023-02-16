@@ -9,7 +9,7 @@ public abstract class Employee {
 	}
 
 	public static void setAmount(int amount) {
-		self.amount = amount;
+		Employee.amount = amount;
 	}
 
 	public static int getPediod() {
@@ -17,6 +17,6 @@ public abstract class Employee {
 	}
 
 	public static void setPeriod(int period) {
-		self.period = period;
+		Employee.period = period;
 	}
 }
