@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
-
-<Pane prefHeight="800" prefWidth="600" style="-fx-background-color: #990040;"
-      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-    <Rectangle fx:id="rectangle" width="900" height="550" arcHeight="20.0" arcWidth="20.0" x="40" y="80" stroke="#EA005E" fill="#FFFFFF"/>
-</Pane>
