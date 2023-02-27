@@ -17,15 +17,11 @@ public class Controller {
 	private Simulation simulation;
 	private Stage primaryStage;
 
-
-
 	public Controller(Stage stage) throws IOException {
 		primaryStage = stage;
 		this.simulation = new Simulation();
 		setKeyActions();
 	}
-
-
 
 	private void setKeyActions() {
 		primaryStage.getScene().setOnKeyReleased((KeyEvent event) -> {
@@ -39,27 +35,8 @@ public class Controller {
 					simulation.stop();
 					break;
 				}
-				case S: {
-					primaryStage.getScene().lookup("habitatArea").setLayoutX(13);
-				}
 				default: break;
 			}
 		});
 	}
-/*	@Override
-	public void handle(KeyEvent event) {
-		switch (event.getCode()) {
-		case B:
-			simulation.start((Pane) primaryStage.getScene().lookup("habitatArea"));
-			break;
-		case E:
-			simulation.stop();
-			break;
-		case T:
-			// view.toggleTime();
-			break;
-		default:
-			break;
-		}
-	}*/
 }

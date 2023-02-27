@@ -4,9 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Employee {
-
-	protected static Image image;
-	protected static String imagePath;
 	protected ImageView imageView;
 	protected double x, y;
 

@@ -11,7 +11,7 @@ public class Simulation {
 	public void start(Pane habitatArea) {
 		if (active) { return; }
 
-		habitat = new Habitat(1000, 1000, habitatArea);
+		habitat = new Habitat(habitatArea);
 
 		timer = new AnimationTimer() {
 			private long startingTime = System.nanoTime();

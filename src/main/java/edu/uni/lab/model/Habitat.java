@@ -2,38 +2,49 @@ package edu.uni.lab.model;
 
 import java.util.Random;
 
+import edu.uni.lab.textureloader.TextureLoader;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class Habitat {
 	private static final int ARR_LIMIT = 100;
 	private Employee[] employees;
 	private int devCounter = 0, mgrCounter = 0;
-	private int width, height;
+
+	private double devBorderX, devBorderY, mgrBorderX, mgrBorderY;
+
 	private Random random = new Random();
 
 	private Pane habitatArea;
 
+	public Habitat(Pane habitatArea) {
+		devBorderX = habitatArea.getWidth() - TextureLoader.getDevTextureWidth();
+		devBorderY = habitatArea.getHeight() - TextureLoader.getDevTextureHeight();
+		mgrBorderX = habitatArea.getWidth() - TextureLoader.getMgrTextureWidth();
+		mgrBorderY = habitatArea.getHeight() - TextureLoader.getMgrTextureHeight();
 
-	public Habitat(int width, int height, Pane habitatArea) {
-		this.width = width;
-		this.height = height;
 		this.habitatArea = habitatArea;
 		employees = new Employee[ARR_LIMIT];
-
 	}
 
 	public void update (long elapsedTime) {
+		//System.out.format("devs:%d mgrs:%d\n", devCounter, mgrCounter);
 
-		System.out.format("devs:%d mgrs:%d\n", devCounter, mgrCounter);
-		if (elapsedTime / Developer.getPeriod() >= devCounter
-				&& random.nextDouble() <= Developer.getProbability()) {
-			addEmployee(new Developer(random.nextDouble() * habitatArea.getWidth(), random.nextDouble() * habitatArea.getHeight())); // Tentative coordinates
-		}
+		if ((devCounter + mgrCounter) < ARR_LIMIT) {
+			if (elapsedTime / Developer.getPeriod() >= devCounter
+					&& random.nextDouble() <= Developer.getProbability()) {
+				addEmployee(new Developer(randCoord(devBorderX), randCoord(devBorderY))); // Tentative coordinates
+			}
 
-		if (elapsedTime / Manager.getPeriod() >= mgrCounter
-				&& mgrCounter <= (devCounter * Manager.getRatio())) {
-			addEmployee(new Manager(random.nextDouble() * habitatArea.getWidth(), random.nextDouble() * habitatArea.getHeight()));
+			if (elapsedTime / Manager.getPeriod() >= mgrCounter
+					&& mgrCounter <= (devCounter * Manager.getRatio())) {
+				addEmployee(new Manager(randCoord(mgrBorderX), randCoord(mgrBorderY))); // Tentative coordinates
+			}
 		}
+	}
+
+	private double randCoord(double border) {
+		return random.nextDouble() * border;
 	}
 
 	private boolean addEmployee(Employee employee) {
