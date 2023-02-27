@@ -4,22 +4,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Employee {
-	protected static long period; // In milliseconds
-	//protected static Image image;
-	//protected ImageView imageView;
+
+	protected static Image image;
+	protected static String imagePath;
+	protected ImageView imageView;
 	protected double x, y;
 
 	public Employee(double x, double y) {
 		this.x = x;
 		this.y = y;
-	}
-
-	public static long getPeriod() {
-		return period;
-	}
-
-	public static void setPeriod(long period) {
-		Employee.period = period;
 	}
 
 	public double getX() {
@@ -37,4 +30,6 @@ public abstract class Employee {
 	public void setY(double y) {
 		this.y = y;
 	}
+
+	public ImageView getImageView() { return imageView; }
 }
