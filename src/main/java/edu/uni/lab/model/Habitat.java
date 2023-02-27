@@ -4,7 +4,6 @@ import java.util.Random;
 
 import edu.uni.lab.textureloader.TextureLoader;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
 public class Habitat {
 	private static final int ARR_LIMIT = 100;
@@ -28,17 +27,16 @@ public class Habitat {
 	}
 
 	public void update (long elapsedTime) {
-		//System.out.format("devs:%d mgrs:%d\n", devCounter, mgrCounter);
 
 		if ((devCounter + mgrCounter) < ARR_LIMIT) {
 			if (elapsedTime / Developer.getPeriod() >= devCounter
 					&& random.nextDouble() <= Developer.getProbability()) {
-				addEmployee(new Developer(randCoord(devBorderX), randCoord(devBorderY))); // Tentative coordinates
+				addEmployee(new Developer(randCoord(devBorderX), randCoord(devBorderY)));
 			}
 
 			if (elapsedTime / Manager.getPeriod() >= mgrCounter
 					&& mgrCounter <= (devCounter * Manager.getRatio())) {
-				addEmployee(new Manager(randCoord(mgrBorderX), randCoord(mgrBorderY))); // Tentative coordinates
+				addEmployee(new Manager(randCoord(mgrBorderX), randCoord(mgrBorderY)));
 			}
 		}
 	}

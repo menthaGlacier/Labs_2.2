@@ -21,7 +21,7 @@ public class Controller {
 
 	public Controller(Stage stage) throws IOException {
 		primaryStage = stage;
-		this.simulation = new Simulation((Label) primaryStage.getScene().lookup("#elapsedTime"));
+		this.simulation = new Simulation((Label) primaryStage.getScene().lookup("#timeLabel"));
 		setKeyActions();
 	}
 
@@ -36,7 +36,8 @@ public class Controller {
 				}
 				case E: {
 					simulation.stop();
-					simulation.start
+					Pane habitatArea = (Pane) primaryStage.getScene().lookup("#habitatArea");
+					habitatArea.getChildren().clear();
 					break;
 				}
 				case T: {
