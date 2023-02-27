@@ -3,7 +3,9 @@ package edu.uni.lab.controller;
 import edu.uni.lab.model.Simulation;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -19,7 +21,7 @@ public class Controller {
 
 	public Controller(Stage stage) throws IOException {
 		primaryStage = stage;
-		this.simulation = new Simulation();
+		this.simulation = new Simulation((Label) primaryStage.getScene().lookup("#elapsedTime"));
 		setKeyActions();
 	}
 
@@ -29,11 +31,17 @@ public class Controller {
 			{
 				case B: {
 					simulation.start((Pane) primaryStage.getScene().lookup("#habitatArea"));
+
 					break;
 				}
 				case E: {
 					simulation.stop();
+					simulation.start
 					break;
+				}
+				case T: {
+					Node timeLabel = primaryStage.getScene().lookup("#timeLabel");
+					timeLabel.setVisible(!timeLabel.isVisible());
 				}
 				default: break;
 			}
