@@ -3,7 +3,7 @@ package edu.uni.lab.model;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public abstract class Employee {
+public abstract class Employee implements IBehaviour {
 	protected ImageView imageView;
 	protected double x, y;
 

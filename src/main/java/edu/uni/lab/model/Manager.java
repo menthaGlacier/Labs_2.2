@@ -6,7 +6,7 @@ public class Manager extends Employee {
 	private static double ratio = 0.3;
 	protected static long period; // In milliseconds
 	static {
-		period = 10_000_000_000L;
+		period = 3_000_000_000L;
 	}
 
 	public Manager(double x, double y) {

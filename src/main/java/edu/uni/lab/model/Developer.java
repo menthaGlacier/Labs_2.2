@@ -3,10 +3,10 @@ package edu.uni.lab.model;
 import edu.uni.lab.textureloader.TextureLoader;
 
 public class Developer extends Employee {
-	private static double probability = 0.3;
+	private static double probability = 0.6;
 	protected static long period; // In milliseconds
 	static {
-		period = 3_000_000_000L;
+		period = 1_000_000_000L;
 	}
 
 	public Developer(double x, double y) {

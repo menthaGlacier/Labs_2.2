@@ -6,7 +6,7 @@ import edu.uni.lab.textureloader.TextureLoader;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
-	private static final int ARR_LIMIT = 100;
+	public static final int ARR_LIMIT = 100; //kray brat
 	private Employee[] employees;
 	private int devCounter = 0, mgrCounter = 0;
 
@@ -47,7 +47,6 @@ public class Habitat {
 
 	private boolean addEmployee(Employee employee) {
 		if ((devCounter + mgrCounter) >= ARR_LIMIT) {
-			/* Display "1000 (tentative) krai brat" funny image" */
 			return false;
 		}
 
@@ -62,4 +61,11 @@ public class Habitat {
 		return true;
 	}
 
+	public int getDevCounter() {
+		return devCounter;
+	}
+
+	public int getMgrCounter() {
+		return mgrCounter;
+	}
 }

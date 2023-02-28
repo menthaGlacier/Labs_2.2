@@ -2,20 +2,32 @@ package edu.uni.lab.model;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class Simulation {
 	private Habitat habitat;
 	private boolean active = false;
 	private AnimationTimer timer;
-	private ElapsedTimeLabel timeLabel;
 
-	public Simulation(Label label) {
-		timeLabel = new ElapsedTimeLabel(label, 0);
+	private Label timeLabel;
+	private Label devCountLabel;
+	private Label mgrCountLabel;
+
+	private ImageView kray;
+
+	public Simulation(VBox vbox) {
+		timeLabel = (Label) vbox.lookup("#timeLabel");
+		mgrCountLabel = (Label) vbox.lookup("#mgrCountLabel");
+		devCountLabel = (Label) vbox.lookup("#devCountLabel");
+		kray = (ImageView) vbox.lookup("#kray");
 	}
 
 	public void start(Pane habitatArea) {
-		if (active) { return; }
+		if (active) {
+			return;
+		}
 
 		habitat = new Habitat(habitatArea);
 
@@ -29,7 +41,14 @@ public class Simulation {
 				if (timeNow - lastTime >= nanosPerFrame) {
 					habitat.update(timeNow-startingTime);
 					lastTime = timeNow;
-					timeLabel.update(timeNow-startingTime);
+					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime)/1_000_000_000L) + "s");
+					if (kray.isVisible() == false
+							&& habitat.getDevCounter() + habitat.getMgrCounter() == Habitat.ARR_LIMIT) {
+						kray.setVisible(true);
+					} else {
+						devCountLabel.setText("Developers: " + habitat.getDevCounter());
+						mgrCountLabel.setText("Managers: " + habitat.getMgrCounter());
+					}
 				}
 			}
 		};
@@ -42,22 +61,11 @@ public class Simulation {
 		if (!active) { return; }
 
 		timer.stop();
+		kray.setVisible(false);
 		active = false;
 	}
 
 	public Habitat getHabitat() { return habitat; }
 
 	public boolean isActive() { return active; }
-}
-
-class ElapsedTimeLabel {
-	private Label label;
-	public ElapsedTimeLabel(Label label, long time) {
-		this.label = label;
-		update(time);
-	}
-
-	public void update(long now) {
-		label.setText("Time elapsed: " + (now/1_000_000_000L) + "s");
-	}
 }

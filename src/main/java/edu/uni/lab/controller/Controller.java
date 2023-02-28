@@ -1,27 +1,19 @@
 package edu.uni.lab.controller;
 
 import edu.uni.lab.model.Simulation;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
-
 public class Controller {
 	private Simulation simulation;
 	private Stage primaryStage;
 
-	public Controller(Stage stage) throws IOException {
+	public Controller(Stage stage) {
 		primaryStage = stage;
-		this.simulation = new Simulation((Label) primaryStage.getScene().lookup("#timeLabel"));
 		setKeyActions();
 	}
 
@@ -30,8 +22,8 @@ public class Controller {
 			switch (event.getCode())
 			{
 				case B: {
+					this.simulation = new Simulation((VBox) primaryStage.getScene().lookup("#statistics"));
 					simulation.start((Pane) primaryStage.getScene().lookup("#habitatArea"));
-
 					break;
 				}
 				case E: {
