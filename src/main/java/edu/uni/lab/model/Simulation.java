@@ -2,7 +2,6 @@ package edu.uni.lab.model;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -15,13 +14,10 @@ public class Simulation {
 	private Label devCountLabel;
 	private Label mgrCountLabel;
 
-	private ImageView kray;
-
 	public Simulation(VBox vbox) {
 		timeLabel = (Label) vbox.lookup("#timeLabel");
 		mgrCountLabel = (Label) vbox.lookup("#mgrCountLabel");
 		devCountLabel = (Label) vbox.lookup("#devCountLabel");
-		kray = (ImageView) vbox.lookup("#kray");
 	}
 
 	public void start(Pane habitatArea) {
@@ -41,14 +37,9 @@ public class Simulation {
 				if (timeNow - lastTime >= nanosPerFrame) {
 					habitat.update(timeNow-startingTime);
 					lastTime = timeNow;
-					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime)/1_000_000_000L) + "s");
-					if (kray.isVisible() == false
-							&& habitat.getDevCounter() + habitat.getMgrCounter() == Habitat.ARR_LIMIT) {
-						kray.setVisible(true);
-					} else {
-						devCountLabel.setText("Developers: " + habitat.getDevCounter());
-						mgrCountLabel.setText("Managers: " + habitat.getMgrCounter());
-					}
+					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime) / 1_000_000_000L) + "s");
+					devCountLabel.setText("Developers: " + habitat.getDevCounter());
+					mgrCountLabel.setText("Managers: " + habitat.getMgrCounter());
 				}
 			}
 		};
@@ -58,14 +49,19 @@ public class Simulation {
 	}
 
 	public void stop() {
-		if (!active) { return; }
+		if (!active) {
+			return;
+		}
 
 		timer.stop();
-		kray.setVisible(false);
 		active = false;
 	}
 
-	public Habitat getHabitat() { return habitat; }
+	public Habitat getHabitat() {
+		return habitat;
+	}
 
-	public boolean isActive() { return active; }
+	public boolean isActive() {
+		return active;
+	}
 }

@@ -4,7 +4,7 @@ import edu.uni.lab.textureloader.TextureLoader;
 
 public class Developer extends Employee {
 	private static double probability = 0.6;
-	protected static long period; // In milliseconds
+	protected static long period;
 	static {
 		period = 1_000_000_000L;
 	}

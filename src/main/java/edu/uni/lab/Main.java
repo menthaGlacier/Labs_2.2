@@ -16,21 +16,23 @@ public class Main extends Application {
 	private Controller controller;
 	private Scene simulationScene;
 
+	public static void main(String[] args) {
+		launch();
+	}
+
 	@Override
 	public void start(Stage stage) throws IOException {
-		URL url = getClass().getResource("simulation.fxml");
+		URL url = getClass().getResource("fxml/simulation.fxml");
 		if (url != null) {
 			simulationScene = new Scene(FXMLLoader.load(url), WINDOW_WIDTH, WINDOW_HEIGHT);
-		} else { throw new IOException(); }
+		} else {
+			throw new IOException();
+		}
 
 		stage.setScene(simulationScene);
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
 		stage.show();
 		controller = new Controller(stage);
-	}
-
-	public static void main(String[] args) {
-		launch();
 	}
 }

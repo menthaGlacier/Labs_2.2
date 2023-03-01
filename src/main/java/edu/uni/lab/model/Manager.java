@@ -4,7 +4,7 @@ import edu.uni.lab.textureloader.TextureLoader;
 
 public class Manager extends Employee {
 	private static double ratio = 0.3;
-	protected static long period; // In milliseconds
+	protected static long period;
 	static {
 		period = 3_000_000_000L;
 	}

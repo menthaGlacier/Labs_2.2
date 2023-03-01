@@ -1,6 +1,5 @@
 package edu.uni.lab.model;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Employee implements IBehaviour {
@@ -28,5 +27,7 @@ public abstract class Employee implements IBehaviour {
 		this.y = y;
 	}
 
-	public ImageView getImageView() { return imageView; }
+	public ImageView getImageView() {
+		return imageView;
+	}
 }

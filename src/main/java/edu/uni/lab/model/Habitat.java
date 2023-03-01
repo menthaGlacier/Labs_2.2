@@ -1,12 +1,12 @@
 package edu.uni.lab.model;
 
-import java.util.Random;
-
 import edu.uni.lab.textureloader.TextureLoader;
 import javafx.scene.layout.Pane;
 
+import java.util.Random;
+
 public class Habitat {
-	public static final int ARR_LIMIT = 100; //kray brat
+	public static final int ARR_LIMIT = 100; // TODO remove, switch to an argument
 	private Employee[] employees;
 	private int devCounter = 0, mgrCounter = 0;
 
