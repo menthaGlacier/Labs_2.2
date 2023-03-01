@@ -10,10 +10,10 @@ public final class TextureLoader {
 	private static final Image mgrTexture;
 
 	static {
-		String imagePath = new File("").getAbsolutePath() + "./src/main/resources/images/dev.gif";
+		String imagePath = new File("").getAbsolutePath() + "./src/main/resources/edu/uni/lab/images/dev.gif";
 		devTexture = new Image(imagePath, 50.0, 50.0, false, true);
 
-		imagePath = new File("").getAbsolutePath() + "./src/main/resources/images/mgr.png";
+		imagePath = new File("").getAbsolutePath() + "./src/main/resources/edu/uni/lab/images/mgr.png";
 		mgrTexture = new Image(imagePath, 50.0, 50.0, false, true);
 	}
 
