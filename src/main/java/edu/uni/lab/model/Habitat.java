@@ -1,71 +1,96 @@
 package edu.uni.lab.model;
 
-import edu.uni.lab.textureloader.TextureLoader;
+import java.util.Random;
 import javafx.scene.layout.Pane;
 
-import java.util.Random;
-
 public class Habitat {
-	public static final int ARR_LIMIT = 100; // TODO remove, switch to an argument
-	private Employee[] employees;
-	private int devCounter = 0, mgrCounter = 0;
+	private static final int ARR_LIMIT = 100;
+	private static final int DEVELOPER_PERIOD_MIN = 3000;
+	private static final int DEVELOPER_PERIOD_MAX = 12000;
+	private static final int MANAGER_PERIOD_MIN = 1000;
+	private static final int MANAGER_PERIOD_MAX = 9000;
+	private static final double DEVELOPER_PROBABILITY_MIN = 0.3;
+	private static final double DEVELOPER_PROBABILITY_MAX = 0.9;
+	private static final double MANAGER_RATIO_MIN = 0.2;
+	private static final double MANAGER_RATIO_MAX = 0.7;
 
-	private double devBorderX, devBorderY, mgrBorderX, mgrBorderY;
+	private final Pane habitatArea;
+	private final int width;
+	private final int height;
+	private final Employee[] employees;
+	private int developersCounter = 0;
+	private int managersCounter = 0;
+	private long lastDeveloperGenerationTime = 0;
+	private long lastManagerGenerationTime = 0;
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
-	private Pane habitatArea;
-
-	public Habitat(Pane habitatArea) {
-		devBorderX = habitatArea.getWidth() - TextureLoader.getDevTextureWidth();
-		devBorderY = habitatArea.getHeight() - TextureLoader.getDevTextureHeight();
-		mgrBorderX = habitatArea.getWidth() - TextureLoader.getMgrTextureWidth();
-		mgrBorderY = habitatArea.getHeight() - TextureLoader.getMgrTextureHeight();
-
+	public Habitat(Pane habitatArea, int width, int height) {
 		this.habitatArea = habitatArea;
+		this.width = width;
+		this.height = height;
+
+		Developer.setPeriod(random
+				.nextInt(DEVELOPER_PERIOD_MAX - DEVELOPER_PERIOD_MIN + 1)
+				+ DEVELOPER_PERIOD_MIN);
+		Manager.setPeriod(random
+				.nextInt(MANAGER_PERIOD_MAX - MANAGER_PERIOD_MIN + 1)
+				+ MANAGER_PERIOD_MIN);
+		Developer.setProbability(random
+				.nextDouble(DEVELOPER_PROBABILITY_MAX - DEVELOPER_PROBABILITY_MIN)
+				+ DEVELOPER_PROBABILITY_MIN);
+		Manager.setRatio(random
+				.nextDouble(MANAGER_RATIO_MAX - MANAGER_RATIO_MIN)
+				+ MANAGER_RATIO_MIN);
+
 		employees = new Employee[ARR_LIMIT];
 	}
 
-	public void update (long elapsedTime) {
+	public void update(long elapsedTime) {
+		if ((developersCounter + managersCounter) >= ARR_LIMIT) {
+			return;
+		}
 
-		if ((devCounter + mgrCounter) < ARR_LIMIT) {
-			if (elapsedTime / Developer.getPeriod() >= devCounter
-					&& random.nextDouble() <= Developer.getProbability()) {
-				addEmployee(new Developer(randCoord(devBorderX), randCoord(devBorderY)));
-			}
+		if (elapsedTime - lastDeveloperGenerationTime >= Developer.getPeriod()
+				&& random.nextDouble() <= Developer.getProbability()) {
+			addEmployee(new Developer(
+					random.nextDouble() * (habitatArea.getWidth()
+							- Developer.getTexture().getWidth()),
+					random.nextDouble() * (habitatArea.getHeight()
+							- Developer.getTexture().getHeight())));
+			lastDeveloperGenerationTime = elapsedTime;
+		}
 
-			if (elapsedTime / Manager.getPeriod() >= mgrCounter
-					&& mgrCounter <= (devCounter * Manager.getRatio())) {
-				addEmployee(new Manager(randCoord(mgrBorderX), randCoord(mgrBorderY)));
-			}
+		if (elapsedTime - lastManagerGenerationTime >= Manager.getPeriod()
+				&& managersCounter <= developersCounter * Manager.getRatio()) {
+			addEmployee(new Manager(
+					random.nextDouble() * (habitatArea.getWidth()
+							- Manager.getTexture().getWidth()),
+					random.nextDouble() * (habitatArea.getHeight()
+							- Manager.getTexture().getHeight())));
+			lastManagerGenerationTime = elapsedTime;
 		}
 	}
 
-	private double randCoord(double border) {
-		return random.nextDouble() * border;
-	}
-
-	private boolean addEmployee(Employee employee) {
-		if ((devCounter + mgrCounter) >= ARR_LIMIT) {
-			return false;
+	private void addEmployee(Employee employee) {
+		if ((developersCounter + managersCounter) >= ARR_LIMIT) {
+			return;
 		}
 
-		employees[devCounter + mgrCounter] = employee;
+		employees[developersCounter + managersCounter] = employee;
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
-			devCounter += 1;
+			developersCounter += 1;
 		} else if (employee instanceof Manager) {
-			mgrCounter += 1;
+			managersCounter += 1;
 		}
-
-		return true;
 	}
 
-	public int getDevCounter() {
-		return devCounter;
+	public int getDevelopersCounter() {
+		return developersCounter;
 	}
 
-	public int getMgrCounter() {
-		return mgrCounter;
+	public int getManagersCounter() {
+		return managersCounter;
 	}
 }

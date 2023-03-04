@@ -25,7 +25,7 @@ public class Simulation {
 			return;
 		}
 
-		habitat = new Habitat(habitatArea);
+		habitat = new Habitat(habitatArea, 880, 480);
 
 		timer = new AnimationTimer() {
 			private long startingTime = System.nanoTime();
@@ -38,8 +38,8 @@ public class Simulation {
 					habitat.update(timeNow-startingTime);
 					lastTime = timeNow;
 					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime) / 1_000_000_000L) + "s");
-					devCountLabel.setText("Developers: " + habitat.getDevCounter());
-					mgrCountLabel.setText("Managers: " + habitat.getMgrCounter());
+					devCountLabel.setText("Developers: " + habitat.getDevelopersCounter());
+					mgrCountLabel.setText("Managers: " + habitat.getManagersCounter());
 				}
 			}
 		};
