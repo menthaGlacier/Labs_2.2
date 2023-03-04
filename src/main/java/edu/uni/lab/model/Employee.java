@@ -4,7 +4,7 @@ import javafx.scene.image.ImageView;
 
 public abstract class Employee implements IBehaviour {
 	protected ImageView imageView;
-	protected double x, y;
+	private double x, y;
 
 	public Employee(double x, double y) {
 		this.x = x;

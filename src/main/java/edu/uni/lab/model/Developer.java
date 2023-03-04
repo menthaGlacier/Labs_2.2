@@ -1,19 +1,38 @@
 package edu.uni.lab.model;
 
-import edu.uni.lab.textureloader.TextureLoader;
+import java.util.Objects;
+import javafx.scene.image.Image;
+import edu.uni.lab.utility.Texture;
+import javafx.scene.image.ImageView;
 
 public class Developer extends Employee {
-	private static double probability = 0.6;
-	protected static long period;
+	private final static int DEVELOPER_WIDTH = 80;
+	private final static int DEVELOPER_HEIGHT = 80;
+
+	private final static Texture texture;
+	private static long period;
+	private static double probability;
+
 	static {
-		period = 1_000_000_000L;
+		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
+				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
+				DEVELOPER_WIDTH, DEVELOPER_HEIGHT, true, false),
+				DEVELOPER_WIDTH, DEVELOPER_HEIGHT);
 	}
 
 	public Developer(double x, double y) {
 		super(x, y);
-		imageView = TextureLoader.createDevImageView();
-		imageView.setLayoutX(x);
-		imageView.setLayoutY(y);
+		imageView = new ImageView(texture.getImage());
+		imageView.setX(x);
+		imageView.setY(y);
+	}
+
+	public static long getPeriod() {
+		return period;
+	}
+
+	public static void setPeriod(long period) {
+		Developer.period = period;
 	}
 
 	public static double getProbability() {
@@ -24,11 +43,7 @@ public class Developer extends Employee {
 		Developer.probability = probability;
 	}
 
-	public static long getPeriod() {
-		return period;
-	}
-
-	public static void setPeriod(long period) {
-		Developer.period = period;
+	public static Texture getTexture() {
+		return texture;
 	}
 }
