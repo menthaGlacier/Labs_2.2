@@ -28,16 +28,16 @@ public class Simulation {
 		habitat = new Habitat(habitatArea, 880, 480);
 
 		timer = new AnimationTimer() {
-			private long startingTime = System.nanoTime();
-			private long lastTime = startingTime;
+			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+			private static final long startTime = System.nanoTime();
+			private long lastTime = startTime;
 
-			private final long nanosPerFrame = 1_000_000_000 / 60;
 			@Override
 			public void handle(long timeNow) {
-				if (timeNow - lastTime >= nanosPerFrame) {
-					habitat.update(timeNow-startingTime);
+				if (timeNow - lastTime >= nanoSecondsPerFrame) {
+					habitat.update((timeNow - startTime) / 1_000_000);
 					lastTime = timeNow;
-					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime) / 1_000_000_000L) + "s");
+					timeLabel.setText("Time elapsed: " + ((timeNow - startTime) / 1_000_000_000L) + "s");
 					devCountLabel.setText("Developers: " + habitat.getDevelopersCounter());
 					mgrCountLabel.setText("Managers: " + habitat.getManagersCounter());
 				}

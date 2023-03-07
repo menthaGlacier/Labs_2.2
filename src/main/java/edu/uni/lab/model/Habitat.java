@@ -5,18 +5,19 @@ import javafx.scene.layout.Pane;
 
 public class Habitat {
 	private static final int ARR_LIMIT = 100;
-	private static final int DEVELOPER_PERIOD_MIN = 3000;
-	private static final int DEVELOPER_PERIOD_MAX = 12000;
-	private static final int MANAGER_PERIOD_MIN = 1000;
-	private static final int MANAGER_PERIOD_MAX = 9000;
-	private static final double DEVELOPER_PROBABILITY_MIN = 0.3;
-	private static final double DEVELOPER_PROBABILITY_MAX = 0.9;
-	private static final double MANAGER_RATIO_MIN = 0.2;
-	private static final double MANAGER_RATIO_MAX = 0.7;
+	private static final int DEVELOPER_PERIOD_MIN = 1000;
+	private static final int DEVELOPER_PERIOD_MAX = 4000;
+	private static final int MANAGER_PERIOD_MIN = 500;
+	private static final int MANAGER_PERIOD_MAX = 3000;
+	private static final double DEVELOPER_PROBABILITY_MIN = 0.5;
+	private static final double DEVELOPER_PROBABILITY_MAX = 0.7;
+	private static final double MANAGER_RATIO_MIN = 0.4;
+	private static final double MANAGER_RATIO_MAX = 0.9;
 
 	private final Pane habitatArea;
 	private final int width;
 	private final int height;
+
 	private final Employee[] employees;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
@@ -42,6 +43,12 @@ public class Habitat {
 		Manager.setRatio(random
 				.nextDouble(MANAGER_RATIO_MAX - MANAGER_RATIO_MIN)
 				+ MANAGER_RATIO_MIN);
+
+		System.out.println("Debug:");
+		System.out.println("Developer period: " + Developer.getPeriod());
+		System.out.println("Developer probability: " + Developer.getProbability());
+		System.out.println("Manager period: " + Manager.getPeriod());
+		System.out.println("Manager ratio: " + Manager.getRatio());
 
 		employees = new Employee[ARR_LIMIT];
 	}
