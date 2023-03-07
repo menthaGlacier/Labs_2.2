@@ -15,8 +15,6 @@ public class Habitat {
 	private static final double MANAGER_RATIO_MAX = 0.9;
 
 	private final Pane habitatArea;
-	private final int width;
-	private final int height;
 
 	private final Employee[] employees;
 	private int developersCounter = 0;
@@ -26,10 +24,8 @@ public class Habitat {
 
 	private final Random random = new Random();
 
-	public Habitat(Pane habitatArea, int width, int height) {
+	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-		this.width = width;
-		this.height = height;
 
 		Developer.setPeriod(random
 				.nextInt(DEVELOPER_PERIOD_MAX - DEVELOPER_PERIOD_MIN + 1)

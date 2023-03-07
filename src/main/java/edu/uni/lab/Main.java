@@ -1,6 +1,7 @@
 package edu.uni.lab;
 
 import edu.uni.lab.controller.Controller;
+import edu.uni.lab.model.Simulation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class Main extends Application {
 
 	private Controller controller;
 	private Scene simulationScene;
+	private Simulation simulation;
 
 	public static void main(String[] args) {
 		launch();
@@ -33,6 +35,8 @@ public class Main extends Application {
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
 		stage.show();
-		controller = new Controller(stage);
+
+		simulation = new Simulation();
+		controller = new Controller(stage, simulation);
 	}
 }
