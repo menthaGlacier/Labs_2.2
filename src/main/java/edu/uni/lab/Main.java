@@ -14,9 +14,9 @@ public class Main extends Application {
 	private static final int WINDOW_WIDTH = 1280;
 	private static final int WINDOW_HEIGHT = 720;
 
-	private Controller controller;
-	private Scene simulationScene;
+	private Scene scene;
 	private Simulation simulation;
+	private Controller controller;
 
 	public static void main(String[] args) {
 		launch();
@@ -24,19 +24,15 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		URL url = getClass().getResource("fxml/simulation.fxml");
-		if (url != null) {
-			simulationScene = new Scene(FXMLLoader.load(url), WINDOW_WIDTH, WINDOW_HEIGHT);
-		} else {
-			throw new IOException();
-		}
+		FXMLLoader loader = new FXMLLoader((getClass()
+					.getResource("/edu/uni/lab/fxml/simulation.fxml")));
+		scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+		controller = loader.getController();
+		controller.setSimulation(new Simulation());
 
-		stage.setScene(simulationScene);
+		stage.setScene(scene);
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
 		stage.show();
-
-		simulation = new Simulation();
-		controller = new Controller(stage, simulation);
 	}
 }

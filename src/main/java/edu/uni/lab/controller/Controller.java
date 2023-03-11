@@ -9,8 +9,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 
 public class Controller {
-	private final Simulation simulation;
-	private final Stage primaryStage;
+	private Simulation simulation = null;
 
 	@FXML
 	Pane root;
@@ -18,32 +17,34 @@ public class Controller {
 	@FXML
 	Pane habitatArea;
 
-	@FXML
-	Label timeLabel;
-
-
-	public Controller(Stage primaryStage, Simulation simulation) {
-		this.primaryStage = primaryStage;
-		this.simulation = simulation;
-		setKeyActions();
+	public Controller() {
+		//	setKeyActions();
 	}
 
-	private void setKeyActions() {
-		primaryStage.getScene().setOnKeyReleased((KeyEvent event) -> {
+	public void setSimulation(Simulation simulation) {
+		this.simulation = simulation;
+	}
+
+	@FXML
+	private void setKeyActions(KeyEvent event) {
+		//root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
 			case B:
-				simulation.start(habitatArea);
+				//simulation.start(habitatArea);
+				System.out.println("B");
 				break;
 			case E:
-				simulation.stop();
-				habitatArea.getChildren().clear();
+				//simulation.stop();
+				//habitatArea.getChildren().clear();
+				System.out.println("E");
 				break;
 			case T:
-				timeLabel.setVisible(!(timeLabel.isVisible()));
+				//timeLabel.setVisible(!(timeLabel.isVisible()));
+				System.out.println("T");
 				break;
 			default:
 				break;
 			}
-		});
+		//});
 	}
 }

@@ -9,6 +9,7 @@ public class Simulation {
 	private AnimationTimer timer;
 
 	public Simulation() {
+		// idk
 	}
 
 	public void start(Pane habitatArea) {
