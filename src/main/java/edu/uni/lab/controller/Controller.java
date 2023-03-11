@@ -25,9 +25,8 @@ public class Controller {
 		this.simulation = simulation;
 	}
 
-	@FXML
-	private void setKeyActions(KeyEvent event) {
-		//root.getScene().setOnKeyReleased((KeyEvent event) -> {
+	public void setKeyActions() {
+		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
 			case B:
 				//simulation.start(habitatArea);
@@ -45,6 +44,6 @@ public class Controller {
 			default:
 				break;
 			}
-		//});
+		});
 	}
 }

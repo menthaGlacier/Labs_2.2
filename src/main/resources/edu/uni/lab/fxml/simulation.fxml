@@ -9,8 +9,7 @@
       fx:controller="edu.uni.lab.controller.Controller"
       style="-fx-background-color: #990040;"
       xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1"
-      onKeyReleased="#setKeyActions">
+      xmlns:fx="http://javafx.com/fxml/1">
     <Pane fx:id="habitatArea" layoutX="80.0" layoutY="120.0"
           prefHeight="480.0" prefWidth="880.0"
           style="-fx-background-color: #C30052;-fx-background-radius: 20;"

@@ -29,6 +29,7 @@ public class Main extends Application {
 		scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 		controller = loader.getController();
 		controller.setSimulation(new Simulation());
+		controller.setKeyActions();
 
 		stage.setScene(scene);
 		stage.setTitle("Simulation");
