@@ -15,7 +15,6 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 720;
 
 	private Scene scene;
-	private Simulation simulation;
 	private Controller controller;
 
 	public static void main(String[] args) {

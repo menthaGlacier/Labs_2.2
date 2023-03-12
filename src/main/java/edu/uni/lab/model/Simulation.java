@@ -1,15 +1,22 @@
 package edu.uni.lab.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 public class Simulation {
 	private Habitat habitat;
 	private boolean active = false;
 	private AnimationTimer timer;
+	private final StringProperty timeLabelText;
+	private final StringProperty countersLabelText;
 
 	public Simulation() {
-		// idk
+		timeLabelText = new SimpleStringProperty("Time: 0s.");
+		countersLabelText = new SimpleStringProperty("Developers: 0" + "\n" +
+														"Managers: 0");
 	}
 
 	public void start(Pane habitatArea) {
@@ -46,6 +53,11 @@ public class Simulation {
 
 		timer.stop();
 		active = false;
+	}
+
+	public void bindLabels(Label timeLabel, Label countersLabel) {
+		timeLabel.textProperty().bind(timeLabelText);
+		countersLabel.textProperty().bind(countersLabelText);
 	}
 
 	public Habitat getHabitat() {

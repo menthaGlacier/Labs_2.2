@@ -5,7 +5,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.fxml.FXML;
 
 public class Controller {
@@ -17,29 +16,32 @@ public class Controller {
 	@FXML
 	Pane habitatArea;
 
-	public Controller() {
-		//	setKeyActions();
-	}
+	@FXML
+	VBox statistics;
+
+	@FXML
+	Label timeLabel;
+
+	@FXML
+	Label countersLabel;
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
+		simulation.bindLabels(timeLabel, countersLabel);
 	}
 
 	public void setKeyActions() {
 		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
 			case B:
-				//simulation.start(habitatArea);
-				System.out.println("B");
+				simulation.start(habitatArea);
 				break;
 			case E:
-				//simulation.stop();
-				//habitatArea.getChildren().clear();
-				System.out.println("E");
+				simulation.stop();
+				habitatArea.getChildren().clear();
 				break;
 			case T:
-				//timeLabel.setVisible(!(timeLabel.isVisible()));
-				System.out.println("T");
+				timeLabel.setVisible(!(timeLabel.isVisible()));
 				break;
 			default:
 				break;
