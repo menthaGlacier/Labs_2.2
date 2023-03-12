@@ -27,7 +27,7 @@ public class Controller {
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
-		simulation.bindLabels(timeLabel, countersLabel);
+		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 	}
 
 	public void setKeyActions() {

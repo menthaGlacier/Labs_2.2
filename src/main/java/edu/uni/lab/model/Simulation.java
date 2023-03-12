@@ -25,10 +25,9 @@ public class Simulation {
 		}
 
 		habitat = new Habitat(habitatArea);
-
 		timer = new AnimationTimer() {
 			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
-			private static final long startTime = System.nanoTime();
+			private final long startTime = System.nanoTime();
 			private long lastTime = startTime;
 
 			@Override
@@ -37,7 +36,16 @@ public class Simulation {
 					habitat.update((timeNow - startTime) / 1_000_000);
 					lastTime = timeNow;
 
-					// TODO Statistics
+					timeLabelText.set("Time: "
+									+ (lastTime - startTime) / 1_000_000_000
+									+ "s."
+					);
+
+					countersLabelText.set("Developers: "
+									+ habitat.getDevelopersCounter() + "\n"
+									+ "Managers: "
+									+ habitat.getManagersCounter()
+					);
 				}
 			}
 		};
@@ -55,7 +63,7 @@ public class Simulation {
 		active = false;
 	}
 
-	public void bindLabels(Label timeLabel, Label countersLabel) {
+	public void bindStatisticsLabels(Label timeLabel, Label countersLabel) {
 		timeLabel.textProperty().bind(timeLabelText);
 		countersLabel.textProperty().bind(countersLabelText);
 	}
