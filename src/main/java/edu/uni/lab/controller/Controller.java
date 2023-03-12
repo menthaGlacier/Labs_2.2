@@ -11,19 +11,15 @@ public class Controller {
 	private Simulation simulation = null;
 
 	@FXML
-	Pane root;
-
+	private Pane root;
 	@FXML
-	Pane habitatArea;
-
+	private Pane habitatArea;
 	@FXML
-	VBox statistics;
-
+	private VBox statistics;
 	@FXML
-	Label timeLabel;
-
+	private Label timeLabel;
 	@FXML
-	Label countersLabel;
+	private Label countersLabel;
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
