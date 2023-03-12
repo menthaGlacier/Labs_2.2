@@ -15,8 +15,7 @@ public class Habitat {
 	private static final double MANAGER_RATIO_MAX = 0.9;
 
 	private final Pane habitatArea;
-
-	private final Employee[] employees;
+	private final EmployeeRepository employees;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
 	private long lastDeveloperGenerationTime = 0;
@@ -46,7 +45,8 @@ public class Habitat {
 		System.out.println("Manager period: " + Manager.getPeriod());
 		System.out.println("Manager ratio: " + Manager.getRatio());
 
-		employees = new Employee[ARR_LIMIT];
+		employees = EmployeeRepository.getInstance();
+		employees.resize(100); // TODO Switch to user defined size
 	}
 
 	public void update(long elapsedTime) {
@@ -76,11 +76,7 @@ public class Habitat {
 	}
 
 	private void addEmployee(Employee employee) {
-		if ((developersCounter + managersCounter) >= ARR_LIMIT) {
-			return;
-		}
-
-		employees[developersCounter + managersCounter] = employee;
+		employees.add(employee, developersCounter + managersCounter);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
 			developersCounter += 1;
