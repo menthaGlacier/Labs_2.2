@@ -1,5 +1,6 @@
 package edu.uni.lab;
 
+import edu.uni.lab.controller.ControllerFactory;
 import edu.uni.lab.controller.Controller;
 import edu.uni.lab.model.Simulation;
 import javafx.application.Application;
@@ -14,6 +15,7 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 720;
 
 	private Scene scene;
+	private Simulation simulation;
 	private Controller controller;
 
 	public static void main(String[] args) {
@@ -22,16 +24,19 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		simulation = new Simulation();
 		FXMLLoader loader = new FXMLLoader((getClass()
 					.getResource("/edu/uni/lab/fxml/simulation.fxml")));
+		loader.setControllerFactory(controllerClass ->
+					new ControllerFactory().getController(simulation));
+
 		scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 		controller = loader.getController();
-		controller.setSimulation(new Simulation());
-		controller.setKeyActions();
 
-		stage.setScene(scene);
+		stage.setOnShown(controller::setup);
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
+		stage.setScene(scene);
 		stage.show();
 	}
 }

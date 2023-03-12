@@ -5,6 +5,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 import javafx.fxml.FXML;
 
 public class Controller {
@@ -21,12 +22,11 @@ public class Controller {
 	@FXML
 	private Label countersLabel;
 
-	public void setSimulation(Simulation simulation) {
+	public Controller(Simulation simulation) {
 		this.simulation = simulation;
-		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 	}
 
-	public void setKeyActions() {
+	private void setKeyActions() {
 		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
 			case B:
@@ -43,5 +43,10 @@ public class Controller {
 				break;
 			}
 		});
+	}
+
+	public void setup(WindowEvent windowEvent) {
+		simulation.bindStatisticsLabels(timeLabel, countersLabel);
+		setKeyActions();
 	}
 }
