@@ -1,23 +1,22 @@
 package edu.uni.lab.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class Simulation {
 	private Habitat habitat;
 	private boolean active = false;
 	private AnimationTimer timer;
+	private final StringProperty timeLabelText;
+	private final StringProperty countersLabelText;
 
-	private Label timeLabel;
-	private Label devCountLabel;
-	private Label mgrCountLabel;
-
-	public Simulation(VBox vbox) {
-		timeLabel = (Label) vbox.lookup("#timeLabel");
-		mgrCountLabel = (Label) vbox.lookup("#mgrCountLabel");
-		devCountLabel = (Label) vbox.lookup("#devCountLabel");
+	public Simulation() {
+		timeLabelText = new SimpleStringProperty("Time: 0s.");
+		countersLabelText = new SimpleStringProperty("Developers: 0" + "\n" +
+														"Managers: 0");
 	}
 
 	public void start(Pane habitatArea) {
@@ -25,21 +24,27 @@ public class Simulation {
 			return;
 		}
 
-		habitat = new Habitat(habitatArea, 880, 480);
-
+		habitat = new Habitat(habitatArea);
 		timer = new AnimationTimer() {
-			private long startingTime = System.nanoTime();
-			private long lastTime = startingTime;
+			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+			private final long startTime = System.nanoTime();
+			private long lastTime = startTime;
 
-			private final long nanosPerFrame = 1_000_000_000 / 60;
 			@Override
 			public void handle(long timeNow) {
-				if (timeNow - lastTime >= nanosPerFrame) {
-					habitat.update(timeNow-startingTime);
+				if (timeNow - lastTime >= nanoSecondsPerFrame) {
+					habitat.update((timeNow - startTime) / 1_000_000);
 					lastTime = timeNow;
-					timeLabel.setText("Time elapsed: " + ((timeNow - startingTime) / 1_000_000_000L) + "s");
-					devCountLabel.setText("Developers: " + habitat.getDevelopersCounter());
-					mgrCountLabel.setText("Managers: " + habitat.getManagersCounter());
+					timeLabelText.set("Time: "
+									+ (lastTime - startTime) / 1_000_000_000
+									+ "s."
+					);
+
+					countersLabelText.set("Developers: "
+									+ habitat.getDevelopersCounter() + "\n"
+									+ "Managers: "
+									+ habitat.getManagersCounter()
+					);
 				}
 			}
 		};
@@ -55,6 +60,11 @@ public class Simulation {
 
 		timer.stop();
 		active = false;
+	}
+
+	public void bindStatisticsLabels(Label timeLabel, Label countersLabel) {
+		timeLabel.textProperty().bind(timeLabelText);
+		countersLabel.textProperty().bind(countersLabelText);
 	}
 
 	public Habitat getHabitat() {

@@ -1,39 +1,48 @@
 package edu.uni.lab.controller;
 
 import edu.uni.lab.model.Simulation;
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
 
 public class Controller {
-	private Simulation simulation;
-	private Stage primaryStage;
+	private Simulation simulation = null;
 
-	public Controller(Stage stage) {
-		primaryStage = stage;
-		setKeyActions();
+	@FXML
+	Pane root;
+
+	@FXML
+	Pane habitatArea;
+
+	@FXML
+	VBox statistics;
+
+	@FXML
+	Label timeLabel;
+
+	@FXML
+	Label countersLabel;
+
+	public void setSimulation(Simulation simulation) {
+		this.simulation = simulation;
+		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 	}
 
-	private void setKeyActions() {
-		primaryStage.getScene().setOnKeyReleased((KeyEvent event) -> {
+	public void setKeyActions() {
+		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
-			case B: {
-				this.simulation = new Simulation((VBox) primaryStage.getScene().lookup("#statistics"));
-				simulation.start((Pane) primaryStage.getScene().lookup("#habitatArea"));
+			case B:
+				simulation.start(habitatArea);
 				break;
-			}
-			case E: {
+			case E:
 				simulation.stop();
-				Pane habitatArea = (Pane) primaryStage.getScene().lookup("#habitatArea");
 				habitatArea.getChildren().clear();
 				break;
-			}
-			case T: {
-				Node timeLabel = primaryStage.getScene().lookup("#timeLabel");
-				timeLabel.setVisible(!timeLabel.isVisible());
-			}
+			case T:
+				timeLabel.setVisible(!(timeLabel.isVisible()));
+				break;
 			default:
 				break;
 			}
