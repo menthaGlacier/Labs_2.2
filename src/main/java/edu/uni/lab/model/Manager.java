@@ -16,7 +16,7 @@ public class Manager extends Employee {
 	static {
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/manager.png")),
-				MANAGER_WIDTH, MANAGER_HEIGHT, true, false),
+				MANAGER_WIDTH, MANAGER_HEIGHT, false, true),
 				MANAGER_WIDTH, MANAGER_HEIGHT);
 	}
 

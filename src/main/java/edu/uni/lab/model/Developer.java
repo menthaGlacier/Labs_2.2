@@ -16,7 +16,7 @@ public class Developer extends Employee {
 	static {
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
-				DEVELOPER_WIDTH, DEVELOPER_HEIGHT, true, false),
+				DEVELOPER_WIDTH, DEVELOPER_HEIGHT, false, true),
 				DEVELOPER_WIDTH, DEVELOPER_HEIGHT);
 	}
 
