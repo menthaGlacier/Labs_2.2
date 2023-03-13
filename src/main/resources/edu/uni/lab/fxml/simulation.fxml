@@ -19,12 +19,12 @@
                         <Font name="Serif Bold" size="22" />
                     </font>
                 </Label>
-         <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
+         <Button fx:id="startButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
             <font>
                <Font name="Serif Bold" size="22.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
+         <Button fx:id="stopButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
             <font>
                <Font name="Serif Bold" size="22.0" />
             </font>

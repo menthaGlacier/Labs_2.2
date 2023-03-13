@@ -1,5 +1,7 @@
 package edu.uni.lab.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.animation.AnimationTimer;
@@ -8,19 +10,20 @@ import javafx.scene.layout.Pane;
 
 public class Simulation {
 	private Habitat habitat;
-	private boolean active = false;
 	private AnimationTimer timer;
+	private final BooleanProperty isActive;
 	private final StringProperty timeLabelText;
 	private final StringProperty countersLabelText;
 
 	public Simulation() {
+		isActive = new SimpleBooleanProperty(false);
 		timeLabelText = new SimpleStringProperty("Time: 0s.");
 		countersLabelText = new SimpleStringProperty("Developers: 0" + "\n" +
 														"Managers: 0");
 	}
 
 	public void start(Pane habitatArea) {
-		if (active) {
+		if (isActive.getValue()) {
 			return;
 		}
 
@@ -50,16 +53,16 @@ public class Simulation {
 		};
 
 		timer.start();
-		active = true;
+		isActive.setValue(true);
 	}
 
 	public void stop() {
-		if (!active) {
+		if (!(isActive.getValue())) {
 			return;
 		}
 
 		timer.stop();
-		active = false;
+		isActive.setValue(false);
 	}
 
 	public void bindStatisticsLabels(Label timeLabel, Label countersLabel) {
@@ -72,6 +75,10 @@ public class Simulation {
 	}
 
 	public boolean isActive() {
-		return active;
+		return isActive.getValue();
+	}
+
+	public BooleanProperty getIsActiveProperty() {
+		return isActive;
 	}
 }
