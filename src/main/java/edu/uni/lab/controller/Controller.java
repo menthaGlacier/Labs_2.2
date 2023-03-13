@@ -4,12 +4,11 @@ import edu.uni.lab.model.Simulation;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import javafx.fxml.FXML;
 
 public class Controller {
-	private Simulation simulation = null;
+	private Simulation simulation;
 
 	@FXML
 	private Pane root;
