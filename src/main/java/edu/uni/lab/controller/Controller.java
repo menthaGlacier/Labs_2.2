@@ -16,8 +16,6 @@ public class Controller {
 	@FXML
 	private Pane habitatArea;
 	@FXML
-	private VBox statistics;
-	@FXML
 	private Label timeLabel;
 	@FXML
 	private Label countersLabel;
