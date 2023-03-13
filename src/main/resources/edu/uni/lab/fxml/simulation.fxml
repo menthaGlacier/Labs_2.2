@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -19,24 +18,35 @@
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.Controller">
     <AnchorPane fx:id="visualizationArea" prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="0.0">
         <Pane fx:id="habitatArea" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
-        <HBox fx:id="statistics" layoutX="968.0" layoutY="150.0" spacing="10.0" AnchorPane.bottomAnchor="646.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                <Label fx:id="countersLabel" prefWidth="250.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Developers: 0&#10;Managers: 0">
+        <HBox fx:id="statistics" layoutX="968.0" layoutY="150.0" spacing="10.0" AnchorPane.bottomAnchor="646.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                <Label fx:id="countersLabel" prefHeight="64.0" prefWidth="250.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Developers: 0&#10;Managers: 0">
                     <font>
                         <Font name="Serif Bold" size="22" />
                     </font>
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
                 </Label>
 
-                <Label fx:id="timeLabel" layoutX="968.0" layoutY="120.0" prefHeight="64.0" prefWidth="150.0" style="-fx-alignment: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Time: 0s."> <!--visible="false"-->
+                <Label fx:id="timeLabel" layoutX="968.0" layoutY="120.0" prefHeight="64.0" prefWidth="200.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Time: 0s."> <!--visible="false"-->
                     <font>
                         <Font name="Serif Bold" size="22" />
                     </font>
                 </Label>
+         <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
+            <font>
+               <Font name="Serif Bold" size="22.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
+            <font>
+               <Font name="Serif Bold" size="22.0" />
+            </font>
+         </Button>
         </HBox>
 
     </AnchorPane>
+   <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <HBox spacing="10.0" AnchorPane.bottomAnchor="646.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         </HBox>
+   </AnchorPane>
 <!--    <VBox fx:id="statistics" layoutX="968.0" layoutY="150.0">
         <Label fx:id="timeLabel" layoutX="968.0" layoutY="120.0"
                text="Time elapsed: " visible="false">
