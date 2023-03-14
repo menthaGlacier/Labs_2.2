@@ -23,7 +23,7 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class MainController {
-	private Simulation simulation;
+	private final Simulation simulation;
 
 	@FXML
 	private AnchorPane root;
@@ -80,11 +80,13 @@ public class MainController {
 		timeLabel.setVisible(!(timeLabel.isVisible()));
 	}
 
-	private void callAboutWindow() {
+	private void callAboutDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
-				.getResource("/edu/uni/lab/fxml/about.fxml")));
-		loader.setControllerFactory(clazz->new AboutMenuController(dialog));
+				.getResource("/edu/uni/lab/fxml/aboutDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new AboutMenuController(dialog));
+
 		try {
 			dialog.setScene(new Scene(loader.load()));
 		} catch (IOException e) {
@@ -92,6 +94,25 @@ public class MainController {
 		}
 
 		dialog.setTitle("About");
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(root.getScene().getWindow());
+		dialog.showAndWait();
+	}
+
+	private void callStatisticsDialog() {
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/statisticsDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new AboutMenuController(dialog));
+
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
+		}
+
+		dialog.setTitle("Statistics");
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
@@ -142,8 +163,9 @@ public class MainController {
 		stopMenu.setOnAction(actionEvent -> stop());
 		toggleTimeMenu.setOnAction(actionEvent -> toggleTime());
 		//toggleModalWindowMenu.setOnAction(actionEvent -> callAboutWindow());
-		aboutMenu.setOnAction(actionEvent -> callAboutWindow());
+		aboutMenu.setOnAction(actionEvent -> callAboutDialog());
 	}
+
 	public void setup(WindowEvent windowEvent) {
 		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 		startButton.disableProperty().bind(simulation.getIsActiveProperty());

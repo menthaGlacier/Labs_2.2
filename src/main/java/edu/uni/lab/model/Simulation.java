@@ -64,6 +64,7 @@ public class Simulation {
 		isActive.setValue(false);
 	}
 
+	// TODO remove this
 	public void bindStatisticsLabels(Label timeLabel, Label countersLabel) {
 		timeLabel.textProperty().bind(timeLabelText);
 		countersLabel.textProperty().bind(countersLabelText);
@@ -73,6 +74,7 @@ public class Simulation {
 		return isActive.get();
 	}
 
+	// TODO remove this also
 	public SimpleBooleanProperty getIsActiveProperty() {
 		return isActive;
 	}

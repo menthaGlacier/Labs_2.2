@@ -1,15 +1,12 @@
 package edu.uni.lab.controller;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.fxml.FXML;
 
 public class AboutMenuController {
-	private Stage stage;
+	private final Stage stage;
 
-	@FXML
-	private AnchorPane root;
 	@FXML
 	private Button exitAboutButton;
 
@@ -19,8 +16,6 @@ public class AboutMenuController {
 
 	@FXML
 	private void handleAction() {
-		exitAboutButton.setOnAction(actionEvent -> {
-			stage.close();
-		});
+		exitAboutButton.setOnAction(actionEvent -> stage.close());
 	}
 }

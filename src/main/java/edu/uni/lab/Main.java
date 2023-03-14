@@ -28,7 +28,7 @@ public class Main extends Application {
 		FXMLLoader loader = new FXMLLoader((getClass()
 					.getResource("/edu/uni/lab/fxml/simulation.fxml")));
 		loader.setControllerFactory(controllerClass ->
-					new MainControllerFactory().getController(simulation));
+				new MainControllerFactory().getController(simulation));
 
 		scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 		controller = loader.getController();
