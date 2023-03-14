@@ -6,30 +6,34 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.fxml.About">
-   <children>
-      <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="36.0" prefHeight="380.0" prefWidth="360.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;">
-               <children>
-                  <Label text="Company employees simulation">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label text="Made by Litvinenko Andrey and Shishkin Alexey" />
-               </children>
-            </VBox>
-            <ImageView fitHeight="250.0" fitWidth="150.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../images/rickroll_about_it.gif" />
-               </image>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </ImageView>
-         </children>
+<AnchorPane fx:id="root"
+            fx:controller="edu.uni.lab.controller.AboutMenuController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #990040;"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1">
+   <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="36.0"
+         prefHeight="380.0" prefWidth="360.0" AnchorPane.bottomAnchor="10.0"
+         AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0"
+         AnchorPane.topAnchor="10.0">
+      <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="200.0"
+            style="-fx-background-color: #C30052; -fx-background-radius: 10;">
+         <Label text="Company employees simulation">
+            <font>
+               <Font name="System Bold" size="20.0"/>
+            </font>
+         </Label>
+         <Label text="Made by Litvinenko Andrey and Shishkin Alexey"/>
       </VBox>
-      <Button mnemonicParsing="false" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="538.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="365.0" />
-   </children>
+      <ImageView fitHeight="250.0" fitWidth="150.0" pickOnBounds="true">
+         <VBox.margin>
+            <Insets top="20.0"/>
+         </VBox.margin>
+         <Image url="@../images/rickroll_about_it.gif"/>
+      </ImageView>
+   </VBox>
+   <Button fx:id="exitAboutButton" text="OK" onAction="#handleAction"
+           AnchorPane.bottomAnchor="10.0"
+           AnchorPane.leftAnchor="538.0" AnchorPane.rightAnchor="10.0"
+           AnchorPane.topAnchor="365.0"/>
 </AnchorPane>

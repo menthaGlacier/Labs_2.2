@@ -1,7 +1,7 @@
 package edu.uni.lab;
 
-import edu.uni.lab.controller.ControllerFactory;
-import edu.uni.lab.controller.Controller;
+import edu.uni.lab.controller.MainControllerFactory;
+import edu.uni.lab.controller.MainController;
 import edu.uni.lab.model.Simulation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class Main extends Application {
 
 	private Scene scene;
 	private Simulation simulation;
-	private Controller controller;
+	private MainController controller;
 
 	public static void main(String[] args) {
 		launch();
@@ -28,7 +28,7 @@ public class Main extends Application {
 		FXMLLoader loader = new FXMLLoader((getClass()
 					.getResource("/edu/uni/lab/fxml/simulation.fxml")));
 		loader.setControllerFactory(controllerClass ->
-					new ControllerFactory().getController(simulation));
+					new MainControllerFactory().getController(simulation));
 
 		scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
 		controller = loader.getController();
