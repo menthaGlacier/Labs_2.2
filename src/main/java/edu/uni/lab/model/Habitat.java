@@ -1,16 +1,18 @@
 package edu.uni.lab.model;
 
 import java.util.Random;
+
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
-	private static final int ARR_LIMIT = 100;
-	private static final int DEVELOPER_PERIOD_MIN = 1000;
-	private static final int DEVELOPER_PERIOD_MAX = 4000;
-	private static final int MANAGER_PERIOD_MIN = 500;
-	private static final int MANAGER_PERIOD_MAX = 3000;
-	private static final double DEVELOPER_PROBABILITY_MIN = 0.5;
-	private static final double DEVELOPER_PROBABILITY_MAX = 0.7;
+	private static SimpleIntegerProperty repositorySizeProperty = new SimpleIntegerProperty(100);
+	public static final int DEVELOPER_PERIOD_MIN = 1000;
+	public static final int DEVELOPER_PERIOD_MAX = 4000;
+	public static final int MANAGER_PERIOD_MIN = 500;
+	public static final int MANAGER_PERIOD_MAX = 3000;
+	public static final double DEVELOPER_PROBABILITY_MIN = 0.5;
+	public static final double DEVELOPER_PROBABILITY_MAX = 0.7;
 	private static final double MANAGER_RATIO_MIN = 0.4;
 	private static final double MANAGER_RATIO_MAX = 0.9;
 
@@ -26,12 +28,14 @@ public class Habitat {
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
 
-		Developer.setPeriod(random
-				.nextInt(DEVELOPER_PERIOD_MAX - DEVELOPER_PERIOD_MIN + 1)
-				+ DEVELOPER_PERIOD_MIN);
-		Manager.setPeriod(random
-				.nextInt(MANAGER_PERIOD_MAX - MANAGER_PERIOD_MIN + 1)
-				+ MANAGER_PERIOD_MIN);
+		if (Developer.getPeriod() < DEVELOPER_PERIOD_MIN || Developer.getPeriod() > DEVELOPER_PERIOD_MAX) {
+			Developer.setPeriod(DEVELOPER_PERIOD_MIN);
+		}
+
+		if (Manager.getPeriod() < MANAGER_PERIOD_MIN || Manager.getPeriod() > MANAGER_PERIOD_MAX) {
+			Manager.setPeriod(MANAGER_PERIOD_MIN);
+		}
+
 		Developer.setProbability(random
 				.nextDouble(DEVELOPER_PROBABILITY_MAX - DEVELOPER_PROBABILITY_MIN)
 				+ DEVELOPER_PROBABILITY_MIN);
@@ -46,11 +50,11 @@ public class Habitat {
 		System.out.println("Manager ratio: " + Manager.getRatio());
 
 		employees = EmployeeRepository.getInstance();
-		employees.resize(100); // TODO Switch to user defined size
+		employees.resize(repositorySizeProperty.get());
 	}
 
 	public void update(long elapsedTime) {
-		if ((developersCounter + managersCounter) >= ARR_LIMIT) {
+		if ((developersCounter + managersCounter) >= employees.size()) {
 			return;
 		}
 
@@ -91,5 +95,13 @@ public class Habitat {
 
 	public int getManagersCounter() {
 		return managersCounter;
+	}
+
+	public static void setRepositorySize(int repositorySize) {
+		repositorySizeProperty.setValue(repositorySize);
+	}
+
+	public static SimpleIntegerProperty getRepositorySizeProperty() {
+		return repositorySizeProperty;
 	}
 }

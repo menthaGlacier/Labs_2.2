@@ -1,6 +1,12 @@
 package edu.uni.lab.controller;
 
+import edu.uni.lab.model.Developer;
+import edu.uni.lab.model.Habitat;
+import edu.uni.lab.model.Manager;
 import edu.uni.lab.model.Simulation;
+import edu.uni.lab.utility.NumericField;
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -41,6 +47,21 @@ public class MainController {
 	private MenuItem toggleModalWindowMenu;
 	@FXML
 	private MenuItem aboutMenu;
+
+	@FXML
+	private NumericField developerPeriodField;
+	@FXML
+	private Label developerPeriodLabel;
+
+	@FXML
+	private NumericField managerPeriodField;
+	@FXML
+	private Label managerPeriodLabel;
+
+	@FXML
+	private NumericField employeeAmountField;
+	@FXML
+	private Label employeeAmountLabel;
 
 	public MainController(Simulation simulation) {
 		this.simulation = simulation;
@@ -91,6 +112,31 @@ public class MainController {
 		stopButton.setOnAction(actionEvent -> stop());
 	}
 
+	@FXML
+	private void onDeveloperPeriodButtonClick() {
+		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
+		if (value != null
+				&& value < Habitat.DEVELOPER_PERIOD_MAX && value > Habitat.DEVELOPER_PERIOD_MIN) {
+			Developer.setPeriod(value);
+		}
+	}
+
+	@FXML
+	private void onManagerPeriodButtonClick() {
+		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
+		if (value != null
+				&& value < Habitat.MANAGER_PERIOD_MAX && value > Habitat.MANAGER_PERIOD_MIN) {
+			Manager.setPeriod(value);
+		}
+	}
+
+	@FXML private void onEmployeeAmountButtonClick() {
+		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
+		if (value != null && value > 0) {
+			Habitat.setRepositorySize(value);
+		}
+	}
+
 	private void setMenuItemsActions() {
 		startMenu.setOnAction(actionEvent -> start());
 		stopMenu.setOnAction(actionEvent -> stop());
@@ -102,9 +148,13 @@ public class MainController {
 		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 		startButton.disableProperty().bind(simulation.getIsActiveProperty());
 		stopButton.disableProperty().bind(simulation.getIsActiveProperty().not());
+		developerPeriodLabel.textProperty().bind(Bindings.concat("Current developers' period: ", Developer.getPeriodProperty()));
+		managerPeriodLabel.textProperty().bind(Bindings.concat("Current managers' period: ", Manager.getPeriodProperty()));
+		employeeAmountLabel.textProperty().bind(Bindings.concat("Current employee amount: ", Habitat.getRepositorySizeProperty()));
 
 		setKeyActions();
 		setButtonActions();
 		setMenuItemsActions();
+
 	}
 }

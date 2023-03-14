@@ -1,6 +1,8 @@
 package edu.uni.lab.model;
 
 import java.util.Objects;
+
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import edu.uni.lab.utility.Texture;
 import javafx.scene.image.ImageView;
@@ -8,9 +10,8 @@ import javafx.scene.image.ImageView;
 public class Developer extends Employee {
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
-
 	private final static Texture texture;
-	private static long period;
+	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
 	private static double probability;
 
 	static {
@@ -28,11 +29,15 @@ public class Developer extends Employee {
 	}
 
 	public static long getPeriod() {
-		return period;
+		return periodProperty.get();
+	}
+
+	public static SimpleLongProperty getPeriodProperty() {
+		return periodProperty;
 	}
 
 	public static void setPeriod(long period) {
-		Developer.period = period;
+		periodProperty.setValue(period);
 	}
 
 	public static double getProbability() {

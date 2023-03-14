@@ -1,6 +1,8 @@
 package edu.uni.lab.model;
 
 import java.util.Objects;
+
+import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import edu.uni.lab.utility.Texture;
 import javafx.scene.image.ImageView;
@@ -10,7 +12,7 @@ public class Manager extends Employee {
 	private final static int MANAGER_HEIGHT = 80;
 
 	private final static Texture texture;
-	private static long period;
+	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
 	private static double ratio;
 
 	static {
@@ -28,11 +30,15 @@ public class Manager extends Employee {
 	}
 
 	public static long getPeriod() {
-		return period;
+		return periodProperty.get();
+	}
+
+	public static SimpleLongProperty getPeriodProperty() {
+		return periodProperty;
 	}
 
 	public static void setPeriod(long period) {
-		Manager.period = period;
+		periodProperty.setValue(period);
 	}
 
 	public static double getRatio() {

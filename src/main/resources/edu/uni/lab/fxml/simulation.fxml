@@ -3,7 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import edu.uni.lab.utility.NumericField?>
 
+<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.MainController">
     <AnchorPane fx:id="visualizationArea" prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="26.0">
         <Pane fx:id="habitatArea" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
@@ -32,7 +34,70 @@
         </HBox>
     </AnchorPane>
 
-    <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" />
+    <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
+        <VBox fx:id="developerPeriodInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="10.0">
+            <NumericField fx:id="developerPeriodField" promptText="Enter period (in ms)">
+                <VBox.margin>
+                    <Insets top="5.0" />
+                </VBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </NumericField>
+            <Label fx:id="developerPeriodLabel" text="Current developers' period: ">
+                <font>
+                    <Font name="Serif Bold" size="16.0" />
+                </font>
+            </Label>
+            <Button fx:id="developerPeriodButton" text="Apply" onAction="#onDeveloperPeriodButtonClick">
+                <VBox.margin>
+                    <Insets bottom="5.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+
+        <VBox fx:id="managerPeriodInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <NumericField fx:id="managerPeriodField" promptText="Enter period (in ms)">
+                <VBox.margin>
+                    <Insets top="5.0" />
+                </VBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </NumericField>
+            <Label fx:id="managerPeriodLabel" text="Current managers' period: ">
+                <font>
+                    <Font name="Serif Bold" size="16.0" />
+                </font>
+            </Label>
+            <Button fx:id="managerPeriodButton" onAction="#onManagerPeriodButtonClick" text="Apply">
+                <VBox.margin>
+                    <Insets bottom="5.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+
+        <VBox fx:id="employeeAmountInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="300.0" AnchorPane.bottomAnchor="480.0">
+            <NumericField fx:id="employeeAmountField" promptText="Enter amount">
+                <VBox.margin>
+                    <Insets top="5.0" />
+                </VBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </NumericField>
+            <Label fx:id="employeeAmountLabel" text="Current employee max amount: ">
+                <font>
+                    <Font name="Serif Bold" size="16.0" />
+                </font>
+            </Label>
+            <Button fx:id="employeeAmountButton" onAction="#onEmployeeAmountButtonClick" text="Apply">
+                <VBox.margin>
+                    <Insets bottom="5.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </AnchorPane>
     <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
             <Menu text="Simulation">
