@@ -65,19 +65,13 @@ public class Simulation {
 		isActive.setValue(false);
 	}
 
+	// TODO remove this
 	public void bindStatisticsLabels(Label timeLabel, Label countersLabel) {
 		timeLabel.textProperty().bind(timeLabelText);
 		countersLabel.textProperty().bind(countersLabelText);
 	}
 
-	public Habitat getHabitat() {
-		return habitat;
-	}
-
-	public boolean isActive() {
-		return isActive.getValue();
-	}
-
+	// TODO remove this also
 	public BooleanProperty getIsActiveProperty() {
 		return isActive;
 	}

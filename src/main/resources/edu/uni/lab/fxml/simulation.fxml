@@ -10,23 +10,22 @@
         <HBox fx:id="statistics" layoutX="968.0" layoutY="150.0" spacing="10.0" AnchorPane.bottomAnchor="620.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                 <Label fx:id="countersLabel" prefHeight="64.0" prefWidth="250.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Developers: 0&#10;Managers: 0">
                     <font>
-                        <Font name="Serif Bold" size="22" />
+                        <Font name="System Bold" size="22.0" />
                     </font>
                 </Label>
-
-                <Label fx:id="timeLabel" layoutX="968.0" layoutY="120.0" prefHeight="64.0" prefWidth="200.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Time: 0s."> <!--visible="false"-->
+                <Label fx:id="timeLabel" layoutX="968.0" layoutY="120.0" prefHeight="64.0" prefWidth="200.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Time: 0s." visible="false"> <!--visible="false"-->
                     <font>
-                        <Font name="Serif Bold" size="22" />
+                        <Font name="System Bold" size="22" />
                     </font>
                 </Label>
             <Button fx:id="startButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
                 <font>
-                    <Font name="Serif Bold" size="22.0" />
+                    <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
             <Button fx:id="stopButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
                 <font>
-                    <Font name="Serif Bold" size="22.0" />
+                    <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
         </HBox>
