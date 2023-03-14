@@ -3,6 +3,7 @@ package edu.uni.lab.controller;
 import edu.uni.lab.model.Simulation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
@@ -26,6 +27,14 @@ public class Controller {
 	private Button startButton;
 	@FXML
 	private Button stopButton;
+	@FXML
+	private MenuItem simulationMenuItemStart;
+	@FXML
+	private MenuItem simulationMenuItemStop;
+	@FXML
+	private MenuItem viewMenuItemToggleTime;
+	@FXML
+	private MenuItem viewMenuItemToggleModalWindow;
 
 	public Controller(Simulation simulation) {
 		this.simulation = simulation;
@@ -59,11 +68,20 @@ public class Controller {
 		stopButton.setOnAction(actionEvent -> stop());
 	}
 
+	private void setMenuItemsActions() {
+		simulationMenuItemStart.setOnAction(actionEvent -> start());
+		simulationMenuItemStop.setOnAction(actionEvent -> stop());
+		viewMenuItemToggleTime.setOnAction(actionEvent -> toggleTime());
+		//viewMenuItemToggleModalWindow.setOnAction(actionEvent -> stop()); // TODO
+	}
+
 	public void setup(WindowEvent windowEvent) {
 		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 		startButton.disableProperty().bind(simulation.getIsActiveProperty());
 		stopButton.disableProperty().bind(simulation.getIsActiveProperty().not());
+
 		setKeyActions();
 		setButtonActions();
+		setMenuItemsActions();
 	}
 }

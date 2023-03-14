@@ -19,39 +19,39 @@
                         <Font name="Serif Bold" size="22" />
                     </font>
                 </Label>
-         <Button fx:id="startButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
-            <font>
-               <Font name="Serif Bold" size="22.0" />
-            </font>
-         </Button>
-         <Button fx:id="stopButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
-            <font>
-               <Font name="Serif Bold" size="22.0" />
-            </font>
-         </Button>
+            <Button fx:id="startButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
+                <font>
+                    <Font name="Serif Bold" size="22.0" />
+                </font>
+            </Button>
+            <Button fx:id="stopButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
+                <font>
+                    <Font name="Serif Bold" size="22.0" />
+                </font>
+            </Button>
         </HBox>
-
     </AnchorPane>
-   <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" />
-   <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-     <menus>
-       <Menu mnemonicParsing="false" text="Simulation">
-         <items>
-           <MenuItem mnemonicParsing="false" text="Start" />
-               <MenuItem mnemonicParsing="false" text="Stop" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="View">
-         <items>
-           <MenuItem mnemonicParsing="false" text="Toggle time" />
-               <MenuItem mnemonicParsing="false" text="Toggle modal window" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Help">
-         <items>
-           <MenuItem mnemonicParsing="false" text="About" />
-         </items>
-       </Menu>
-     </menus>
-   </MenuBar>
+
+    <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0" />
+    <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+            <Menu text="Simulation">
+                <items>
+                    <MenuItem fx:id="simulationMenuItemStart" text="Start" />
+                    <MenuItem fx:id="simulationMenuItemStop" text="Stop" />
+                </items>
+            </Menu>
+            <Menu text="View">
+                <items>
+                    <MenuItem fx:id="viewMenuItemToggleTime" text="Toggle time" />
+                    <MenuItem fx:id="viewMenuItemToggleModalWindow" text="Toggle modal window" />
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem text="About" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
 </AnchorPane>
