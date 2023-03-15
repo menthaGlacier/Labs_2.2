@@ -111,10 +111,10 @@
         </Label>
 
         <ComboBox fx:id="developerProbabilityComboBox" promptText="10%" layoutX="300.0" layoutY="120.0" onAction="#onDeveloperProbabilitySelection"
-              AnchorPane.bottomAnchor="549.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="120.0"
+            AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="150.0"
         />
         <ComboBox fx:id="managerRatioComboBox" promptText="10%" layoutX="450.0" layoutY="120.0" onAction="#onManagerRatioSelection"
-              AnchorPane.bottomAnchor="549.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="120.0"
+            AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0"
         />
 
     </AnchorPane>
