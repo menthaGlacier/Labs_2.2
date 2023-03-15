@@ -20,12 +20,12 @@
                         <Font name="System Bold" size="22" />
                     </font>
                 </Label>
-            <Button text="Start" onAction="#start" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
+            <Button fx:id="startSimButton" text="Start" onAction="#start" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button text="Stop" onAction="#stop" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
+            <Button fx:id="stopSimButton" text="Stop" onAction="#stop" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
@@ -96,6 +96,22 @@
                 </VBox.margin>
             </Button>
         </VBox>
+
+        <Label layoutX="301.0" layoutY="126.0" prefWidth="125.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Developer probability">
+            <font>
+                <Font name="Serif Regular" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="445.0" layoutY="126.0" prefWidth="125.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Manager ratio">
+            <font>
+                <Font name="Serif Regular" size="14.0" />
+            </font>
+        </Label>
+
+        <ComboBox fx:id="developerProbabilityComboBox" promptText="10%" layoutX="300.0" layoutY="120.0" onAction="#onDeveloperProbabilitySelection"
+            AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="150.0"/>
+        <ComboBox fx:id="managerRatioComboBox" promptText="10%" layoutX="450.0" layoutY="120.0" onAction="#onManagerRatioSelection"
+            AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0"/>
     </AnchorPane>
 
     <MenuBar prefHeight="26.0" prefWidth="1280.0">
