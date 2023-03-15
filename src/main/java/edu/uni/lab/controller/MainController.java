@@ -157,8 +157,7 @@ public class MainController {
 	@FXML
 	private void onDeveloperPeriodButtonClick() {
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
-		if (value != null
-				&& value < Habitat.DEVELOPER_PERIOD_MAX && value > Habitat.DEVELOPER_PERIOD_MIN) {
+		if (value != null && value > 0 && value < Habitat.DEVELOPER_PERIOD_MAX) {
 			Developer.setPeriod(value);
 		}
 	}
@@ -166,8 +165,7 @@ public class MainController {
 	@FXML
 	private void onManagerPeriodButtonClick() {
 		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
-		if (value != null
-				&& value < Habitat.MANAGER_PERIOD_MAX && value > Habitat.MANAGER_PERIOD_MIN) {
+		if (value != null && value > 0 && value < Habitat.MANAGER_PERIOD_MAX) {
 			Manager.setPeriod(value);
 		}
 	}
