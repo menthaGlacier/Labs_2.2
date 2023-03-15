@@ -109,6 +109,37 @@ public class MainController {
 	}
 
 	@FXML
+	private void onDeveloperPeriodButtonClick() {
+		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
+			Developer.setPeriod(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+		}
+	}
+
+	@FXML
+	private void onManagerPeriodButtonClick() {
+		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+			Manager.setPeriod(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Manager.setPeriod(1000);
+		}
+	}
+
+	@FXML
+	private void onEmployeeAmountButtonClick() {
+		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
+		if (value != null && value > 0) {
+			Habitat.setRepositorySize(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Developer.setPeriod(1000);
+		}
+	}
+	@FXML
 	private void callAboutDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
@@ -154,27 +185,24 @@ public class MainController {
 		dialog.showAndWait();
 	}
 
-	@FXML
-	private void onDeveloperPeriodButtonClick() {
-		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
-		if (value != null && value > 0 && value < Habitat.DEVELOPER_PERIOD_MAX) {
-			Developer.setPeriod(value);
-		}
-	}
+	private void callErrorDialog(String errorMessage) {
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/errorDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new ErrorDialogController(dialog, errorMessage));
 
-	@FXML
-	private void onManagerPeriodButtonClick() {
-		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
-		if (value != null && value > 0 && value < Habitat.MANAGER_PERIOD_MAX) {
-			Manager.setPeriod(value);
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
 		}
-	}
 
-	@FXML private void onEmployeeAmountButtonClick() {
-		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
-		if (value != null && value > 0) {
-			Habitat.setRepositorySize(value);
-		}
+		dialog.setTitle("Error!");
+		dialog.setResizable(false);
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(root.getScene().getWindow());
+		dialog.showAndWait();
 	}
 
 	private void setKeyActions() {

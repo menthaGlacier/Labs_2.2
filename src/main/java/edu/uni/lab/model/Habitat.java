@@ -25,16 +25,8 @@ public class Habitat {
 
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-
-		if (Developer.getPeriod() < 0
-				|| Developer.getPeriod() > DEVELOPER_PERIOD_MAX) {
-			Developer.setPeriod(1000);
-		}
-
-		if (Manager.getPeriod() < 0
-				|| Manager.getPeriod() > MANAGER_PERIOD_MAX) {
-			Manager.setPeriod(1000);
-		}
+		Developer.setPeriod(1000);
+		Manager.setPeriod(1000);
 
 		Developer.setProbability(random
 				.nextDouble(DEVELOPER_PROBABILITY_MAX - DEVELOPER_PROBABILITY_MIN)
