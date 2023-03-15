@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root"
-            fx:controller="edu.uni.lab.controller.AboutMenuController"
+<AnchorPane fx:controller="edu.uni.lab.controller.AboutMenuController"
             prefHeight="400.0" prefWidth="600.0"
             style="-fx-background-color: #990040;"
             xmlns="http://javafx.com/javafx/17.0.2-ea"
@@ -32,7 +31,7 @@
          <Image url="@../images/rickroll_about_it.gif"/>
       </ImageView>
    </VBox>
-   <Button fx:id="exitAboutButton" text="OK" onAction="#handleAction"
+   <Button fx:id="exitAboutButton" text="OK" onAction="#handleClose"
            AnchorPane.bottomAnchor="10.0"
            AnchorPane.leftAnchor="538.0" AnchorPane.rightAnchor="10.0"
            AnchorPane.topAnchor="365.0"/>

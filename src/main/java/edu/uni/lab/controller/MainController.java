@@ -129,6 +129,7 @@ public class MainController {
 		}
 
 		dialog.setTitle("About");
+		dialog.setResizable(false);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
