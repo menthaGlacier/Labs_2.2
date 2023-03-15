@@ -4,65 +4,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.StatisticsDialogController">
-   <VBox layoutX="250.0" layoutY="36.0" prefHeight="380.0" prefWidth="500.0"
-         spacing="10.0" AnchorPane.bottomAnchor="10.0"
-         AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-         AnchorPane.topAnchor="50.0">
-      <VBox prefHeight="128.0" prefWidth="360.0"
-            style="-fx-background-color: #C30052; -fx-background-radius: 10;">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: /edu/uni/lab/images/manager.png; -fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.StatisticsDialogController">
+   <VBox layoutX="250.0" layoutY="36.0" prefHeight="380.0" prefWidth="500.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+      <VBox prefHeight="128.0" prefWidth="360.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;">
          <Label style="-fx-padding: 0 0 0 10;" text="Developer">
             <font>
-               <Font name="System Bold" size="22.0"/>
+               <Font name="System Bold" size="22.0" />
             </font>
          </Label>
-         <Label fx:id="developerInfo" alignment="TOP_LEFT" prefWidth="260.0"
-                style="-fx-padding: 0 0 0 10;"
-                text="Total amount: &#10;Period: &#10;Probability: ">
+         <Label fx:id="developerInfo" alignment="TOP_LEFT" prefWidth="260.0" style="-fx-padding: 0 0 0 10;" text="Total amount: &#10;Period: &#10;Probability: ">
             <font>
-               <Font size="22.0"/>
+               <Font size="22.0" />
             </font>
          </Label>
       </VBox>
-      <VBox layoutX="10.0" layoutY="10.0" prefHeight="128.0"
-            prefWidth="250.0"
-            style="-fx-background-color: #C30052; -fx-background-radius: 10;">
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="128.0" prefWidth="250.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;">
          <Label style="-fx-padding: 0 0 0 10;" text="Manager">
             <font>
-               <Font name="System Bold" size="22.0"/>
+               <Font name="System Bold" size="22.0" />
             </font>
          </Label>
-         <Label fx:id="managerInfo" alignment="TOP_LEFT" prefWidth="260.0"
-                style="-fx-padding: 0 0 0 10;"
-                text="Total amount: &#10;Period: &#10;Ratio: ">
+         <Label fx:id="managerInfo" alignment="TOP_LEFT" prefWidth="260.0" style="-fx-padding: 0 0 0 10;" text="Total amount: &#10;Period: &#10;Ratio: ">
             <font>
-               <Font size="22.0"/>
+               <Font size="22.0" />
             </font>
          </Label>
       </VBox>
-      <VBox layoutX="10.0" layoutY="148.0" maxWidth="460.0" prefHeight="40.0"
-            prefWidth="40.0"
-            style="-fx-background-color: #C30052; -fx-background-radius: 10;">
+      <VBox layoutX="10.0" layoutY="148.0" maxWidth="460.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;">
          <Label style="-fx-padding: 0 0 0 10;" text="Time">
             <font>
-               <Font name="System Bold" size="22.0"/>
+               <Font name="System Bold" size="22.0" />
             </font>
          </Label>
-         <Label fx:id="timeInfo" alignment="TOP_LEFT" prefWidth="260.0"
-                style="-fx-padding: 0 0 0 10;" text="Total time passed:">
+         <Label fx:id="timeInfo" alignment="TOP_LEFT" prefWidth="260.0" style="-fx-padding: 0 0 0 10;" text="Total time passed:">
             <font>
-               <Font size="22.0"/>
+               <Font size="22.0" />
             </font>
          </Label>
       </VBox>
    </VBox>
-   <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0"
-         AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="10.0"
-         AnchorPane.topAnchor="360.0">
-      <Button fx:id="returnToSimulationButton" onAction="#setButtonActions"
-              text="Cancel"/>
-      <Button fx:id="exitSimulationButton" onAction="#setButtonActions"
-              prefWidth="40.0" text="OK"/>
+   <HBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="360.0">
+      <Button fx:id="returnToSimulationButton" onAction="#setButtonActions" text="Cancel" />
+      <Button fx:id="exitSimulationButton" onAction="#setButtonActions" prefWidth="40.0" text="OK" />
    </HBox>
    <Label alignment="TOP_CENTER" style="-fx-background-color: #C30052; -fx-background-radius: 10;" text="Statistics of simulation" AnchorPane.bottomAnchor="358.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <font>

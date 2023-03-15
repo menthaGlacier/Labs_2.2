@@ -80,6 +80,7 @@ public class Habitat {
 	}
 
 	private void addEmployee(Employee employee) {
+		// TODO Forbid employee increment if add was fail
 		employees.add(employee, developersCounter + managersCounter);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
