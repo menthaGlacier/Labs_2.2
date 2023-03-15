@@ -6,6 +6,8 @@ import edu.uni.lab.model.Manager;
 import edu.uni.lab.utility.NumericField;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +24,8 @@ import java.io.IOException;
 public class MainController {
 	private Habitat habitat;
 	private AnimationTimer timer;
+	private long startTime;
+	private long lastUpdateTime = 0;
 	private boolean isActive = false;
 
 	@FXML
@@ -58,18 +62,19 @@ public class MainController {
 			return;
 		}
 
+		startTime = System.nanoTime();
+		lastUpdateTime = startTime;
 		timer = new AnimationTimer() {
 			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
-			private final long startTime = System.nanoTime();
-			private long lastTime = startTime;
 
 			@Override
 			public void handle(long timeNow) {
-				if (timeNow - lastTime >= nanoSecondsPerFrame) {
+				if (timeNow - lastUpdateTime >= nanoSecondsPerFrame) {
 					habitat.update((timeNow - startTime) / 1_000_000);
-					lastTime = timeNow;
+					lastUpdateTime = timeNow;
+
 					timeLabel.setText("Time: "
-							+ (lastTime - startTime) / 1_000_000_000
+							+ (lastUpdateTime - startTime) / 1_000_000_000
 							+ "s."
 					);
 
@@ -127,10 +132,12 @@ public class MainController {
 	@FXML
 	private void callStatisticsDialog() {
 		final Stage dialog = new Stage();
+		final BooleanProperty stopSimulation = new SimpleBooleanProperty(false);
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/statisticsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new StatisticsDialogController(dialog, 0,
+				new StatisticsDialogController(dialog, stopSimulation,
+						(lastUpdateTime - startTime) / 1_000_000_000,
 						habitat.getDevelopersCounter(),
 						habitat.getManagersCounter()));
 

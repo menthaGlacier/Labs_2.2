@@ -22,14 +22,14 @@ public class StatisticsDialogController {
 	@FXML
 	private Label timeInfo;
 
-	public StatisticsDialogController(Stage stage, long timePassed,
-									int developerCounter, int managerCounter) {
+	public StatisticsDialogController(Stage stage,
+						BooleanProperty stopSimulationProperty, long timePassed,
+						int developerCounter, int managerCounter) {
 		this.stage = stage;
+		this.stopSimulationProperty = stopSimulationProperty;
 		this.developerCounter = developerCounter;
 		this.managerCounter = managerCounter;
 		this.timePassed = timePassed;
-
-		stopSimulationProperty = new SimpleBooleanProperty(false);
 	}
 
 	@FXML
@@ -46,12 +46,12 @@ public class StatisticsDialogController {
 
 	@FXML
 	private void initialize() {
-		developerInfo.setText("Total amount:" + developerCounter + "\n"
+		developerInfo.setText("Total amount: " + developerCounter + "\n"
 				+ "Period: " + Developer.getPeriod() + "ms." + "\n"
 				+ "Probability: " + Developer.getProbability()
 		);
 
-		managerInfo.setText("Total amount:" + managerCounter + "\n"
+		managerInfo.setText("Total amount: " + managerCounter + "\n"
 				+ "Period: " + Manager.getPeriod() + "ms." + "\n"
 				+ "Ratio: " + Manager.getRatio()
 		);
