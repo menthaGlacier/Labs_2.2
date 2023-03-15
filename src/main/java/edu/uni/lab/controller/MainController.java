@@ -3,10 +3,9 @@ package edu.uni.lab.controller;
 import edu.uni.lab.model.Developer;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.Manager;
-import edu.uni.lab.model.Simulation;
 import edu.uni.lab.utility.NumericField;
+import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -23,7 +22,9 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class MainController {
-	private final Simulation simulation;
+	private Habitat habitat;
+	private AnimationTimer timer;
+	private boolean isActive = false;
 
 	@FXML
 	private AnchorPane root;
@@ -63,16 +64,50 @@ public class MainController {
 	@FXML
 	private Label employeeAmountLabel;
 
-	public MainController(Simulation simulation) {
-		this.simulation = simulation;
+	public MainController() {
 	}
 
-	private void start() {
-		simulation.start(habitatArea);
+	public void start() {
+		this.habitat = new Habitat(habitatArea);
+		if (isActive) {
+			return;
+		}
+
+		timer = new AnimationTimer() {
+			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+			private final long startTime = System.nanoTime();
+			private long lastTime = startTime;
+
+			@Override
+			public void handle(long timeNow) {
+				if (timeNow - lastTime >= nanoSecondsPerFrame) {
+					habitat.update((timeNow - startTime) / 1_000_000);
+					lastTime = timeNow;
+					timeLabel.setText("Time: "
+							+ (lastTime - startTime) / 1_000_000_000
+							+ "s."
+					);
+
+					countersLabel.setText("Developers: "
+							+ habitat.getDevelopersCounter() + "\n"
+							+ "Managers: "
+							+ habitat.getManagersCounter()
+					);
+				}
+			}
+		};
+
+		timer.start();
+		isActive = true;
 	}
 
 	private void stop() {
-		simulation.stop();
+		if (!isActive) {
+			return;
+		}
+
+		timer.stop();
+		isActive = false;
 		habitatArea.getChildren().clear();
 	}
 
@@ -167,12 +202,15 @@ public class MainController {
 	}
 
 	public void setup(WindowEvent windowEvent) {
-		simulation.bindStatisticsLabels(timeLabel, countersLabel);
-		startButton.disableProperty().bind(simulation.getIsActiveProperty());
-		stopButton.disableProperty().bind(simulation.getIsActiveProperty().not());
-		developerPeriodLabel.textProperty().bind(Bindings.concat("Current developers' period: ", Developer.getPeriodProperty()));
-		managerPeriodLabel.textProperty().bind(Bindings.concat("Current managers' period: ", Manager.getPeriodProperty()));
-		employeeAmountLabel.textProperty().bind(Bindings.concat("Current employee amount: ", Habitat.getRepositorySizeProperty()));
+		developerPeriodLabel.textProperty()
+				.bind(Bindings.concat("Current developers' period: ",
+						Developer.getPeriodProperty()));
+		managerPeriodLabel.textProperty()
+				.bind(Bindings.concat("Current managers' period: ",
+						Manager.getPeriodProperty()));
+		employeeAmountLabel.textProperty()
+				.bind(Bindings.concat("Current employee amount: ",
+						Habitat.getRepositorySizeProperty()));
 
 		setKeyActions();
 		setButtonActions();
