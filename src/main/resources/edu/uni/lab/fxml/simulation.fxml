@@ -7,9 +7,9 @@
 <?import javafx.geometry.Insets?>
 
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.MainController">
-    <AnchorPane fx:id="visualizationArea" prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="26.0">
+    <AnchorPane prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="26.0">
         <Pane fx:id="habitatArea" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
-        <HBox fx:id="statistics" layoutX="968.0" layoutY="150.0" spacing="10.0" AnchorPane.bottomAnchor="620.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+        <HBox layoutX="968.0" layoutY="150.0" spacing="10.0" AnchorPane.bottomAnchor="620.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                 <Label fx:id="countersLabel" prefHeight="64.0" prefWidth="250.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" text="Developers: 0&#10;Managers: 0">
                     <font>
                         <Font name="System Bold" size="22.0" />
@@ -20,12 +20,12 @@
                         <Font name="System Bold" size="22" />
                     </font>
                 </Label>
-            <Button fx:id="startButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Start">
+            <Button text="Start" onAction="#start" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button fx:id="stopButton" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;" text="Stop">
+            <Button text="Stop" onAction="#stop" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
@@ -33,8 +33,8 @@
         </HBox>
     </AnchorPane>
 
-    <AnchorPane fx:id="controlArea" prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
-        <VBox fx:id="developerPeriodInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="10.0">
+    <AnchorPane prefHeight="720.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
+        <VBox fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="10.0">
             <NumericField fx:id="developerPeriodField" promptText="Enter period (in ms)">
                 <VBox.margin>
                     <Insets top="5.0" />
@@ -48,14 +48,14 @@
                     <Font name="Serif Bold" size="16.0" />
                 </font>
             </Label>
-            <Button fx:id="developerPeriodButton" text="Apply" onAction="#onDeveloperPeriodButtonClick">
+            <Button text="Apply" onAction="#onDeveloperPeriodButtonClick">
                 <VBox.margin>
                     <Insets bottom="5.0" />
                 </VBox.margin>
             </Button>
         </VBox>
 
-        <VBox fx:id="managerPeriodInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.bottomAnchor="590.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <NumericField fx:id="managerPeriodField" promptText="Enter period (in ms)">
                 <VBox.margin>
                     <Insets top="5.0" />
@@ -69,14 +69,14 @@
                     <Font name="Serif Bold" size="16.0" />
                 </font>
             </Label>
-            <Button fx:id="managerPeriodButton" onAction="#onManagerPeriodButtonClick" text="Apply">
+            <Button text="Apply" onAction="#onManagerPeriodButtonClick">
                 <VBox.margin>
                     <Insets bottom="5.0" />
                 </VBox.margin>
             </Button>
         </VBox>
 
-        <VBox fx:id="employeeAmountInput" fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="300.0" AnchorPane.bottomAnchor="480.0">
+        <VBox fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="300.0" AnchorPane.bottomAnchor="480.0">
             <NumericField fx:id="employeeAmountField" promptText="Enter amount">
                 <VBox.margin>
                     <Insets top="5.0" />
@@ -90,27 +90,25 @@
                     <Font name="Serif Bold" size="16.0" />
                 </font>
             </Label>
-            <Button fx:id="employeeAmountButton" onAction="#onEmployeeAmountButtonClick" text="Apply">
+            <Button text="Apply" onAction="#onEmployeeAmountButtonClick" >
                 <VBox.margin>
                     <Insets bottom="5.0" />
                 </VBox.margin>
             </Button>
         </VBox>
     </AnchorPane>
-    <MenuBar prefHeight="26.0" prefWidth="1280.0"
-             style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0"
-             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+    <MenuBar prefHeight="26.0" prefWidth="1280.0">
         <Menu text="Simulation">
-            <MenuItem fx:id="startMenu" text="Start"/>
-            <MenuItem fx:id="stopMenu" text="Stop"/>
+            <MenuItem text="Start" onAction="#start"/>
+            <MenuItem text="Stop" onAction="#stop"/>
         </Menu>
         <Menu text="View">
-            <MenuItem fx:id="toggleTimeMenu" text="Toggle time"/>
-            <MenuItem fx:id="toggleModalWindowMenu"
-                      text="Toggle modal window"/>
+            <MenuItem text="Toggle time" onAction="#toggleTime"/>
+            <MenuItem text="Toggle modal window"/>
         </Menu>
         <Menu text="Help">
-            <MenuItem fx:id="aboutMenu" text="About"/>
+            <MenuItem text="About" onAction="#callAboutDialog"/>
         </Menu>
     </MenuBar>
 </AnchorPane>

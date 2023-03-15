@@ -34,20 +34,6 @@ public class MainController {
 	private Label timeLabel;
 	@FXML
 	private Label countersLabel;
-	@FXML
-	private Button startButton;
-	@FXML
-	private Button stopButton;
-	@FXML
-	private MenuItem startMenu;
-	@FXML
-	private MenuItem stopMenu;
-	@FXML
-	private MenuItem toggleTimeMenu;
-	@FXML
-	private MenuItem toggleModalWindowMenu;
-	@FXML
-	private MenuItem aboutMenu;
 
 	@FXML
 	private NumericField developerPeriodField;
@@ -67,6 +53,7 @@ public class MainController {
 	public MainController() {
 	}
 
+	@FXML
 	public void start() {
 		this.habitat = new Habitat(habitatArea);
 		if (isActive) {
@@ -101,6 +88,7 @@ public class MainController {
 		isActive = true;
 	}
 
+	@FXML
 	private void stop() {
 		if (!isActive) {
 			return;
@@ -111,10 +99,12 @@ public class MainController {
 		habitatArea.getChildren().clear();
 	}
 
+	@FXML
 	private void toggleTime() {
 		timeLabel.setVisible(!(timeLabel.isVisible()));
 	}
 
+	@FXML
 	private void callAboutDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
@@ -135,6 +125,7 @@ public class MainController {
 		dialog.showAndWait();
 	}
 
+	@FXML
 	private void callStatisticsDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
@@ -152,21 +143,6 @@ public class MainController {
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
-	}
-
-	private void setKeyActions() {
-		root.getScene().setOnKeyReleased((KeyEvent event) -> {
-			switch (event.getCode()) {
-			case B -> start();
-			case E -> stop();
-			case T -> toggleTime();
-			}
-		});
-	}
-
-	private void setButtonActions() {
-		startButton.setOnAction(actionEvent -> start());
-		stopButton.setOnAction(actionEvent -> stop());
 	}
 
 	@FXML
@@ -194,12 +170,14 @@ public class MainController {
 		}
 	}
 
-	private void setMenuItemsActions() {
-		startMenu.setOnAction(actionEvent -> start());
-		stopMenu.setOnAction(actionEvent -> stop());
-		toggleTimeMenu.setOnAction(actionEvent -> toggleTime());
-		//toggleModalWindowMenu.setOnAction(actionEvent -> callAboutWindow());
-		aboutMenu.setOnAction(actionEvent -> callAboutDialog());
+	private void setKeyActions() {
+		root.getScene().setOnKeyReleased((KeyEvent event) -> {
+			switch (event.getCode()) {
+			case B -> start();
+			case E -> stop();
+			case T -> toggleTime();
+			}
+		});
 	}
 
 	public void setup(WindowEvent windowEvent) {
@@ -214,8 +192,5 @@ public class MainController {
 						Habitat.getRepositorySizeProperty()));
 
 		setKeyActions();
-		setButtonActions();
-		setMenuItemsActions();
-
 	}
 }
