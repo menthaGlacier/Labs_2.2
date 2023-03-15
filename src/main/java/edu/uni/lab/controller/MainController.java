@@ -8,11 +8,9 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -97,6 +95,7 @@ public class MainController {
 		timer.stop();
 		isActive = false;
 		habitatArea.getChildren().clear();
+		callStatisticsDialog();
 	}
 
 	@FXML
@@ -131,7 +130,9 @@ public class MainController {
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/statisticsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new AboutMenuController(dialog));
+				new StatisticsDialogController(dialog, 0,
+						habitat.getDevelopersCounter(),
+						habitat.getManagersCounter()));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -140,6 +141,7 @@ public class MainController {
 		}
 
 		dialog.setTitle("Statistics");
+		dialog.setResizable(false);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();

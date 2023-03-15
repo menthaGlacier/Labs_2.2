@@ -11,7 +11,7 @@ public class AboutMenuController {
 	}
 
 	@FXML
-	private void handleClose() {
+	private void close() {
 		stage.close();
 	}
 }
