@@ -13,7 +13,7 @@ public class Manager extends Employee {
 
 	private final static Texture texture;
 	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
-	private static double ratio;
+	private static double ratio = 0.1;
 
 	static {
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class

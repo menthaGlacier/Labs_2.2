@@ -6,9 +6,9 @@ import edu.uni.lab.model.Manager;
 import edu.uni.lab.model.Simulation;
 import edu.uni.lab.utility.NumericField;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -21,6 +21,9 @@ import javafx.stage.WindowEvent;
 import javafx.fxml.FXML;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Arrays;
 
 public class MainController {
 	private final Simulation simulation;
@@ -52,11 +55,15 @@ public class MainController {
 	private NumericField developerPeriodField;
 	@FXML
 	private Label developerPeriodLabel;
+	@FXML
+	private ComboBox<String> developerProbabilityComboBox;
 
 	@FXML
 	private NumericField managerPeriodField;
 	@FXML
 	private Label managerPeriodLabel;
+	@FXML
+	private ComboBox<String> managerRatioComboBox;
 
 	@FXML
 	private NumericField employeeAmountField;
@@ -151,7 +158,8 @@ public class MainController {
 		}
 	}
 
-	@FXML private void onEmployeeAmountButtonClick() {
+	@FXML
+	private void onEmployeeAmountButtonClick() {
 		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
 		if (value != null && value > 0) {
 			Habitat.setRepositorySize(value);
@@ -166,13 +174,40 @@ public class MainController {
 		aboutMenu.setOnAction(actionEvent -> callAboutDialog());
 	}
 
+	@FXML
+	private void onDeveloperProbabilitySelection() {
+		DecimalFormat parser = new DecimalFormat("0'%'");
+		try {
+			Developer.setProbability(parser.parse(developerProbabilityComboBox.getSelectionModel().getSelectedItem()).doubleValue());
+		}
+		catch (ParseException e) {
+			return;
+		}
+	}
+
+	@FXML
+	private void onManagerRatioSelection() {
+		DecimalFormat parser = new DecimalFormat("0'%'");
+		try {
+			Manager.setRatio(parser.parse(managerRatioComboBox.getSelectionModel().getSelectedItem()).doubleValue());
+		}
+		catch (ParseException e) {
+			return;
+		}
+	}
+
 	public void setup(WindowEvent windowEvent) {
 		simulation.bindStatisticsLabels(timeLabel, countersLabel);
 		startButton.disableProperty().bind(simulation.getIsActiveProperty());
 		stopButton.disableProperty().bind(simulation.getIsActiveProperty().not());
+
 		developerPeriodLabel.textProperty().bind(Bindings.concat("Current developers' period: ", Developer.getPeriodProperty()));
 		managerPeriodLabel.textProperty().bind(Bindings.concat("Current managers' period: ", Manager.getPeriodProperty()));
 		employeeAmountLabel.textProperty().bind(Bindings.concat("Current employee amount: ", Habitat.getRepositorySizeProperty()));
+
+		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
+		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
+		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
 
 		setKeyActions();
 		setButtonActions();

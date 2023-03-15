@@ -12,7 +12,7 @@ public class Developer extends Employee {
 	private final static int DEVELOPER_HEIGHT = 80;
 	private final static Texture texture;
 	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
-	private static double probability;
+	private static double probability = 0.1;
 
 	static {
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class

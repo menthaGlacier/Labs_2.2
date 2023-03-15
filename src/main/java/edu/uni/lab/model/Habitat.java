@@ -36,12 +36,12 @@ public class Habitat {
 			Manager.setPeriod(MANAGER_PERIOD_MIN);
 		}
 
-		Developer.setProbability(random
+/*		Developer.setProbability(random
 				.nextDouble(DEVELOPER_PROBABILITY_MAX - DEVELOPER_PROBABILITY_MIN)
 				+ DEVELOPER_PROBABILITY_MIN);
 		Manager.setRatio(random
 				.nextDouble(MANAGER_RATIO_MAX - MANAGER_RATIO_MIN)
-				+ MANAGER_RATIO_MIN);
+				+ MANAGER_RATIO_MIN);*/
 
 		System.out.println("Debug:");
 		System.out.println("Developer period: " + Developer.getPeriod());

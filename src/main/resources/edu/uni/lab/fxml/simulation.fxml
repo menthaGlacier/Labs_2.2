@@ -6,6 +6,8 @@
 <?import edu.uni.lab.utility.NumericField?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.MainController">
     <AnchorPane fx:id="visualizationArea" prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="26.0">
         <Pane fx:id="habitatArea" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
@@ -96,6 +98,25 @@
                 </VBox.margin>
             </Button>
         </VBox>
+
+        <Label layoutX="301.0" layoutY="126.0" prefWidth="125.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Developer probability">
+            <font>
+                <Font name="Serif Regular" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="445.0" layoutY="126.0" prefWidth="125.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Manager ratio">
+            <font>
+                <Font name="Serif Regular" size="14.0" />
+            </font>
+        </Label>
+
+        <ComboBox fx:id="developerProbabilityComboBox" promptText="10%" layoutX="300.0" layoutY="120.0" onAction="#onDeveloperProbabilitySelection"
+              AnchorPane.bottomAnchor="549.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="120.0"
+        />
+        <ComboBox fx:id="managerRatioComboBox" promptText="10%" layoutX="450.0" layoutY="120.0" onAction="#onManagerRatioSelection"
+              AnchorPane.bottomAnchor="549.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="120.0"
+        />
+
     </AnchorPane>
     <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
