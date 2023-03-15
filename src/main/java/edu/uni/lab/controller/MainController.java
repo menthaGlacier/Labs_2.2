@@ -3,17 +3,17 @@ package edu.uni.lab.controller;
 import edu.uni.lab.model.Developer;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.Manager;
-import edu.uni.lab.model.Simulation;
 import edu.uni.lab.utility.NumericField;
+import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,7 +26,11 @@ import java.text.ParseException;
 import java.util.Arrays;
 
 public class MainController {
-	private final Simulation simulation;
+	private Habitat habitat;
+	private AnimationTimer timer;
+	private long startTime;
+	private long lastUpdateTime = 0;
+	private boolean isActive = false;
 
 	@FXML
 	private AnchorPane root;
@@ -36,20 +40,6 @@ public class MainController {
 	private Label timeLabel;
 	@FXML
 	private Label countersLabel;
-	@FXML
-	private Button startButton;
-	@FXML
-	private Button stopButton;
-	@FXML
-	private MenuItem startMenu;
-	@FXML
-	private MenuItem stopMenu;
-	@FXML
-	private MenuItem toggleTimeMenu;
-	@FXML
-	private MenuItem toggleModalWindowMenu;
-	@FXML
-	private MenuItem aboutMenu;
 
 	@FXML
 	private NumericField developerPeriodField;
@@ -70,23 +60,117 @@ public class MainController {
 	@FXML
 	private Label employeeAmountLabel;
 
-	public MainController(Simulation simulation) {
-		this.simulation = simulation;
+	public MainController() {
 	}
 
-	private void start() {
-		simulation.start(habitatArea);
+	@FXML
+	public void start() {
+		this.habitat = new Habitat(habitatArea);
+		if (isActive) {
+			return;
+		}
+
+		startTime = System.nanoTime();
+		lastUpdateTime = startTime;
+		timer = new AnimationTimer() {
+			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+
+			@Override
+			public void handle(long timeNow) {
+				if (timeNow - lastUpdateTime >= nanoSecondsPerFrame) {
+					habitat.update((timeNow - startTime) / 1_000_000);
+					lastUpdateTime = timeNow;
+
+					timeLabel.setText("Time: "
+							+ (lastUpdateTime - startTime) / 1_000_000_000
+							+ "s."
+					);
+
+					countersLabel.setText("Developers: "
+							+ habitat.getDevelopersCounter() + "\n"
+							+ "Managers: "
+							+ habitat.getManagersCounter()
+					);
+				}
+			}
+		};
+
+		timer.start();
+		isActive = true;
 	}
 
+	@FXML
 	private void stop() {
-		simulation.stop();
+		if (!isActive) {
+			return;
+		}
+
+		timer.stop();
+		isActive = false;
 		habitatArea.getChildren().clear();
+		callStatisticsDialog();
 	}
 
+	@FXML
 	private void toggleTime() {
 		timeLabel.setVisible(!(timeLabel.isVisible()));
 	}
 
+	@FXML
+	private void onDeveloperPeriodButtonClick() {
+		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
+			Developer.setPeriod(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+		}
+	}
+
+	@FXML
+	private void onManagerPeriodButtonClick() {
+		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+			Manager.setPeriod(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Manager.setPeriod(1000);
+		}
+	}
+
+	@FXML
+	private void onEmployeeAmountButtonClick() {
+		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
+		if (value != null && value > 0) {
+			Habitat.setRepositorySize(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Developer.setPeriod(1000);
+		}
+	}
+
+	@FXML
+	private void onDeveloperProbabilitySelection() {
+		DecimalFormat parser = new DecimalFormat("0'%'");
+		try {
+			Developer.setProbability(parser.parse(developerProbabilityComboBox
+					.getSelectionModel().getSelectedItem()).doubleValue());
+		} catch (ParseException e) {
+			return;
+		}
+	}
+
+	@FXML
+	private void onManagerRatioSelection() {
+		DecimalFormat parser = new DecimalFormat("0'%'");
+		try {
+			Manager.setRatio(parser.parse(managerRatioComboBox
+					.getSelectionModel().getSelectedItem()).doubleValue());
+		} catch (ParseException e) {
+			return;
+		}
+	}
+
+	@FXML
 	private void callAboutDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
@@ -101,17 +185,23 @@ public class MainController {
 		}
 
 		dialog.setTitle("About");
+		dialog.setResizable(false);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
 	}
 
+	@FXML
 	private void callStatisticsDialog() {
 		final Stage dialog = new Stage();
+		final BooleanProperty stopSimulation = new SimpleBooleanProperty(false);
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/statisticsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new AboutMenuController(dialog));
+				new StatisticsDialogController(dialog, stopSimulation,
+						(lastUpdateTime - startTime) / 1_000_000_000,
+						habitat.getDevelopersCounter(),
+						habitat.getManagersCounter()));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -120,6 +210,27 @@ public class MainController {
 		}
 
 		dialog.setTitle("Statistics");
+		dialog.setResizable(false);
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(root.getScene().getWindow());
+		dialog.showAndWait();
+	}
+
+	private void callErrorDialog(String errorMessage) {
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/errorDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new ErrorDialogController(dialog, errorMessage));
+
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
+		}
+
+		dialog.setTitle("Error!");
+		dialog.setResizable(false);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
@@ -135,83 +246,21 @@ public class MainController {
 		});
 	}
 
-	private void setButtonActions() {
-		startButton.setOnAction(actionEvent -> start());
-		stopButton.setOnAction(actionEvent -> stop());
-	}
-
-	@FXML
-	private void onDeveloperPeriodButtonClick() {
-		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
-		if (value != null
-				&& value < Habitat.DEVELOPER_PERIOD_MAX && value > Habitat.DEVELOPER_PERIOD_MIN) {
-			Developer.setPeriod(value);
-		}
-	}
-
-	@FXML
-	private void onManagerPeriodButtonClick() {
-		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
-		if (value != null
-				&& value < Habitat.MANAGER_PERIOD_MAX && value > Habitat.MANAGER_PERIOD_MIN) {
-			Manager.setPeriod(value);
-		}
-	}
-
-	@FXML
-	private void onEmployeeAmountButtonClick() {
-		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
-		if (value != null && value > 0) {
-			Habitat.setRepositorySize(value);
-		}
-	}
-
-	private void setMenuItemsActions() {
-		startMenu.setOnAction(actionEvent -> start());
-		stopMenu.setOnAction(actionEvent -> stop());
-		toggleTimeMenu.setOnAction(actionEvent -> toggleTime());
-		//toggleModalWindowMenu.setOnAction(actionEvent -> callAboutWindow());
-		aboutMenu.setOnAction(actionEvent -> callAboutDialog());
-	}
-
-	@FXML
-	private void onDeveloperProbabilitySelection() {
-		DecimalFormat parser = new DecimalFormat("0'%'");
-		try {
-			Developer.setProbability(parser.parse(developerProbabilityComboBox.getSelectionModel().getSelectedItem()).doubleValue());
-		}
-		catch (ParseException e) {
-			return;
-		}
-	}
-
-	@FXML
-	private void onManagerRatioSelection() {
-		DecimalFormat parser = new DecimalFormat("0'%'");
-		try {
-			Manager.setRatio(parser.parse(managerRatioComboBox.getSelectionModel().getSelectedItem()).doubleValue());
-		}
-		catch (ParseException e) {
-			return;
-		}
-	}
-
 	public void setup(WindowEvent windowEvent) {
-		simulation.bindStatisticsLabels(timeLabel, countersLabel);
-		startButton.disableProperty().bind(simulation.getIsActiveProperty());
-		stopButton.disableProperty().bind(simulation.getIsActiveProperty().not());
-
-		developerPeriodLabel.textProperty().bind(Bindings.concat("Current developers' period: ", Developer.getPeriodProperty()));
-		managerPeriodLabel.textProperty().bind(Bindings.concat("Current managers' period: ", Manager.getPeriodProperty()));
-		employeeAmountLabel.textProperty().bind(Bindings.concat("Current employee amount: ", Habitat.getRepositorySizeProperty()));
+		developerPeriodLabel.textProperty()
+				.bind(Bindings.concat("Current developers' period: ",
+						Developer.getPeriodProperty()));
+		managerPeriodLabel.textProperty()
+				.bind(Bindings.concat("Current managers' period: ",
+						Manager.getPeriodProperty()));
+		employeeAmountLabel.textProperty()
+				.bind(Bindings.concat("Current employee amount: ",
+						Habitat.getRepositorySizeProperty()));
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
 
 		setKeyActions();
-		setButtonActions();
-		setMenuItemsActions();
-
 	}
 }
