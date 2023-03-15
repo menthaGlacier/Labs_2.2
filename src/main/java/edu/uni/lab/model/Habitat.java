@@ -7,10 +7,8 @@ import javafx.scene.layout.Pane;
 
 public class Habitat {
 	private static SimpleIntegerProperty repositorySizeProperty = new SimpleIntegerProperty(100);
-	public static final int DEVELOPER_PERIOD_MIN = 1000;
-	public static final int DEVELOPER_PERIOD_MAX = 4000;
-	public static final int MANAGER_PERIOD_MIN = 500;
-	public static final int MANAGER_PERIOD_MAX = 3000;
+	public static final int DEVELOPER_PERIOD_MAX = 60000;
+	public static final int MANAGER_PERIOD_MAX = 60000;
 	public static final double DEVELOPER_PROBABILITY_MIN = 0.5;
 	public static final double DEVELOPER_PROBABILITY_MAX = 0.7;
 	private static final double MANAGER_RATIO_MIN = 0.4;
@@ -28,12 +26,14 @@ public class Habitat {
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
 
-		if (Developer.getPeriod() < DEVELOPER_PERIOD_MIN || Developer.getPeriod() > DEVELOPER_PERIOD_MAX) {
-			Developer.setPeriod(DEVELOPER_PERIOD_MIN);
+		if (Developer.getPeriod() < 0
+				|| Developer.getPeriod() > DEVELOPER_PERIOD_MAX) {
+			Developer.setPeriod(1000);
 		}
 
-		if (Manager.getPeriod() < MANAGER_PERIOD_MIN || Manager.getPeriod() > MANAGER_PERIOD_MAX) {
-			Manager.setPeriod(MANAGER_PERIOD_MIN);
+		if (Manager.getPeriod() < 0
+				|| Manager.getPeriod() > MANAGER_PERIOD_MAX) {
+			Manager.setPeriod(1000);
 		}
 
 		Developer.setProbability(random
