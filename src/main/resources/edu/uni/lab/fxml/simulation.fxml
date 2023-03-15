@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import edu.uni.lab.utility.NumericField?>
-
 <?import javafx.geometry.Insets?>
+
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.MainController">
     <AnchorPane fx:id="visualizationArea" prefHeight="720" prefWidth="700" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="26.0">
         <Pane fx:id="habitatArea" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
@@ -97,25 +97,20 @@
             </Button>
         </VBox>
     </AnchorPane>
-    <MenuBar prefHeight="26.0" prefWidth="1280.0" style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-            <Menu text="Simulation">
-                <items>
-                    <MenuItem fx:id="startMenu" text="Start" />
-                    <MenuItem fx:id="stopMenu" text="Stop" />
-                </items>
-            </Menu>
-            <Menu text="View">
-                <items>
-                    <MenuItem fx:id="toggleTimeMenu" text="Toggle time" />
-                    <MenuItem fx:id="toggleModalWindowMenu" text="Toggle modal window" />
-                </items>
-            </Menu>
-            <Menu text="Help">
-                <items>
-                    <MenuItem fx:id="aboutMenu" text="About" />
-                </items>
-            </Menu>
-        </menus>
+    <MenuBar prefHeight="26.0" prefWidth="1280.0"
+             style="-fx-use-system-menu-bar: true;" AnchorPane.leftAnchor="0.0"
+             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Menu text="Simulation">
+            <MenuItem fx:id="startMenu" text="Start"/>
+            <MenuItem fx:id="stopMenu" text="Stop"/>
+        </Menu>
+        <Menu text="View">
+            <MenuItem fx:id="toggleTimeMenu" text="Toggle time"/>
+            <MenuItem fx:id="toggleModalWindowMenu"
+                      text="Toggle modal window"/>
+        </Menu>
+        <Menu text="Help">
+            <MenuItem fx:id="aboutMenu" text="About"/>
+        </Menu>
     </MenuBar>
 </AnchorPane>
