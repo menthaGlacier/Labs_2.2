@@ -3,12 +3,11 @@ package edu.uni.lab.controller;
 import edu.uni.lab.model.Developer;
 import edu.uni.lab.model.Manager;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 
-public class StatisticsDialogController {
+public class InfoDialogController {
 	private final Stage stage;
 	private final BooleanProperty stopSimulationProperty;
 	private final int developerCounter;
@@ -22,9 +21,9 @@ public class StatisticsDialogController {
 	@FXML
 	private Label timeInfo;
 
-	public StatisticsDialogController(Stage stage,
-						BooleanProperty stopSimulationProperty, long timePassed,
-						int developerCounter, int managerCounter) {
+	public InfoDialogController(Stage stage,
+	                            BooleanProperty stopSimulationProperty, long timePassed,
+	                            int developerCounter, int managerCounter) {
 		this.stage = stage;
 		this.stopSimulationProperty = stopSimulationProperty;
 		this.developerCounter = developerCounter;

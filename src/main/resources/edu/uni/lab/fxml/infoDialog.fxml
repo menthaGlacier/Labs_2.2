@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.StatisticsDialogController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.InfoDialogController">
    <VBox layoutX="250.0" layoutY="36.0" prefHeight="380.0" prefWidth="500.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
       <VBox prefHeight="128.0" prefWidth="360.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;">
          <Label style="-fx-padding: 0 0 0 10;" text="Developer">

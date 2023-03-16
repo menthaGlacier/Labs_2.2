@@ -34,6 +34,7 @@ public class MainController {
 	private long lastUpdateTime = 0;
 	private BooleanProperty isActive;
 	private BooleanProperty isTimeToggledOn;
+	private BooleanProperty isInfoDialogAllowed;
 
 	@FXML
 	private AnchorPane root;
@@ -49,6 +50,8 @@ public class MainController {
 	private Button stopSimButton;
 	@FXML
 	private CheckBox toggleTimeCheckbox;
+	@FXML
+	private CheckBox toggleInfoDialogCheckbox;
 	@FXML
 	private NumericField developerPeriodField;
 	@FXML
@@ -112,9 +115,18 @@ public class MainController {
 		}
 
 		timer.stop();
+
+		if (isInfoDialogAllowed.getValue()) {
+			final BooleanProperty stopSimulation = new SimpleBooleanProperty(false);
+			callInfoDialog(stopSimulation);
+			if (!(stopSimulation.getValue())) {
+				timer.start();
+				return;
+			}
+		}
+
 		isActive.setValue(false);
 		habitatArea.getChildren().clear();
-		callStatisticsDialog();
 	}
 
 	@FXML
@@ -193,14 +205,12 @@ public class MainController {
 		dialog.showAndWait();
 	}
 
-	@FXML
-	private void callStatisticsDialog() {
+	private void callInfoDialog(BooleanProperty stopSimulation) {
 		final Stage dialog = new Stage();
-		final BooleanProperty stopSimulation = new SimpleBooleanProperty(false);
 		FXMLLoader loader = new FXMLLoader((getClass()
-				.getResource("/edu/uni/lab/fxml/statisticsDialog.fxml")));
+				.getResource("/edu/uni/lab/fxml/infoDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new StatisticsDialogController(dialog, stopSimulation,
+				new InfoDialogController(dialog, stopSimulation,
 						(lastUpdateTime - startTime) / 1_000_000_000,
 						habitat.getDevelopersCounter(),
 						habitat.getManagersCounter()));
@@ -251,6 +261,7 @@ public class MainController {
 	public void setup(WindowEvent windowEvent) {
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);
+		isInfoDialogAllowed = new SimpleBooleanProperty(false);
 
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Current developers' period: ",
@@ -266,6 +277,7 @@ public class MainController {
 		stopSimButton.disableProperty().bind(isActive.not());
 		timeLabel.visibleProperty().bind(isTimeToggledOn);
 		toggleTimeCheckbox.selectedProperty().bindBidirectional(isTimeToggledOn);
+		toggleInfoDialogCheckbox.selectedProperty().bindBidirectional(isInfoDialogAllowed);
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));

@@ -117,7 +117,12 @@
         <ComboBox fx:id="developerProbabilityComboBox" layoutX="300.0" layoutY="120.0" onAction="#onDeveloperProbabilitySelection" prefWidth="136.0" promptText="10%" AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="150.0" />
         <ComboBox fx:id="managerRatioComboBox" layoutX="450.0" layoutY="120.0" onAction="#onManagerRatioSelection" promptText="10%" AnchorPane.bottomAnchor="519.0" AnchorPane.leftAnchor="445.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0" />
 
-        <CheckBox fx:id="toggleTimeCheckbox" text="Toggle time" layoutX="300.0" layoutY="190.0" prefHeight="20.0" prefWidth="100.0" >
+        <CheckBox fx:id="toggleTimeCheckbox" text="Show time" layoutX="300.0" layoutY="190.0" prefHeight="20.0" prefWidth="100.0" >
+            <font>
+                <Font size="14.0" />
+            </font>
+        </CheckBox>
+        <CheckBox fx:id="toggleInfoDialogCheckbox" text="Show info dialog" layoutX="410.0" layoutY="190.0" prefHeight="20.0" prefWidth="180.0" >
             <font>
                 <Font size="14.0" />
             </font>
