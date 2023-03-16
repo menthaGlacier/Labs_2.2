@@ -9,6 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -32,6 +33,7 @@ public class MainController {
 	private long startTime;
 	private long lastUpdateTime = 0;
 	private BooleanProperty isActive;
+	private BooleanProperty isTimeToggledOn;
 
 	@FXML
 	private AnchorPane root;
@@ -45,6 +47,8 @@ public class MainController {
 	private Button startSimButton;
 	@FXML
 	private Button stopSimButton;
+	@FXML
+	private CheckBox toggleTimeCheckbox;
 	@FXML
 	private NumericField developerPeriodField;
 	@FXML
@@ -115,7 +119,7 @@ public class MainController {
 
 	@FXML
 	private void toggleTime() {
-		timeLabel.setVisible(!(timeLabel.isVisible()));
+		isTimeToggledOn.setValue(!(isTimeToggledOn.getValue()));
 	}
 
 	@FXML
@@ -246,6 +250,7 @@ public class MainController {
 
 	public void setup(WindowEvent windowEvent) {
 		isActive = new SimpleBooleanProperty(false);
+		isTimeToggledOn = new SimpleBooleanProperty(false);
 
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Current developers' period: ",
@@ -259,6 +264,8 @@ public class MainController {
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
+		timeLabel.visibleProperty().bind(isTimeToggledOn);
+		toggleTimeCheckbox.selectedProperty().bindBidirectional(isTimeToggledOn);
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
