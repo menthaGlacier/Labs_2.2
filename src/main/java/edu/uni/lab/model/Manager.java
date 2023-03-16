@@ -10,12 +10,14 @@ import javafx.scene.image.ImageView;
 public class Manager extends Employee {
 	private final static int MANAGER_WIDTH = 80;
 	private final static int MANAGER_HEIGHT = 80;
-
 	private final static Texture texture;
-	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
-	private static double ratio = 0.1;
+	private final static SimpleLongProperty periodProperty;
+	private static double ratio;
 
 	static {
+		periodProperty = new SimpleLongProperty(1000);
+		ratio = 0.1;
+
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/manager.png")),
 				MANAGER_WIDTH, MANAGER_HEIGHT, false, true),

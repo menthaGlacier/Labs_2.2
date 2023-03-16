@@ -11,10 +11,13 @@ public class Developer extends Employee {
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
 	private final static Texture texture;
-	private static SimpleLongProperty periodProperty = new SimpleLongProperty(0);
-	private static double probability = 0.1;
+	private final static SimpleLongProperty periodProperty;
+	private static double probability;
 
 	static {
+		periodProperty = new SimpleLongProperty(1000);
+		probability = 0.1;
+
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
 				DEVELOPER_WIDTH, DEVELOPER_HEIGHT, false, true),

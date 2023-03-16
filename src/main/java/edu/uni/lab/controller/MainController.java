@@ -141,6 +141,7 @@ public class MainController {
 			Developer.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
+			Developer.setPeriod(1000);
 		}
 	}
 
@@ -158,11 +159,11 @@ public class MainController {
 	@FXML
 	private void onEmployeeAmountButtonClick() {
 		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
-		if (value != null && value > 0) {
+		if (value != null && value > 0 && value < 1_000) {
 			Habitat.setRepositorySize(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Developer.setPeriod(1000);
+			Habitat.setRepositorySize(100);
 		}
 	}
 

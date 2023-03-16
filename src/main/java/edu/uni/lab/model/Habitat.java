@@ -9,10 +9,6 @@ public class Habitat {
 	private static SimpleIntegerProperty repositorySizeProperty = new SimpleIntegerProperty(100);
 	public static final int DEVELOPER_PERIOD_MAX = 60000;
 	public static final int MANAGER_PERIOD_MAX = 60000;
-	public static final double DEVELOPER_PROBABILITY_MIN = 0.5;
-	public static final double DEVELOPER_PROBABILITY_MAX = 0.7;
-	private static final double MANAGER_RATIO_MIN = 0.4;
-	private static final double MANAGER_RATIO_MAX = 0.9;
 
 	private final Pane habitatArea;
 	private final EmployeeRepository employees;
@@ -25,21 +21,6 @@ public class Habitat {
 
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-		Developer.setPeriod(1000);
-		Manager.setPeriod(1000);
-
-/*		Developer.setProbability(random
-				.nextDouble(DEVELOPER_PROBABILITY_MAX - DEVELOPER_PROBABILITY_MIN)
-				+ DEVELOPER_PROBABILITY_MIN);
-		Manager.setRatio(random
-				.nextDouble(MANAGER_RATIO_MAX - MANAGER_RATIO_MIN)
-				+ MANAGER_RATIO_MIN);*/
-
-		System.out.println("Debug:");
-		System.out.println("Developer period: " + Developer.getPeriod());
-		System.out.println("Developer probability: " + Developer.getProbability());
-		System.out.println("Manager period: " + Manager.getPeriod());
-		System.out.println("Manager ratio: " + Manager.getRatio());
 
 		employees = EmployeeRepository.getInstance();
 		employees.resize(repositorySizeProperty.get());
