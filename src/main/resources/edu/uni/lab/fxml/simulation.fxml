@@ -20,12 +20,12 @@
                         <Font name="System Bold" size="22" />
                     </font>
                 </Label>
-            <Button text="Start" onAction="#start" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
+            <Button fx:id="startSimButton" text="Start" onAction="#start" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button text="Stop" onAction="#stop" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
+            <Button fx:id="stopSimButton" text="Stop" onAction="#stop" prefHeight="60.0" prefWidth="105.0" style="-fx-background-radius: 10;">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>

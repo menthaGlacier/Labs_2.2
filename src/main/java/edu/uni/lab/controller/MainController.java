@@ -8,6 +8,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,7 +31,7 @@ public class MainController {
 	private AnimationTimer timer;
 	private long startTime;
 	private long lastUpdateTime = 0;
-	private boolean isActive = false;
+	private BooleanProperty isActive;
 
 	@FXML
 	private AnchorPane root;
@@ -40,21 +41,22 @@ public class MainController {
 	private Label timeLabel;
 	@FXML
 	private Label countersLabel;
-
+	@FXML
+	private Button startSimButton;
+	@FXML
+	private Button stopSimButton;
 	@FXML
 	private NumericField developerPeriodField;
 	@FXML
 	private Label developerPeriodLabel;
 	@FXML
 	private ComboBox<String> developerProbabilityComboBox;
-
 	@FXML
 	private NumericField managerPeriodField;
 	@FXML
 	private Label managerPeriodLabel;
 	@FXML
 	private ComboBox<String> managerRatioComboBox;
-
 	@FXML
 	private NumericField employeeAmountField;
 	@FXML
@@ -66,7 +68,7 @@ public class MainController {
 	@FXML
 	public void start() {
 		this.habitat = new Habitat(habitatArea);
-		if (isActive) {
+		if (isActive.getValue()) {
 			return;
 		}
 
@@ -96,17 +98,17 @@ public class MainController {
 		};
 
 		timer.start();
-		isActive = true;
+		isActive.setValue(true);
 	}
 
 	@FXML
 	private void stop() {
-		if (!isActive) {
+		if (!(isActive.getValue())) {
 			return;
 		}
 
 		timer.stop();
-		isActive = false;
+		isActive.setValue(false);
 		habitatArea.getChildren().clear();
 		callStatisticsDialog();
 	}
@@ -154,9 +156,7 @@ public class MainController {
 		try {
 			Developer.setProbability(parser.parse(developerProbabilityComboBox
 					.getSelectionModel().getSelectedItem()).doubleValue());
-		} catch (ParseException e) {
-			return;
-		}
+		} catch (ParseException ignored) {}
 	}
 
 	@FXML
@@ -165,9 +165,7 @@ public class MainController {
 		try {
 			Manager.setRatio(parser.parse(managerRatioComboBox
 					.getSelectionModel().getSelectedItem()).doubleValue());
-		} catch (ParseException e) {
-			return;
-		}
+		} catch (ParseException ignored) {}
 	}
 
 	@FXML
@@ -247,6 +245,8 @@ public class MainController {
 	}
 
 	public void setup(WindowEvent windowEvent) {
+		isActive = new SimpleBooleanProperty(false);
+
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Current developers' period: ",
 						Developer.getPeriodProperty()));
@@ -256,6 +256,9 @@ public class MainController {
 		employeeAmountLabel.textProperty()
 				.bind(Bindings.concat("Current employee amount: ",
 						Habitat.getRepositorySizeProperty()));
+
+		startSimButton.disableProperty().bind(isActive);
+		stopSimButton.disableProperty().bind(isActive.not());
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
