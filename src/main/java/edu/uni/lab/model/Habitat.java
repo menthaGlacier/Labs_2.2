@@ -27,10 +27,6 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
-		if ((developersCounter + managersCounter) >= employees.size()) {
-			return;
-		}
-
 		if (elapsedTime - lastDeveloperGenerationTime >= Developer.getPeriod()
 				&& random.nextDouble() <= Developer.getProbability()) {
 			addEmployee(new Developer(
@@ -54,6 +50,10 @@ public class Habitat {
 
 	private void addEmployee(Employee employee) {
 		// TODO Forbid employee increment if add was fail
+		if ((developersCounter + managersCounter) >= employees.size()) {
+			return;
+		}
+
 		employees.add(employee, developersCounter + managersCounter);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {

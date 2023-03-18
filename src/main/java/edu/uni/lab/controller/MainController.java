@@ -73,7 +73,7 @@ public class MainController {
 	}
 
 	@FXML
-	public void start() {
+	public void startSimulation() {
 		this.habitat = new Habitat(habitatArea);
 		if (isActive.getValue()) {
 			return;
@@ -109,7 +109,7 @@ public class MainController {
 	}
 
 	@FXML
-	private void stop() {
+	private void stopSimulation() {
 		if (!(isActive.getValue())) {
 			return;
 		}
@@ -117,9 +117,9 @@ public class MainController {
 		timer.stop();
 
 		if (isInfoDialogAllowed.getValue()) {
-			final BooleanProperty stopSimulation = new SimpleBooleanProperty(false);
-			callInfoDialog(stopSimulation);
-			if (!(stopSimulation.getValue())) {
+			final BooleanProperty stopSimulationProperty = new SimpleBooleanProperty(false);
+			callInfoDialog(stopSimulationProperty);
+			if (!(stopSimulationProperty.getValue())) {
 				timer.start();
 				return;
 			}
@@ -252,8 +252,8 @@ public class MainController {
 	private void setKeyActions() {
 		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
-			case B -> start();
-			case E -> stop();
+			case B -> startSimulation();
+			case E -> stopSimulation();
 			case T -> toggleTime();
 			}
 		});
