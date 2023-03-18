@@ -281,7 +281,6 @@ public class MainController {
 		showTimeRadioButton.setToggleGroup(shownTime);
 		hideTimeRadioButton.setToggleGroup(shownTime);
 		showTimeRadioButton.selectedProperty().bindBidirectional(isTimeToggledOn);
-//		hideTimeRadioButton.selectedProperty().bindBidirectional(showTimeRadioButton.selectedProperty().not());
 		toggleInfoDialogCheckbox.selectedProperty().bindBidirectional(isInfoDialogAllowed);
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
