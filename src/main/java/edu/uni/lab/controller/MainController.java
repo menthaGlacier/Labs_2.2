@@ -8,15 +8,12 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -49,7 +46,9 @@ public class MainController {
 	@FXML
 	private Button stopSimButton;
 	@FXML
-	private CheckBox toggleTimeCheckbox;
+	private RadioButton showTimeRadioButton;
+	@FXML
+	private RadioButton hideTimeRadioButton;
 	@FXML
 	private CheckBox toggleInfoDialogCheckbox;
 	@FXML
@@ -277,7 +276,12 @@ public class MainController {
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
 		timeLabel.visibleProperty().bind(isTimeToggledOn);
-		toggleTimeCheckbox.selectedProperty().bindBidirectional(isTimeToggledOn);
+
+		ToggleGroup shownTime = new ToggleGroup();
+		showTimeRadioButton.setToggleGroup(shownTime);
+		hideTimeRadioButton.setToggleGroup(shownTime);
+		showTimeRadioButton.selectedProperty().bindBidirectional(isTimeToggledOn);
+//		hideTimeRadioButton.selectedProperty().bindBidirectional(showTimeRadioButton.selectedProperty().not());
 		toggleInfoDialogCheckbox.selectedProperty().bindBidirectional(isInfoDialogAllowed);
 
 		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
