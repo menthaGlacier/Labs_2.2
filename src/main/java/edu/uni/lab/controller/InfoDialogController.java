@@ -57,8 +57,4 @@ public class InfoDialogController {
 
 		timeInfo.setText("Total time passed: " + timePassed + "s.");
 	}
-
-	public BooleanProperty getStopSimulationProperty() {
-		return stopSimulationProperty;
-	};
 }
