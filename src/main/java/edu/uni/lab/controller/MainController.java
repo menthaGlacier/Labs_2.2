@@ -134,13 +134,18 @@ public class MainController {
 	}
 
 	@FXML
+	private void toggleInfoDialog() {
+		isInfoDialogAllowed.setValue(!(isInfoDialogAllowed.getValue()));
+	}
+
+	@FXML
 	private void onDeveloperPeriodButtonClick() {
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
 			Developer.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Developer.setPeriod(1000);
+			Developer.setPeriod(1000); // TODO Should be defined constant
 		}
 	}
 
@@ -151,7 +156,7 @@ public class MainController {
 			Manager.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Manager.setPeriod(1000);
+			Manager.setPeriod(1000); // TODO Should be defined constant
 		}
 	}
 
@@ -162,7 +167,7 @@ public class MainController {
 			Habitat.setRepositorySize(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Habitat.setRepositorySize(100);
+			Habitat.setRepositorySize(100); // TODO Should be defined constant
 		}
 	}
 

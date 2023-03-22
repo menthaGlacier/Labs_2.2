@@ -20,7 +20,6 @@ public class NumericField extends TextField {
 			catch (ParseException e) {
 				return null;
 			}
-			//return change.getControlNewText().matches("(\\d*)?") ? change : null;
 		}));
 	}
 }
