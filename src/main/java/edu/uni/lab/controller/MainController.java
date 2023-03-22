@@ -190,7 +190,7 @@ public class MainController {
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/aboutDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new AboutMenuController(dialog));
+				new AboutDialogController(dialog));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
