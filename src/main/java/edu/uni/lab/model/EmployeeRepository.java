@@ -1,7 +1,7 @@
 package edu.uni.lab.model;
 
 public class EmployeeRepository {
-	private static EmployeeRepository instance = new EmployeeRepository();
+	private static final EmployeeRepository instance = new EmployeeRepository();
 	private Employee[] employees;
 
 	private EmployeeRepository() {
@@ -25,7 +25,10 @@ public class EmployeeRepository {
 	}
 
 	public void resize(int size) {
-		if (size < 0) { size = 0; }
+		if (size < 0) {
+			size = 0;
+		}
+
 		employees = new Employee[size];
 	}
 }

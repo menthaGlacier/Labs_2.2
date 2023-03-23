@@ -4,8 +4,8 @@ import java.util.Objects;
 
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
-import edu.uni.lab.utility.Texture;
 import javafx.scene.image.ImageView;
+import edu.uni.lab.utility.Texture;
 
 public class Manager extends Employee {
 	private final static int MANAGER_WIDTH = 80;

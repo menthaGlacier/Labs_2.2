@@ -1,9 +1,10 @@
 package edu.uni.lab.controller;
 
-import edu.uni.lab.model.Developer;
-import edu.uni.lab.model.Habitat;
-import edu.uni.lab.model.Manager;
-import edu.uni.lab.utility.NumericField;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Arrays;
+
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +19,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.fxml.FXML;
-
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.Arrays;
+import edu.uni.lab.model.Developer;
+import edu.uni.lab.model.Habitat;
+import edu.uni.lab.model.Manager;
+import edu.uni.lab.utility.NumericField;
 
 public class MainController {
 	private Habitat habitat;
