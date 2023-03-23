@@ -5,11 +5,11 @@ import java.util.Random;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
-	public static final int DEVELOPER_PERIOD_MAX = 60000;
-	public static final int MANAGER_PERIOD_MAX = 60000;
+	public static final int DEVELOPER_PERIOD_MAX = 60_000;
+	public static final int MANAGER_PERIOD_MAX = 60_000;
 
 	private final Pane habitatArea;
-	private final EmployeeRepository employees;
+	private final EmployeeRepository employeesRepository;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
 	private long lastDeveloperGenerationTime = 0;
@@ -19,7 +19,7 @@ public class Habitat {
 
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-		employees = EmployeeRepository.getInstance();
+		employeesRepository = EmployeeRepository.getInstance();
 	}
 
 	public void update(long elapsedTime) {
@@ -29,7 +29,8 @@ public class Habitat {
 					random.nextDouble() * (habitatArea.getWidth()
 							- Developer.getTexture().getWidth()),
 					random.nextDouble() * (habitatArea.getHeight()
-							- Developer.getTexture().getHeight())));
+							- Developer.getTexture().getHeight()),
+					elapsedTime));
 			lastDeveloperGenerationTime = elapsedTime;
 		}
 
@@ -39,13 +40,14 @@ public class Habitat {
 					random.nextDouble() * (habitatArea.getWidth()
 							- Manager.getTexture().getWidth()),
 					random.nextDouble() * (habitatArea.getHeight()
-							- Manager.getTexture().getHeight())));
+							- Manager.getTexture().getHeight()),
+					elapsedTime));
 			lastManagerGenerationTime = elapsedTime;
 		}
 	}
 
 	private void addEmployee(Employee employee) {
-		employees.add(employee);
+		employeesRepository.add(employee);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
 			developersCounter += 1;

@@ -141,7 +141,7 @@ public class MainController {
 			Developer.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Developer.setPeriod(1000); // TODO Should be defined constant
+			Developer.setPeriod(1_000); // TODO Should be defined constant
 		}
 	}
 
@@ -152,7 +152,7 @@ public class MainController {
 			Manager.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Manager.setPeriod(1000); // TODO Should be defined constant
+			Manager.setPeriod(1_000); // TODO Should be defined constant
 		}
 	}
 
