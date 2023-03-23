@@ -63,10 +63,6 @@ public class MainController {
 	private Label managerPeriodLabel;
 	@FXML
 	private ComboBox<String> managerRatioComboBox;
-	@FXML
-	private NumericField employeeAmountField;
-	@FXML
-	private Label employeeAmountLabel;
 
 	public MainController() {
 	}
@@ -157,17 +153,6 @@ public class MainController {
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
 			Manager.setPeriod(1000); // TODO Should be defined constant
-		}
-	}
-
-	@FXML
-	private void onEmployeeAmountButtonClick() {
-		Integer value = (Integer) employeeAmountField.getTextFormatter().getValue();
-		if (value != null && value > 0 && value < 1_000) {
-			Habitat.setRepositorySize(value);
-		} else {
-			callErrorDialog("Bad argument passed. Default value set");
-			Habitat.setRepositorySize(100); // TODO Should be defined constant
 		}
 	}
 
@@ -274,9 +259,6 @@ public class MainController {
 		managerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Current managers' period: ",
 						Manager.getPeriodProperty()));
-		employeeAmountLabel.textProperty()
-				.bind(Bindings.concat("Current employee amount: ",
-						Habitat.getRepositorySizeProperty()));
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());

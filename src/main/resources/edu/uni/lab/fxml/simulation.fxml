@@ -76,27 +76,6 @@
             </Button>
         </VBox>
 
-        <VBox fillWidth="false" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-padding: 0 0 0 10; -fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="120.0" AnchorPane.rightAnchor="300.0" AnchorPane.bottomAnchor="480.0">
-            <NumericField fx:id="employeeAmountField" promptText="Enter amount">
-                <VBox.margin>
-                    <Insets top="5.0" />
-                </VBox.margin>
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </NumericField>
-            <Label fx:id="employeeAmountLabel" text="Current employee max amount: ">
-                <font>
-                    <Font name="Serif Bold" size="16.0" />
-                </font>
-            </Label>
-            <Button text="Apply" onAction="#onEmployeeAmountButtonClick" >
-                <VBox.margin>
-                    <Insets bottom="5.0" />
-                </VBox.margin>
-            </Button>
-        </VBox>
-
         <Label layoutX="301.0" layoutY="120.0" prefWidth="125.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Developer probability">
             <font>
                 <Font name="Serif Regular" size="13.0" />

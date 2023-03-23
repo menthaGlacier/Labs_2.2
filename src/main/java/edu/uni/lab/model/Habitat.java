@@ -2,11 +2,9 @@ package edu.uni.lab.model;
 
 import java.util.Random;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
-	private static SimpleIntegerProperty repositorySizeProperty = new SimpleIntegerProperty(100);
 	public static final int DEVELOPER_PERIOD_MAX = 60000;
 	public static final int MANAGER_PERIOD_MAX = 60000;
 
@@ -21,9 +19,7 @@ public class Habitat {
 
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-
 		employees = EmployeeRepository.getInstance();
-		employees.resize(repositorySizeProperty.get());
 	}
 
 	public void update(long elapsedTime) {
@@ -49,12 +45,7 @@ public class Habitat {
 	}
 
 	private void addEmployee(Employee employee) {
-		// TODO Forbid employee increment if add was fail
-		if ((developersCounter + managersCounter) >= employees.size()) {
-			return;
-		}
-
-		employees.add(employee, developersCounter + managersCounter);
+		employees.add(employee);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
 			developersCounter += 1;
@@ -69,13 +60,5 @@ public class Habitat {
 
 	public int getManagersCounter() {
 		return managersCounter;
-	}
-
-	public static void setRepositorySize(int repositorySize) {
-		repositorySizeProperty.setValue(repositorySize);
-	}
-
-	public static SimpleIntegerProperty getRepositorySizeProperty() {
-		return repositorySizeProperty;
 	}
 }

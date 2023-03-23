@@ -1,34 +1,28 @@
 package edu.uni.lab.model;
 
+import java.util.LinkedList;
+
 public class EmployeeRepository {
 	private static final EmployeeRepository instance = new EmployeeRepository();
-	private Employee[] employees;
+	private final LinkedList<Employee> employees;
 
 	private EmployeeRepository() {
-		employees = new Employee[0];
+		employees = new LinkedList<>();
 	}
 
 	public static EmployeeRepository getInstance() {
 		return instance;
 	}
 
-	public void add(Employee employee, int index) {
-		if (index >= employees.length) {
-			return;
-		}
-
-		employees[index] = employee;
+	public void add(Employee employee) {
+		employees.add(employee);
 	}
 
 	public int size() {
-		return employees.length;
+		return employees.size();
 	}
 
-	public void resize(int size) {
-		if (size < 0) {
-			size = 0;
-		}
-
-		employees = new Employee[size];
+	public void clear() {
+		employees.clear();
 	}
 }
