@@ -13,13 +13,13 @@ public class Manager extends Employee {
 	private final static Texture texture;
 	private final static SimpleLongProperty periodProperty;
 	private static double ratio;
-	private static long timeToLive;
+	private static long lifeTime;
 
 	static {
 		// TODO These values should be defined constants
 		periodProperty = new SimpleLongProperty(1000);
 		ratio = 0.1;
-		timeToLive = 10_000;
+		lifeTime = 10_000;
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/manager.png")),
@@ -58,11 +58,11 @@ public class Manager extends Employee {
 		Manager.ratio = ratio;
 	}
 
-	public static long getTimeToLive() {
-		return timeToLive;
+	public static long getLifeTime() {
+		return lifeTime;
 	}
 
-	public static void setTimeToLive(long timeToLive) {
-		Manager.timeToLive = timeToLive;
+	public static void setLifeTime(long lifeTime) {
+		Manager.lifeTime = lifeTime;
 	}
 }

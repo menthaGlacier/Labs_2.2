@@ -13,13 +13,13 @@ public class Developer extends Employee {
 	private final static Texture texture;
 	private final static SimpleLongProperty periodProperty;
 	private static double probability;
-	private static long timeToLive;
+	private static long lifeTime;
 
 	static {
 		// TODO These values should be defined constants
 		periodProperty = new SimpleLongProperty(1_000);
 		probability = 0.1;
-		timeToLive = 10_000;
+		lifeTime = 10_000;
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
@@ -58,11 +58,11 @@ public class Developer extends Employee {
 		Developer.probability = probability;
 	}
 
-	public static long getTimeToLive() {
-		return timeToLive;
+	public static long getLifeTime() {
+		return lifeTime;
 	}
 
-	public static void setTimeToLive(long timeToLive) {
-		Developer.timeToLive = timeToLive;
+	public static void setLifeTime(long lifeTime) {
+		Developer.lifeTime = lifeTime;
 	}
 }
