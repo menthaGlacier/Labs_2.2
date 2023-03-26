@@ -2,6 +2,7 @@ package edu.uni.lab.model;
 
 import java.util.Objects;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,14 +13,14 @@ public class Manager extends Employee {
 	private final static int MANAGER_HEIGHT = 80;
 	private final static Texture texture;
 	private final static SimpleLongProperty periodProperty;
-	private static double ratio;
-	private static long lifeTime;
+	private final static SimpleDoubleProperty ratioProperty;
+	private final static SimpleLongProperty lifeTimeProperty;
 
 	static {
 		// TODO These values should be defined constants
-		periodProperty = new SimpleLongProperty(1000);
-		ratio = 0.1;
-		lifeTime = 10_000;
+		periodProperty = new SimpleLongProperty(1_000);
+		ratioProperty = new SimpleDoubleProperty(0.1);
+		lifeTimeProperty = new SimpleLongProperty(10_000);
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/manager.png")),
@@ -51,18 +52,26 @@ public class Manager extends Employee {
 	}
 
 	public static double getRatio() {
-		return ratio;
+		return ratioProperty.getValue();
 	}
 
-	public static void setRatio(double ratio) {
-		Manager.ratio = ratio;
+	public static SimpleDoubleProperty getRatioProperty() {
+		return ratioProperty;
+	}
+
+	public static void setRatio(double probability) {
+		ratioProperty.setValue(probability);
 	}
 
 	public static long getLifeTime() {
-		return lifeTime;
+		return lifeTimeProperty.getValue();
+	}
+
+	public static SimpleLongProperty getLifeTimeProperty() {
+		return lifeTimeProperty;
 	}
 
 	public static void setLifeTime(long lifeTime) {
-		Manager.lifeTime = lifeTime;
+		lifeTimeProperty.setValue(lifeTime);
 	}
 }

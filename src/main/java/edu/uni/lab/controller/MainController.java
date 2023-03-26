@@ -38,10 +38,6 @@ public class MainController {
 	@FXML
 	private Pane habitatArea;
 	@FXML
-	private Label timeLabel;
-	@FXML
-	private Label countersLabel;
-	@FXML
 	private Button startSimButton;
 	@FXML
 	private Button stopSimButton;
@@ -52,15 +48,25 @@ public class MainController {
 	@FXML
 	private CheckBox toggleInfoDialogCheckbox;
 	@FXML
-	private NumericField developerPeriodField;
+	private Label timeLabel;
 	@FXML
 	private Label developerPeriodLabel;
+	@FXML
+	private Label developerLifeTimeLabel;
+	@FXML
+	private Label managerPeriodLabel;
+	@FXML
+	private Label managerLifeTimeLabel;
+	@FXML
+	private NumericField developerPeriodField;
+	@FXML
+	private NumericField developerLifeTimeField;
 	@FXML
 	private ComboBox<String> developerProbabilityComboBox;
 	@FXML
 	private NumericField managerPeriodField;
 	@FXML
-	private Label managerPeriodLabel;
+	private NumericField managerLifeTimeField;
 	@FXML
 	private ComboBox<String> managerRatioComboBox;
 
@@ -88,12 +94,6 @@ public class MainController {
 					timeLabel.setText("Time: "
 							+ (lastUpdateTime - startTime) / 1_000_000_000
 							+ "s."
-					);
-
-					countersLabel.setText("Developers: "
-							+ habitat.getDevelopersCounter() + "\n"
-							+ "Managers: "
-							+ habitat.getManagersCounter()
 					);
 				}
 			}
@@ -136,6 +136,7 @@ public class MainController {
 
 	@FXML
 	private void onDeveloperPeriodButtonClick() {
+		// TODO replace if-else
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
 			Developer.setPeriod(value);
@@ -146,13 +147,14 @@ public class MainController {
 	}
 
 	@FXML
-	private void onManagerPeriodButtonClick() {
-		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
-		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
-			Manager.setPeriod(value);
+	private void onDeveloperLifeTimeButtonClick() {
+		// TODO replace if-else
+		Integer value = (Integer) developerLifeTimeField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
+			Developer.setLifeTime(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
-			Manager.setPeriod(1_000); // TODO Should be defined constant
+			Developer.setLifeTime(20_000); // TODO Should be defined constant
 		}
 	}
 
@@ -166,12 +168,41 @@ public class MainController {
 	}
 
 	@FXML
+	private void onManagerPeriodButtonClick() {
+		// TODO replace if-else
+		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+			Manager.setPeriod(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Manager.setPeriod(1_000); // TODO Should be defined constant
+		}
+	}
+
+	@FXML
+	private void onManagerLifeTimeButtonClick() {
+		// TODO replace if-else
+		Integer value = (Integer) managerLifeTimeField.getTextFormatter().getValue();
+		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+			Manager.setLifeTime(value);
+		} else {
+			callErrorDialog("Bad argument passed. Default value set");
+			Manager.setLifeTime(20_000); // TODO Should be defined constant
+		}
+	}
+
+	@FXML
 	private void onManagerRatioSelection() {
 		DecimalFormat parser = new DecimalFormat("0'%'");
 		try {
 			Manager.setRatio(parser.parse(managerRatioComboBox
 					.getSelectionModel().getSelectedItem()).doubleValue());
 		} catch (ParseException ignored) {}
+	}
+
+	@FXML
+	private void callShowObjectsDialog() {
+		// TODO
 	}
 
 	@FXML
@@ -254,11 +285,17 @@ public class MainController {
 		isInfoDialogAllowed = new SimpleBooleanProperty(false);
 
 		developerPeriodLabel.textProperty()
-				.bind(Bindings.concat("Current developers' period: ",
+				.bind(Bindings.concat("Period: ",
 						Developer.getPeriodProperty()));
+		developerLifeTimeLabel.textProperty()
+				.bind(Bindings.concat("Life time: ",
+						Developer.getLifeTimeProperty()));
 		managerPeriodLabel.textProperty()
-				.bind(Bindings.concat("Current managers' period: ",
+				.bind(Bindings.concat("Period: ",
 						Manager.getPeriodProperty()));
+		managerLifeTimeLabel.textProperty()
+				.bind(Bindings.concat("Life time: ",
+						Manager.getLifeTimeProperty()));
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());

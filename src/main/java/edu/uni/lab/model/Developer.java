@@ -2,6 +2,7 @@ package edu.uni.lab.model;
 
 import java.util.Objects;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,14 +13,14 @@ public class Developer extends Employee {
 	private final static int DEVELOPER_HEIGHT = 80;
 	private final static Texture texture;
 	private final static SimpleLongProperty periodProperty;
-	private static double probability;
-	private static long lifeTime;
+	private final static SimpleDoubleProperty probabilityProperty;
+	private final static SimpleLongProperty lifeTimeProperty;
 
 	static {
 		// TODO These values should be defined constants
 		periodProperty = new SimpleLongProperty(1_000);
-		probability = 0.1;
-		lifeTime = 10_000;
+		probabilityProperty = new SimpleDoubleProperty(0.1);
+		lifeTimeProperty = new SimpleLongProperty(10_000);
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
@@ -51,18 +52,26 @@ public class Developer extends Employee {
 	}
 
 	public static double getProbability() {
-		return probability;
+		return probabilityProperty.getValue();
+	}
+
+	public static SimpleDoubleProperty getProbabilityProperty() {
+		return probabilityProperty;
 	}
 
 	public static void setProbability(double probability) {
-		Developer.probability = probability;
+		probabilityProperty.setValue(probability);
 	}
 
 	public static long getLifeTime() {
-		return lifeTime;
+		return lifeTimeProperty.getValue();
+	}
+
+	public static SimpleLongProperty getLifeTimeProperty() {
+		return lifeTimeProperty;
 	}
 
 	public static void setLifeTime(long lifeTime) {
-		Developer.lifeTime = lifeTime;
+		lifeTimeProperty.setValue(lifeTime);
 	}
 }
