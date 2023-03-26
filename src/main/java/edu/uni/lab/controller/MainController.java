@@ -138,7 +138,7 @@ public class MainController {
 	private void onDeveloperPeriodButtonClick() {
 		// TODO replace if-else
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
-		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
+		if (value != null && value >= 0 && value <= Habitat.PERIOD_MAX) {
 			Developer.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
@@ -150,7 +150,7 @@ public class MainController {
 	private void onDeveloperLifeTimeButtonClick() {
 		// TODO replace if-else
 		Integer value = (Integer) developerLifeTimeField.getTextFormatter().getValue();
-		if (value != null && value >= 0 && value <= Habitat.DEVELOPER_PERIOD_MAX) {
+		if (value != null && value >= 0 && value <= Habitat.LIFETIME_MAX) {
 			Developer.setLifeTime(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
@@ -171,7 +171,7 @@ public class MainController {
 	private void onManagerPeriodButtonClick() {
 		// TODO replace if-else
 		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
-		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+		if (value != null && value >= 0 && value <= Habitat.PERIOD_MAX) {
 			Manager.setPeriod(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");
@@ -183,7 +183,7 @@ public class MainController {
 	private void onManagerLifeTimeButtonClick() {
 		// TODO replace if-else
 		Integer value = (Integer) managerLifeTimeField.getTextFormatter().getValue();
-		if (value != null && value >= 0 && value <= Habitat.MANAGER_PERIOD_MAX) {
+		if (value != null && value >= 0 && value <= Habitat.LIFETIME_MAX) {
 			Manager.setLifeTime(value);
 		} else {
 			callErrorDialog("Bad argument passed. Default value set");

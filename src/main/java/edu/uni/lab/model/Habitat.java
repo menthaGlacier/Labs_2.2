@@ -5,8 +5,8 @@ import java.util.Random;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
-	public static final int DEVELOPER_PERIOD_MAX = 60_000;
-	public static final int MANAGER_PERIOD_MAX = 60_000;
+	public static final int PERIOD_MAX = 1_000_000;
+	public static final int LIFETIME_MAX = 1_000_000;
 
 	private final Pane habitatArea;
 	private final EmployeeRepository employeesRepository;
