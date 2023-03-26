@@ -17,10 +17,9 @@ public class Developer extends Employee {
 	private final static SimpleLongProperty lifeTimeProperty;
 
 	static {
-		// TODO These values should be defined constants
-		periodProperty = new SimpleLongProperty(1_000);
+		periodProperty = new SimpleLongProperty(5_000);
 		probabilityProperty = new SimpleDoubleProperty(0.1);
-		lifeTimeProperty = new SimpleLongProperty(10_000);
+		lifeTimeProperty = new SimpleLongProperty(20_000);
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),

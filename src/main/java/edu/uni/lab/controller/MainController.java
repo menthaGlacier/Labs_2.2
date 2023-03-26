@@ -136,26 +136,24 @@ public class MainController {
 
 	@FXML
 	private void onDeveloperPeriodButtonClick() {
-		// TODO replace if-else
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.PERIOD_MAX) {
 			Developer.setPeriod(value);
-		} else {
-			callErrorDialog("Bad argument passed. Default value set");
-			Developer.setPeriod(1_000); // TODO Should be defined constant
 		}
+
+		callErrorDialog("Bad argument passed. Default value set");
+		Developer.setPeriod(Habitat.PERIOD_DEFAULT);
 	}
 
 	@FXML
 	private void onDeveloperLifeTimeButtonClick() {
-		// TODO replace if-else
 		Integer value = (Integer) developerLifeTimeField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.LIFETIME_MAX) {
 			Developer.setLifeTime(value);
-		} else {
-			callErrorDialog("Bad argument passed. Default value set");
-			Developer.setLifeTime(20_000); // TODO Should be defined constant
 		}
+
+		callErrorDialog("Bad argument passed. Default value set");
+		Developer.setLifeTime(Habitat.LIFETIME_DEFAULT);
 	}
 
 	@FXML
@@ -169,26 +167,26 @@ public class MainController {
 
 	@FXML
 	private void onManagerPeriodButtonClick() {
-		// TODO replace if-else
 		Integer value = (Integer) managerPeriodField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.PERIOD_MAX) {
 			Manager.setPeriod(value);
-		} else {
-			callErrorDialog("Bad argument passed. Default value set");
-			Manager.setPeriod(1_000); // TODO Should be defined constant
+			return;
 		}
+
+		callErrorDialog("Bad argument passed. Default value set");
+		Manager.setPeriod(Habitat.PERIOD_DEFAULT);
 	}
 
 	@FXML
 	private void onManagerLifeTimeButtonClick() {
-		// TODO replace if-else
 		Integer value = (Integer) managerLifeTimeField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.LIFETIME_MAX) {
 			Manager.setLifeTime(value);
-		} else {
-			callErrorDialog("Bad argument passed. Default value set");
-			Manager.setLifeTime(20_000); // TODO Should be defined constant
+			return;
 		}
+
+		callErrorDialog("Bad argument passed. Default value set");
+		Manager.setLifeTime(Habitat.LIFETIME_DEFAULT);
 	}
 
 	@FXML
@@ -307,7 +305,8 @@ public class MainController {
 		showTimeRadioButton.selectedProperty().bindBidirectional(isTimeToggledOn);
 		toggleInfoDialogCheckbox.selectedProperty().bindBidirectional(isInfoDialogAllowed);
 
-		String[] values = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
+		String[] values = {"10%", "20%", "30%", "40%", "50%",
+							"60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
 

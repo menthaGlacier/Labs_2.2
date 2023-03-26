@@ -5,7 +5,9 @@ import java.util.Random;
 import javafx.scene.layout.Pane;
 
 public class Habitat {
+	public static final int PERIOD_DEFAULT = 5_000;
 	public static final int PERIOD_MAX = 1_000_000;
+	public static final int LIFETIME_DEFAULT = 20_000;
 	public static final int LIFETIME_MAX = 1_000_000;
 
 	private final Pane habitatArea;
