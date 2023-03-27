@@ -26,7 +26,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Label fx:id="developerPeriodLabel" style="-fx-padding: 0 0 0 0;" text="Period: " GridPane.valignment="BOTTOM">
+                <Label fx:id="developerPeriodLabel" text="Period: " GridPane.valignment="BOTTOM">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -68,7 +68,6 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                     </padding>
                 </Label>
-
                 <ComboBox fx:id="developerProbabilityComboBox" onAction="#onDeveloperProbabilitySelection" prefWidth="140.0" promptText="10%" />
             </VBox>
         </VBox>
@@ -87,7 +86,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Label fx:id="managerPeriodLabel" style="-fx-padding: 0 0 0 0;" text="Period: " GridPane.valignment="BOTTOM">
+                <Label fx:id="managerPeriodLabel" text="Period: " GridPane.valignment="BOTTOM">
                     <font>
                         <Font size="18.0" />
                     </font>

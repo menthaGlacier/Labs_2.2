@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 
-import edu.uni.lab.model.EmployeeRepository;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
@@ -140,6 +139,7 @@ public class MainController {
 		Integer value = (Integer) developerPeriodField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.PERIOD_MAX) {
 			Developer.setPeriod(value);
+			return;
 		}
 
 		callErrorDialog("Bad argument passed. Default value set");
@@ -151,6 +151,7 @@ public class MainController {
 		Integer value = (Integer) developerLifeTimeField.getTextFormatter().getValue();
 		if (value != null && value >= 0 && value <= Habitat.LIFETIME_MAX) {
 			Developer.setLifeTime(value);
+			return;
 		}
 
 		callErrorDialog("Bad argument passed. Default value set");
@@ -233,7 +234,9 @@ public class MainController {
 				new InfoDialogController(dialog, stopSimulation,
 						(lastUpdateTime - startTime) / 1_000_000_000,
 						habitat.getDevelopersCounter(),
-						habitat.getManagersCounter()));
+						habitat.getManagersCounter()
+				)
+		);
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
