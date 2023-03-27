@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyEvent;
@@ -47,6 +48,8 @@ public class MainController {
 	private RadioButton hideTimeRadioButton;
 	@FXML
 	private CheckBox toggleInfoDialogCheckbox;
+	@FXML
+	private ImageView timeIdle;
 	@FXML
 	private Label timeLabel;
 	@FXML
@@ -302,6 +305,7 @@ public class MainController {
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
 		timeLabel.visibleProperty().bind(isTimeToggledOn);
+		timeIdle.visibleProperty().bind(isTimeToggledOn.not());
 
 		ToggleGroup shownTime = new ToggleGroup();
 		showTimeRadioButton.setToggleGroup(shownTime);

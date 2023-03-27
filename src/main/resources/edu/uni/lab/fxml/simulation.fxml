@@ -2,10 +2,11 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import edu.uni.lab.utility.NumericField?>
+<!--<?import edu.uni.lab.utility.NumericField?>-->
 
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #990040;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uni.lab.controller.MainController">
     <Pane fx:id="habitatArea" prefHeight="692.0" prefWidth="695.0" style="-fx-background-color: #C30052; -fx-background-radius: 5;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="38.0" />
@@ -32,11 +33,11 @@
                     </font>
                 </Label>
                 <Button onAction="#onDeveloperPeriodButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="developerPeriodField" promptText="Enter period (in ms)" GridPane.rowIndex="1">
+<!--                <NumericField fx:id="developerPeriodField" promptText="Enter period (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
-                </NumericField>
+                </NumericField>-->
             </GridPane>
             <GridPane layoutX="10.0" layoutY="44.0" prefWidth="280.0" style="-fx-padding: 0 10 0 10;">
                 <columnConstraints>
@@ -53,11 +54,11 @@
                     </font>
                 </Label>
                 <Button onAction="#onDeveloperLifeTimeButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="developerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
+<!--                <NumericField fx:id="developerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
-                </NumericField>
+                </NumericField>-->
             </GridPane>
             <VBox prefWidth="400.0" style="-fx-padding: 0 0 0 10;">
                 <Label style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Probability:">
@@ -92,11 +93,11 @@
                     </font>
                 </Label>
                 <Button onAction="#onManagerPeriodButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="managerPeriodField" promptText="Enter period (in ms)" GridPane.rowIndex="1">
+<!--                <NumericField fx:id="managerPeriodField" promptText="Enter period (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
-                </NumericField>
+                </NumericField>-->
             </GridPane>
             <GridPane layoutX="10.0" layoutY="44.0" prefWidth="280.0" style="-fx-padding: 0 10 0 10;">
                 <columnConstraints>
@@ -113,11 +114,11 @@
                     </font>
                 </Label>
                 <Button onAction="#onManagerLifeTimeButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="managerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
+<!--                <NumericField fx:id="managerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
-                </NumericField>
+                </NumericField>-->
             </GridPane>
             <VBox prefWidth="400.0" style="-fx-padding: 0 0 0 10;">
                 <Label style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Ratio:">
@@ -131,7 +132,6 @@
                 <ComboBox fx:id="managerRatioComboBox" onAction="#onManagerRatioSelection" prefWidth="140.0" promptText="10%" />
             </VBox>
         </VBox>
-
         <GridPane prefHeight="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" prefWidth="130.0" />
@@ -193,6 +193,9 @@
                         <Font name="System Bold" size="22" />
                     </font>
                 </Label>
+            <ImageView fx:id="timeIdle" fitHeight="60.0" fitWidth="200.0" pickOnBounds="true">
+                <Image url="@../images/peppino_busting_sick_moves_YAAAAAOW.gif" />
+            </ImageView>
             </Pane>
         </GridPane>
     </AnchorPane>

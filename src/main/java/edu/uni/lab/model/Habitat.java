@@ -25,16 +25,16 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
-		for (Employee i : employeesRepository.getEmployeesList()) {
+		for (Employee iterator : employeesRepository.getEmployeesList()) {
 			long lifeTime = 0;
-			if (i instanceof Developer) {
+			if (iterator instanceof Developer) {
 				lifeTime = Developer.getLifeTime();
-			} else if (i instanceof Manager) {
+			} else if (iterator instanceof Manager) {
 				lifeTime = Manager.getLifeTime();
 			}
 
-			if (elapsedTime - i.getCreationTime() >= lifeTime) {
-				employeesRepository.remove(i);
+			if (elapsedTime - iterator.getCreationTime() >= lifeTime) {
+				removeEmployee(iterator);
 			}
 		}
 
@@ -73,6 +73,15 @@ public class Habitat {
 		}
 	}
 
+	private void removeEmployee(Employee employee) {
+		employeesRepository.remove(employee);
+		habitatArea.getChildren().remove(employee.getImageView());
+		if (employee instanceof Developer) {
+			developersCounter -= 1;
+		} else if (employee instanceof Manager) {
+			managersCounter -= 1;
+		}
+	}
 	public int getDevelopersCounter() {
 		return developersCounter;
 	}

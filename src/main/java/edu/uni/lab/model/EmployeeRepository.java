@@ -34,8 +34,6 @@ public class EmployeeRepository {
 		employees.remove(employee);
 		employeesID.remove(employee.hashCode());
 		employeesCreationTime.remove(employee.hashCode());
-
-		System.out.println(employeesID);
 	}
 
 	public int size() {
