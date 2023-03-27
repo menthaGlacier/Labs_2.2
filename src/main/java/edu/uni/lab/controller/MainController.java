@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 
+import edu.uni.lab.model.EmployeeRepository;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
@@ -83,7 +84,7 @@ public class MainController {
 		startTime = System.nanoTime();
 		lastUpdateTime = startTime;
 		timer = new AnimationTimer() {
-			private static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+			static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
 
 			@Override
 			public void handle(long timeNow) {

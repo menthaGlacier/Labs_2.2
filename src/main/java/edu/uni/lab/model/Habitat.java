@@ -25,6 +25,19 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
+		for (Employee i : employeesRepository.getEmployeesList()) {
+			long lifeTime = 0;
+			if (i instanceof Developer) {
+				lifeTime = Developer.getLifeTime();
+			} else if (i instanceof Manager) {
+				lifeTime = Manager.getLifeTime();
+			}
+
+			if (elapsedTime - i.getCreationTime() >= lifeTime) {
+				employeesRepository.remove(i);
+			}
+		}
+
 		if (elapsedTime - lastDeveloperGenerationTime >= Developer.getPeriod()
 				&& random.nextDouble() <= Developer.getProbability()) {
 			addEmployee(new Developer(
@@ -33,6 +46,7 @@ public class Habitat {
 					random.nextDouble() * (habitatArea.getHeight()
 							- Developer.getTexture().getHeight()),
 					elapsedTime));
+
 			lastDeveloperGenerationTime = elapsedTime;
 		}
 
@@ -44,6 +58,7 @@ public class Habitat {
 					random.nextDouble() * (habitatArea.getHeight()
 							- Manager.getTexture().getHeight()),
 					elapsedTime));
+
 			lastManagerGenerationTime = elapsedTime;
 		}
 	}

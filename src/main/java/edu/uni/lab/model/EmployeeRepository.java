@@ -20,10 +20,22 @@ public class EmployeeRepository {
 		return instance;
 	}
 
+	public LinkedList<Employee> getEmployeesList() {
+		return employees;
+	}
+
 	public void add(Employee employee) {
 		employees.add(employee);
 		employeesID.add(employee.hashCode());
 		employeesCreationTime.put(employee.hashCode(), employee.getCreationTime());
+	}
+
+	public void remove(Employee employee) {
+		employees.remove(employee);
+		employeesID.remove(employee.hashCode());
+		employeesCreationTime.remove(employee.hashCode());
+
+		System.out.println(employeesID);
 	}
 
 	public int size() {
