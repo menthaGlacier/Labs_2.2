@@ -24,6 +24,14 @@ public class EmployeeRepository {
 		return employees;
 	}
 
+	public TreeSet<Integer> getEmployeesID() {
+		return employeesID;
+	}
+
+	public HashMap<Integer, Long> getEmployeesCreationTime() {
+		return employeesCreationTime;
+	}
+
 	public void add(Employee employee) {
 		employees.add(employee);
 		employeesID.add(employee.hashCode());

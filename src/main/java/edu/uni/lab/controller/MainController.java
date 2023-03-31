@@ -205,7 +205,25 @@ public class MainController {
 
 	@FXML
 	private void callShowObjectsDialog() {
-		// TODO
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/EmployeesDisplayDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new EmployeesDisplayDialogController(dialog));
+
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
+		}
+
+		timer.stop();
+		dialog.setTitle("Current objects");
+		dialog.setResizable(false);
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(root.getScene().getWindow());
+		dialog.showAndWait();
+		timer.start();
 	}
 
 	@FXML
