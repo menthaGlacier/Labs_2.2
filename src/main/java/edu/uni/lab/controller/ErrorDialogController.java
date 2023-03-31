@@ -1,8 +1,8 @@
 package edu.uni.lab.controller;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
 
 public class ErrorDialogController {
 	private final Stage stage;

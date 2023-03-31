@@ -1,7 +1,6 @@
 package edu.uni.lab.model;
 
 import java.util.Random;
-
 import javafx.scene.layout.Pane;
 
 public class Habitat {

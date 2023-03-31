@@ -1,7 +1,7 @@
 package edu.uni.lab.controller;
 
-import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 public class AboutDialogController {
 	private final Stage stage;

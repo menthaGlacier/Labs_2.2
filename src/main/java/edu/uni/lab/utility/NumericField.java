@@ -1,11 +1,11 @@
 package edu.uni.lab.utility;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
-
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.IntegerStringConverter;
+
+import java.text.DecimalFormat;
+import java.text.ParseException;
 
 public class NumericField extends TextField {
 

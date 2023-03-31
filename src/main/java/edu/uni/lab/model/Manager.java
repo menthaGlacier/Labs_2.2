@@ -1,12 +1,12 @@
 package edu.uni.lab.model;
 
-import java.util.Objects;
-
+import edu.uni.lab.utility.Texture;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import edu.uni.lab.utility.Texture;
+
+import java.util.Objects;
 
 public class Manager extends Employee {
 	private final static int MANAGER_WIDTH = 80;
@@ -42,7 +42,7 @@ public class Manager extends Employee {
 		return periodProperty.get();
 	}
 
-	public static SimpleLongProperty getPeriodProperty() {
+	public static SimpleLongProperty periodProperty() {
 		return periodProperty;
 	}
 
@@ -54,7 +54,7 @@ public class Manager extends Employee {
 		return ratioProperty.getValue();
 	}
 
-	public static SimpleDoubleProperty getRatioProperty() {
+	public static SimpleDoubleProperty ratioProperty() {
 		return ratioProperty;
 	}
 
@@ -66,7 +66,7 @@ public class Manager extends Employee {
 		return lifeTimeProperty.getValue();
 	}
 
-	public static SimpleLongProperty getLifeTimeProperty() {
+	public static SimpleLongProperty lifeTimeProperty() {
 		return lifeTimeProperty;
 	}
 

@@ -1,29 +1,29 @@
 package edu.uni.lab.controller;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.Arrays;
-
-import javafx.animation.AnimationTimer;
-import javafx.beans.binding.Bindings;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.fxml.FXML;
 import edu.uni.lab.model.Developer;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.Manager;
 import edu.uni.lab.utility.NumericField;
+import javafx.animation.AnimationTimer;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Arrays;
 
 public class MainController {
 	private Habitat habitat;
@@ -309,16 +309,16 @@ public class MainController {
 
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Developer.getPeriodProperty()));
+						Developer.periodProperty()));
 		developerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Developer.getLifeTimeProperty()));
+						Developer.lifeTimeProperty()));
 		managerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Manager.getPeriodProperty()));
+						Manager.periodProperty()));
 		managerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Manager.getLifeTimeProperty()));
+						Manager.lifeTimeProperty()));
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());

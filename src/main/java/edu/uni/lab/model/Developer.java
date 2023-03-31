@@ -42,7 +42,7 @@ public class Developer extends Employee {
 		return periodProperty.get();
 	}
 
-	public static SimpleLongProperty getPeriodProperty() {
+	public static SimpleLongProperty periodProperty() {
 		return periodProperty;
 	}
 
@@ -54,7 +54,7 @@ public class Developer extends Employee {
 		return probabilityProperty.getValue();
 	}
 
-	public static SimpleDoubleProperty getProbabilityProperty() {
+	public static SimpleDoubleProperty probabilityProperty() {
 		return probabilityProperty;
 	}
 
@@ -66,7 +66,7 @@ public class Developer extends Employee {
 		return lifeTimeProperty.getValue();
 	}
 
-	public static SimpleLongProperty getLifeTimeProperty() {
+	public static SimpleLongProperty lifeTimeProperty() {
 		return lifeTimeProperty;
 	}
 
