@@ -156,7 +156,7 @@
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button onAction="#callShowObjectsDialog" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 10;" text="Show current objects" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <Button fx:id="showObjectsButton" onAction="#callShowObjectsDialog" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 10;" text="Show current objects" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>

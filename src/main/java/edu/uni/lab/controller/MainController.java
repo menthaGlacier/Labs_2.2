@@ -43,6 +43,8 @@ public class MainController {
 	@FXML
 	private Button stopSimButton;
 	@FXML
+	private Button showObjectsButton;
+	@FXML
 	private RadioButton showTimeRadioButton;
 	@FXML
 	private RadioButton hideTimeRadioButton;
@@ -85,22 +87,6 @@ public class MainController {
 
 		startTime = System.nanoTime();
 		lastUpdateTime = startTime;
-		timer = new AnimationTimer() {
-			static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
-
-			@Override
-			public void handle(long timeNow) {
-				if (timeNow - lastUpdateTime >= nanoSecondsPerFrame) {
-					habitat.update((timeNow - startTime) / 1_000_000);
-					lastUpdateTime = timeNow;
-
-					timeLabel.setText("Time: "
-							+ (lastUpdateTime - startTime) / 1_000_000_000
-							+ "s."
-					);
-				}
-			}
-		};
 
 		timer.start();
 		isActive.setValue(true);
@@ -322,6 +308,7 @@ public class MainController {
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
+		showObjectsButton.disableProperty().bind(isActive.not());
 		timeLabel.visibleProperty().bind(isTimeToggledOn);
 		timeIdle.visibleProperty().bind(isTimeToggledOn.not());
 
@@ -337,5 +324,22 @@ public class MainController {
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
 
 		setKeyActions();
+
+		timer = new AnimationTimer() {
+			static final long nanoSecondsPerFrame = 1_000_000_000 / 60;
+
+			@Override
+			public void handle(long timeNow) {
+				if (timeNow - lastUpdateTime >= nanoSecondsPerFrame) {
+					habitat.update((timeNow - startTime) / 1_000_000);
+					lastUpdateTime = timeNow;
+
+					timeLabel.setText("Time: "
+							+ (lastUpdateTime - startTime) / 1_000_000_000
+							+ "s."
+					);
+				}
+			}
+		};
 	}
 }
