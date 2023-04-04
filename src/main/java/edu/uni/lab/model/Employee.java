@@ -2,9 +2,12 @@ package edu.uni.lab.model;
 
 import javafx.scene.image.ImageView;
 
+import java.util.UUID;
+
 public abstract class Employee implements IBehaviour {
 	protected ImageView imageView;
 	private final long creationTime;
+	private final UUID id;
 	private double x;
 	private double y;
 
@@ -12,6 +15,7 @@ public abstract class Employee implements IBehaviour {
 		this.x = x;
 		this.y = y;
 		this.creationTime = creationTime;
+		this.id = UUID.randomUUID();
 	}
 
 	public ImageView getImageView() {
@@ -20,6 +24,10 @@ public abstract class Employee implements IBehaviour {
 
 	public long getCreationTime() {
 		return creationTime;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 	public double getX() {

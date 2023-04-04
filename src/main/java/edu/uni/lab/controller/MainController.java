@@ -193,7 +193,7 @@ public class MainController {
 	private void callShowObjectsDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
-				.getResource("/edu/uni/lab/fxml/EmployeesDisplayDialog.fxml")));
+				.getResource("/edu/uni/lab/fxml/employeesDisplayDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
 				new EmployeesDisplayDialogController(dialog));
 
