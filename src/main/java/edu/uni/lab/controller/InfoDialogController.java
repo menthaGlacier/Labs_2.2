@@ -1,7 +1,7 @@
 package edu.uni.lab.controller;
 
-import edu.uni.lab.model.Developer;
-import edu.uni.lab.model.Manager;
+import edu.uni.lab.model.employees.Developer;
+import edu.uni.lab.model.employees.Manager;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;

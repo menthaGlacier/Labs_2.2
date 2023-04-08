@@ -1,5 +1,7 @@
-package edu.uni.lab.model;
+package edu.uni.lab.model.employees;
 
+import edu.uni.lab.model.employees.Developer;
+import edu.uni.lab.model.employees.Employee;
 import edu.uni.lab.utility.Texture;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;

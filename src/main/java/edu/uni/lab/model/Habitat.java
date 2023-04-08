@@ -2,6 +2,10 @@ package edu.uni.lab.model;
 
 import java.util.LinkedList;
 import java.util.Random;
+
+import edu.uni.lab.model.employees.Developer;
+import edu.uni.lab.model.employees.Employee;
+import edu.uni.lab.model.employees.Manager;
 import javafx.scene.layout.Pane;
 
 public class Habitat {

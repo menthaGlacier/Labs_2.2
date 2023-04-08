@@ -1,5 +1,6 @@
-package edu.uni.lab.model;
+package edu.uni.lab.model.employees;
 
+import edu.uni.lab.model.IBehaviour;
 import javafx.scene.image.ImageView;
 
 import java.util.UUID;

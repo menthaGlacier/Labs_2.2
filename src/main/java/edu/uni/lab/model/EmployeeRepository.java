@@ -1,5 +1,7 @@
 package edu.uni.lab.model;
 
+import edu.uni.lab.model.employees.Employee;
+
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.TreeSet;

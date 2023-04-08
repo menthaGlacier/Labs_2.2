@@ -1,4 +1,4 @@
-package edu.uni.lab.model;
+package edu.uni.lab.model.employees;
 
 import java.util.Objects;
 
