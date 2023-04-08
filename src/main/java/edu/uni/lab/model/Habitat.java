@@ -1,5 +1,6 @@
 package edu.uni.lab.model;
 
+import java.util.LinkedList;
 import java.util.Random;
 import javafx.scene.layout.Pane;
 
@@ -24,7 +25,8 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
-		for (Employee iterator : employeesRepository.getEmployeesList()) {
+		for (Employee iterator : (LinkedList<Employee>)
+				employeesRepository.getEmployeesList().clone()) {
 			long lifeTime = 0;
 			if (iterator instanceof Developer) {
 				lifeTime = Developer.getLifeTime();
@@ -73,8 +75,8 @@ public class Habitat {
 	}
 
 	private void removeEmployee(Employee employee) {
-		employeesRepository.remove(employee);
 		habitatArea.getChildren().remove(employee.getImageView());
+		employeesRepository.remove(employee);
 		if (employee instanceof Developer) {
 			developersCounter -= 1;
 		} else if (employee instanceof Manager) {
