@@ -13,11 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class EmployeesDisplayDialogController {
+public class ShowObjectsDialogController {
 	private static class TableData {
 		private final ObjectProperty<UUID> id;
 		private final LongProperty creationTime;
-		private int a;
 
 		public TableData(UUID id, long creationTime) {
 			this.id = new SimpleObjectProperty<>(id);
@@ -51,7 +50,7 @@ public class EmployeesDisplayDialogController {
 	@FXML
 	private TableColumn<TableData, Long> creationTimeColumn;
 
-	public EmployeesDisplayDialogController(Stage stage) {
+	public ShowObjectsDialogController(Stage stage) {
 		this.stage = stage;
 		this.dataMap = EmployeeRepository.getInstance().getEmployeesCreationTime();
 	}
