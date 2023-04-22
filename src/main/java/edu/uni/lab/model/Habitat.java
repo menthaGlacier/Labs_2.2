@@ -18,8 +18,10 @@ public class Habitat {
 	private final EmployeeRepository employeesRepository;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
-	private long lastDeveloperGenerationTime = 0;
-	private long lastManagerGenerationTime = 0;
+	private long lastDeveloperGeneration = 0;
+	private long lastDeveloperGenerationTry = 0;
+	private long lastManagerGeneration = 0;
+	private long lastManagerGenerationTry = 0;
 
 	private final Random random = new Random();
 
@@ -43,28 +45,35 @@ public class Habitat {
 			}
 		}
 
-		if (elapsedTime - lastDeveloperGenerationTime >= Developer.getPeriod()
-				&& random.nextDouble() <= Developer.getProbability()) {
-			addEmployee(new Developer(
-					random.nextDouble() * (habitatArea.getWidth()
-							- Developer.getTexture().getWidth()),
-					random.nextDouble() * (habitatArea.getHeight()
-							- Developer.getTexture().getHeight()),
-					elapsedTime));
+		if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
+			lastDeveloperGenerationTry = elapsedTime;
+			if (elapsedTime - lastDeveloperGeneration >= Developer.getPeriod()
+					&& random.nextDouble() <= Developer.getProbability()) {
+				addEmployee(new Developer(
+						random.nextDouble() * (habitatArea.getWidth()
+								- Developer.getTexture().getWidth()),
+						random.nextDouble() * (habitatArea.getHeight()
+								- Developer.getTexture().getHeight()),
+						elapsedTime)
+				);
 
-			lastDeveloperGenerationTime = elapsedTime;
+				lastDeveloperGeneration = elapsedTime;
+			}
 		}
 
-		if (elapsedTime - lastManagerGenerationTime >= Manager.getPeriod()
-				&& managersCounter <= developersCounter * Manager.getRatio()) {
-			addEmployee(new Manager(
-					random.nextDouble() * (habitatArea.getWidth()
-							- Manager.getTexture().getWidth()),
-					random.nextDouble() * (habitatArea.getHeight()
-							- Manager.getTexture().getHeight()),
-					elapsedTime));
+		if (elapsedTime - lastManagerGenerationTry >= Manager.getPeriod()) {
+			lastManagerGenerationTry = elapsedTime;
+			if (elapsedTime - lastManagerGeneration >= Manager.getPeriod()
+					&& managersCounter <= developersCounter * Manager.getRatio()) {
+				addEmployee(new Manager(
+						random.nextDouble() * (habitatArea.getWidth()
+								- Manager.getTexture().getWidth()),
+						random.nextDouble() * (habitatArea.getHeight()
+								- Manager.getTexture().getHeight()),
+						elapsedTime));
 
-			lastManagerGenerationTime = elapsedTime;
+				lastManagerGeneration = elapsedTime;
+			}
 		}
 	}
 
