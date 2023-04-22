@@ -101,7 +101,8 @@ public class MainController {
 		timer.stop();
 
 		if (isInfoDialogAllowed.getValue()) {
-			final BooleanProperty stopSimulationProperty = new SimpleBooleanProperty(false);
+			final BooleanProperty stopSimulationProperty
+					= new SimpleBooleanProperty(false);
 			callInfoDialog(stopSimulationProperty);
 			if (!(stopSimulationProperty.getValue())) {
 				timer.start();
@@ -152,7 +153,7 @@ public class MainController {
 		DecimalFormat parser = new DecimalFormat("0'%'");
 		try {
 			Developer.setProbability(parser.parse(developerProbabilityComboBox
-					.getSelectionModel().getSelectedItem()).doubleValue());
+					.getSelectionModel().getSelectedItem()).doubleValue() / 100);
 		} catch (ParseException ignored) {}
 	}
 
@@ -185,7 +186,7 @@ public class MainController {
 		DecimalFormat parser = new DecimalFormat("0'%'");
 		try {
 			Manager.setRatio(parser.parse(managerRatioComboBox
-					.getSelectionModel().getSelectedItem()).doubleValue());
+					.getSelectionModel().getSelectedItem()).doubleValue() / 100);
 		} catch (ParseException ignored) {}
 	}
 
