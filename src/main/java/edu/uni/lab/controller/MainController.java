@@ -1,5 +1,6 @@
 package edu.uni.lab.controller;
 
+import edu.uni.lab.model.ai.DeveloperAi;
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.employees.Manager;
@@ -27,6 +28,7 @@ import java.util.Arrays;
 
 public class MainController {
 	private Habitat habitat;
+	private DeveloperAi developerAi;
 	private AnimationTimer timer;
 	private long startTime;
 	private long lastUpdateTime = 0;

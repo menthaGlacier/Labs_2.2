@@ -9,12 +9,40 @@ import javafx.scene.image.ImageView;
 import edu.uni.lab.utility.Texture;
 
 public class Developer extends Employee {
+	public enum HorizontalDirection {
+		NONE(0), LEFT(-1), RIGHT(1);
+		private final int value;
+
+		private HorizontalDirection(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
+	public enum VerticalDirection {
+		NONE(0), DOWN(-1), UP(1);
+		private final int value;
+
+		private VerticalDirection(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
 	private final static Texture texture;
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty probabilityProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
+	private HorizontalDirection horizontalDirection;
+	private VerticalDirection verticalDirection;
 
 	static {
 		periodProperty = new SimpleLongProperty(5_000);
@@ -72,5 +100,21 @@ public class Developer extends Employee {
 
 	public static void setLifeTime(long lifeTime) {
 		lifeTimeProperty.setValue(lifeTime);
+	}
+
+	public HorizontalDirection getHorizontalDirection() {
+		return horizontalDirection;
+	}
+
+	public void setHorizontalDirection(HorizontalDirection horizontalDirection) {
+		this.horizontalDirection = horizontalDirection;
+	}
+
+	public VerticalDirection getVerticalDirection() {
+		return verticalDirection;
+	}
+
+	public void setVerticalDirection(VerticalDirection verticalDirection) {
+		this.verticalDirection = verticalDirection;
 	}
 }

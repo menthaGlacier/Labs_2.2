@@ -1,14 +1,15 @@
 package edu.uni.lab.model.employees;
 
-import edu.uni.lab.model.IBehaviour;
 import javafx.scene.image.ImageView;
 
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Employee implements IBehaviour {
+public abstract class Employee {
 	protected ImageView imageView;
 	private final long creationTime;
 	private final UUID id;
+	private double velocity;
 	private double x;
 	private double y;
 
@@ -17,6 +18,7 @@ public abstract class Employee implements IBehaviour {
 		this.y = y;
 		this.creationTime = creationTime;
 		this.id = UUID.randomUUID();
+		this.velocity = ThreadLocalRandom.current().nextDouble();
 	}
 
 	public ImageView getImageView() {
@@ -31,12 +33,21 @@ public abstract class Employee implements IBehaviour {
 		return id;
 	}
 
+	public double getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(double velocity) {
+		this.velocity = velocity;
+	}
+
 	public double getX() {
 		return x;
 	}
 
 	public void setX(double x) {
 		this.x = x;
+		imageView.setX(x);
 	}
 
 	public double getY() {
@@ -45,5 +56,6 @@ public abstract class Employee implements IBehaviour {
 
 	public void setY(double y) {
 		this.y = y;
+		imageView.setY(y);
 	}
 }
