@@ -1,8 +1,6 @@
 package edu.uni.lab.model;
 
-import java.util.LinkedList;
 import java.util.Random;
-import java.util.concurrent.locks.ReentrantLock;
 
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.employees.Employee;
@@ -32,9 +30,7 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
-		ReentrantLock listLock = new ReentrantLock();
-		listLock.lock();
-		try {
+		synchronized (employeesRepository.getEmployeesList()) {
 			for (Employee iterator : employeesRepository.getEmployeesList()) {
 				long lifeTime = 0;
 				if (iterator instanceof Developer) {
@@ -47,8 +43,6 @@ public class Habitat {
 					removeEmployee(iterator);
 				}
 			}
-		} finally {
-			listLock.unlock();
 		}
 
 		if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
