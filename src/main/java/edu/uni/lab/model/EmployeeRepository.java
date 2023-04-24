@@ -10,12 +10,12 @@ import java.util.UUID;
 public class EmployeeRepository {
 	private static final EmployeeRepository instance = new EmployeeRepository();
 	private final LinkedList<Employee> employees;
-	private final TreeSet<UUID> employeesID;
+	private final TreeSet<UUID> employeesId;
 	private final HashMap<UUID, Long> employeesCreationTime;
 
 	private EmployeeRepository() {
 		employees = new LinkedList<>();
-		employeesID = new TreeSet<>();
+		employeesId = new TreeSet<>();
 		employeesCreationTime = new HashMap<>();
 	}
 
@@ -23,12 +23,12 @@ public class EmployeeRepository {
 		return instance;
 	}
 
-	public LinkedList<Employee> getEmployeesList() {
+	public LinkedList<Employee> employeesList() {
 		return employees;
 	}
 
-	public TreeSet<UUID> getEmployeesID() {
-		return employeesID;
+	public TreeSet<UUID> employeesId() {
+		return employeesId;
 	}
 
 	public HashMap<UUID, Long> getEmployeesCreationTime() {
@@ -37,13 +37,13 @@ public class EmployeeRepository {
 
 	public void add(Employee employee) {
 		employees.add(employee);
-		employeesID.add(employee.getId());
+		employeesId.add(employee.getId());
 		employeesCreationTime.put(employee.getId(), employee.getCreationTime());
 	}
 
 	public void remove(Employee employee) {
 		employees.remove(employee);
-		employeesID.remove(employee.getId());
+		employeesId.remove(employee.getId());
 		employeesCreationTime.remove(employee.getId());
 	}
 

@@ -30,8 +30,8 @@ public class Habitat {
 	}
 
 	public void update(long elapsedTime) {
-		synchronized (employeesRepository.getEmployeesList()) {
-			for (Employee iterator : employeesRepository.getEmployeesList()) {
+		synchronized (employeesRepository.employeesList()) {
+			for (Employee iterator : employeesRepository.employeesList()) {
 				long lifeTime = 0;
 				if (iterator instanceof Developer) {
 					lifeTime = Developer.getLifeTime();
