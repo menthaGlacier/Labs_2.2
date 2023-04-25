@@ -1,5 +1,7 @@
 package edu.uni.lab.model;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import edu.uni.lab.model.employees.Developer;
@@ -14,7 +16,7 @@ public class Habitat {
 	public static final int LIFETIME_MAX = 1_000_000;
 
 	private final Pane habitatArea;
-	private final EmployeeRepository employeesRepository;
+	private final EmployeeRepository employees;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
 	private long lastDeveloperGeneration = 0;
@@ -26,12 +28,14 @@ public class Habitat {
 
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
-		employeesRepository = EmployeeRepository.getInstance();
+		employees = EmployeeRepository.getInstance();
 	}
 
 	public void update(long elapsedTime) {
-		synchronized (employeesRepository.employeesList()) {
-			for (Employee iterator : employeesRepository.employeesList()) {
+		synchronized (employees.employeesList()) {
+			LinkedList<Employee> clone = (LinkedList<Employee>)
+					employees.employeesList().clone();
+			for (Employee iterator : clone) {
 				long lifeTime = 0;
 				if (iterator instanceof Developer) {
 					lifeTime = Developer.getLifeTime();
@@ -43,42 +47,42 @@ public class Habitat {
 					removeEmployee(iterator);
 				}
 			}
-		}
 
-		if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
-			lastDeveloperGenerationTry = elapsedTime;
-			if (elapsedTime - lastDeveloperGeneration >= Developer.getPeriod()
-					&& random.nextDouble() <= Developer.getProbability()) {
-				addEmployee(new Developer(
-						random.nextDouble() * (habitatArea.getWidth()
-								- Developer.getTexture().getWidth()),
-						random.nextDouble() * (habitatArea.getHeight()
-								- Developer.getTexture().getHeight()),
-						elapsedTime)
-				);
+			if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
+				lastDeveloperGenerationTry = elapsedTime;
+				if (elapsedTime - lastDeveloperGeneration >= Developer.getPeriod()
+						&& random.nextDouble() <= Developer.getProbability()) {
+					addEmployee(new Developer(
+							random.nextDouble() * (habitatArea.getWidth()
+									- Developer.getTexture().getWidth()),
+							random.nextDouble() * (habitatArea.getHeight()
+									- Developer.getTexture().getHeight()),
+							elapsedTime)
+					);
 
-				lastDeveloperGeneration = elapsedTime;
+					lastDeveloperGeneration = elapsedTime;
+				}
 			}
-		}
 
-		if (elapsedTime - lastManagerGenerationTry >= Manager.getPeriod()) {
-			lastManagerGenerationTry = elapsedTime;
-			if (elapsedTime - lastManagerGeneration >= Manager.getPeriod()
-					&& managersCounter <= developersCounter * Manager.getRatio()) {
-				addEmployee(new Manager(
-						random.nextDouble() * (habitatArea.getWidth()
-								- Manager.getTexture().getWidth()),
-						random.nextDouble() * (habitatArea.getHeight()
-								- Manager.getTexture().getHeight()),
-						elapsedTime));
+			if (elapsedTime - lastManagerGenerationTry >= Manager.getPeriod()) {
+				lastManagerGenerationTry = elapsedTime;
+				if (elapsedTime - lastManagerGeneration >= Manager.getPeriod()
+						&& managersCounter <= developersCounter * Manager.getRatio()) {
+					addEmployee(new Manager(
+							random.nextDouble() * (habitatArea.getWidth()
+									- Manager.getTexture().getWidth()),
+							random.nextDouble() * (habitatArea.getHeight()
+									- Manager.getTexture().getHeight()),
+							elapsedTime));
 
-				lastManagerGeneration = elapsedTime;
+					lastManagerGeneration = elapsedTime;
+				}
 			}
 		}
 	}
 
 	private void addEmployee(Employee employee) {
-		employeesRepository.add(employee);
+		employees.add(employee);
 		habitatArea.getChildren().add(employee.getImageView());
 		if (employee instanceof Developer) {
 			developersCounter += 1;
@@ -89,7 +93,7 @@ public class Habitat {
 
 	private void removeEmployee(Employee employee) {
 		habitatArea.getChildren().remove(employee.getImageView());
-		employeesRepository.remove(employee);
+		employees.remove(employee);
 		if (employee instanceof Developer) {
 			developersCounter -= 1;
 		} else if (employee instanceof Manager) {
