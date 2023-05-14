@@ -1,6 +1,7 @@
 package edu.uni.lab.model.employees;
 
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import edu.uni.lab.utility.Texture;
 
 public class Developer extends Employee {
+/*
 	public enum HorizontalDirection {
 		NONE(0), LEFT(-1), RIGHT(1);
 		private final int value;
@@ -34,6 +36,7 @@ public class Developer extends Employee {
 			return value;
 		}
 	}
+ */
 
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
@@ -41,8 +44,11 @@ public class Developer extends Employee {
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty probabilityProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
-	private HorizontalDirection horizontalDirection;
-	private VerticalDirection verticalDirection;
+	private final static long trajectoryChangePeriod = 1000;
+	//private HorizontalDirection horizontalDirection;
+	//private VerticalDirection verticalDirection;
+	private long lastTrajectoryChange = getCreationTime();
+	private double velocityX, velocityY;
 
 	static {
 		periodProperty = new SimpleLongProperty(5_000);
@@ -60,6 +66,20 @@ public class Developer extends Employee {
 		imageView = new ImageView(texture.getImage());
 		imageView.setX(x);
 		imageView.setY(y);
+	}
+
+	@Override
+	public void move() {
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastTrajectoryChange >= trajectoryChangePeriod) {
+			velocityX = ThreadLocalRandom.current().nextDouble();
+			velocityY = ThreadLocalRandom.current().nextDouble();
+			lastTrajectoryChange = currentTime;
+			//System.out.println("changed");
+		}
+		setX(getX() + velocityX);
+		setY(getY() + velocityY);
+		//System.out.println("moved");
 	}
 
 	public static Texture getTexture() {
@@ -102,6 +122,7 @@ public class Developer extends Employee {
 		lifeTimeProperty.setValue(lifeTime);
 	}
 
+/*
 	public HorizontalDirection getHorizontalDirection() {
 		return horizontalDirection;
 	}
@@ -117,4 +138,6 @@ public class Developer extends Employee {
 	public void setVerticalDirection(VerticalDirection verticalDirection) {
 		this.verticalDirection = verticalDirection;
 	}
+
+ */
 }

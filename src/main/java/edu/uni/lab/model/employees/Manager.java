@@ -29,6 +29,11 @@ public class Manager extends Employee {
 				MANAGER_WIDTH, MANAGER_HEIGHT);
 	}
 
+	@Override
+	public void move() {
+
+	}
+
 	public Manager(double x, double y, long creationTime) {
 		super(x, y, creationTime);
 		imageView = new ImageView(texture.getImage());

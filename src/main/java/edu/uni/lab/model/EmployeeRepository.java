@@ -35,13 +35,13 @@ public class EmployeeRepository {
 		return employeesCreationTime;
 	}
 
-	public void add(Employee employee) {
+	public synchronized void add(Employee employee) {
 		employees.add(employee);
 		employeesId.add(employee.getId());
 		employeesCreationTime.put(employee.getId(), employee.getCreationTime());
 	}
 
-	public void remove(Employee employee) {
+	public synchronized void remove(Employee employee) {
 		employees.remove(employee);
 		employeesId.remove(employee.getId());
 		employeesCreationTime.remove(employee.getId());
@@ -51,7 +51,9 @@ public class EmployeeRepository {
 		return employees.size();
 	}
 
-	public void clear() {
+	public synchronized void clear() {
 		employees.clear();
+		employeesId.clear();
+		employeesCreationTime.clear();
 	}
 }

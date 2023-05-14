@@ -3,6 +3,7 @@ package edu.uni.lab;
 import edu.uni.lab.controller.MainControllerFactory;
 import edu.uni.lab.controller.MainController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,6 +34,10 @@ public class Main extends Application {
 		stage.setOnShown(controller::setup);
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
+		stage.setOnCloseRequest(event -> {
+			Platform.exit();
+			System.exit(0);
+		});
 		stage.setScene(scene);
 		stage.show();
 	}
