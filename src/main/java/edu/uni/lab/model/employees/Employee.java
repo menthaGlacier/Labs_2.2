@@ -9,12 +9,16 @@ public abstract class Employee implements IBehaviour {
 	protected ImageView imageView;
 	private final long creationTime;
 	private final UUID id;
+	protected final double habitatAreaWidth, habitatAreaHeight;
 	private double x, y;
 
-	public Employee(double x, double y, long creationTime) {
+	public Employee(double x, double y, long creationTime,
+					double habitatAreaWidth, double habitatAreaHeight) {
 		this.x = x;
 		this.y = y;
 		this.creationTime = creationTime;
+		this.habitatAreaWidth = habitatAreaWidth;
+		this.habitatAreaHeight = habitatAreaHeight;
 		this.id = UUID.randomUUID();
 	}
 
@@ -36,7 +40,9 @@ public abstract class Employee implements IBehaviour {
 
 	public void setX(double x) {
 		this.x = x;
-		imageView.setX(x);
+		synchronized (imageView) {
+			imageView.setX(x);
+		}
 	}
 
 	public double getY() {
@@ -45,6 +51,8 @@ public abstract class Employee implements IBehaviour {
 
 	public void setY(double y) {
 		this.y = y;
-		imageView.setY(y);
+		synchronized (imageView) {
+			imageView.setY(y);
+		}
 	}
 }

@@ -47,16 +47,19 @@ public class Habitat {
 				++i;
 			}
 
+			final double habitatAreaWidth = habitatArea.getWidth(),
+					habitatAreaHeight = habitatArea.getHeight();
+
 			if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
 				lastDeveloperGenerationTry = elapsedTime;
 				if (elapsedTime - lastDeveloperGeneration >= Developer.getPeriod()
 						&& random.nextDouble() <= Developer.getProbability()) {
 					addEmployee(new Developer(
-							random.nextDouble() * (habitatArea.getWidth()
+							random.nextDouble() * (habitatAreaWidth
 									- Developer.getTexture().getWidth()),
-							random.nextDouble() * (habitatArea.getHeight()
+							random.nextDouble() * (habitatAreaHeight
 									- Developer.getTexture().getHeight()),
-							elapsedTime)
+							elapsedTime, habitatAreaWidth, habitatAreaHeight)
 					);
 
 					lastDeveloperGeneration = elapsedTime;
@@ -68,11 +71,11 @@ public class Habitat {
 				if (elapsedTime - lastManagerGeneration >= Manager.getPeriod()
 						&& managersCounter <= developersCounter * Manager.getRatio()) {
 					addEmployee(new Manager(
-							random.nextDouble() * (habitatArea.getWidth()
+							random.nextDouble(0, habitatAreaWidth
 									- Manager.getTexture().getWidth()),
-							random.nextDouble() * (habitatArea.getHeight()
+							random.nextDouble(0,habitatAreaHeight
 									- Manager.getTexture().getHeight()),
-							elapsedTime));
+							elapsedTime, habitatAreaWidth, habitatAreaHeight));
 
 					lastManagerGeneration = elapsedTime;
 				}

@@ -34,8 +34,9 @@ public class Manager extends Employee {
 
 	}
 
-	public Manager(double x, double y, long creationTime) {
-		super(x, y, creationTime);
+	public Manager(double x, double y, long creationTime,
+				   double habitatAreaWidth, double habitatAreaHeight) {
+		super(x, y, creationTime, habitatAreaWidth, habitatAreaHeight);
 		imageView = new ImageView(texture.getImage());
 		imageView.setX(x);
 		imageView.setY(y);

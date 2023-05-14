@@ -22,9 +22,9 @@ public class Developer extends Employee {
 	private final static double maxVelocity = 10.0;
 
 	static {
-		periodProperty = new SimpleLongProperty(5_000);
-		probabilityProperty = new SimpleDoubleProperty(0.1);
-		lifeTimeProperty = new SimpleLongProperty(20_000);
+		periodProperty = new SimpleLongProperty(1_000);
+		probabilityProperty = new SimpleDoubleProperty(0.5);
+		lifeTimeProperty = new SimpleLongProperty(5_000);
 
 		texture = new Texture(new Image(Objects.requireNonNull(Developer.class
 				.getResourceAsStream("/edu/uni/lab/images/developer.gif")),
@@ -32,8 +32,9 @@ public class Developer extends Employee {
 				DEVELOPER_WIDTH, DEVELOPER_HEIGHT);
 	}
 
-	public Developer(double x, double y, long creationTime) {
-		super(x, y, creationTime);
+	public Developer(double x, double y, long creationTime,
+					 double habitatAreaWidth, double habitatAreaHeight) {
+		super(x, y, creationTime, habitatAreaWidth, habitatAreaHeight);
 		imageView = new ImageView(texture.getImage());
 		imageView.setX(x);
 		imageView.setY(y);
@@ -48,10 +49,25 @@ public class Developer extends Employee {
 			velocityX = getRandomVelocity();
 			velocityY = getRandomVelocity();
 			lastTrajectoryChange = currentTime;
-			//System.out.println("changed");
 		}
-		setX(getX() + velocityX);
-		setY(getY() + velocityY);
+
+		if (getX() + velocityX < 0.0) {
+			velocityX *= -1.0;
+			setX(velocityX - getX());
+		} else if (getX() + velocityX > habitatAreaWidth - getTexture().getWidth()) {
+			velocityX *= -1.0;
+			double border = habitatAreaWidth - getTexture().getWidth();
+			setX(border + velocityX + border - getX());
+		} else { setX(getX() + velocityX); }
+
+		if (getY() + velocityY < 0.0) {
+			velocityY *= -1.0;
+			setY(velocityY - getY());
+		} else if (getY() + velocityY > habitatAreaHeight - getTexture().getHeight()) {
+			velocityY *= -1.0;
+			double border = habitatAreaHeight - getTexture().getHeight();
+			setY(border + velocityY + border - getY());
+		} else { setY(getY() + velocityY); }
 		//System.out.println("moved");
 	}
 
