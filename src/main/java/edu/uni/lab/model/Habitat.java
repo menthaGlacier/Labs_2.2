@@ -1,7 +1,5 @@
 package edu.uni.lab.model;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 import edu.uni.lab.model.employees.Developer;
@@ -33,19 +31,20 @@ public class Habitat {
 
 	public void update(long elapsedTime) {
 		synchronized (employees.employeesList()) {
-			LinkedList<Employee> clone = (LinkedList<Employee>)
-					employees.employeesList().clone();
-			for (Employee iterator : clone) {
+			for (int i = 0; i < employees.size();) {
+				Employee iteratingEmployee = employees.employeesList().get(i);
 				long lifeTime = 0;
-				if (iterator instanceof Developer) {
+				if (iteratingEmployee instanceof Developer) {
 					lifeTime = Developer.getLifeTime();
-				} else if (iterator instanceof Manager) {
+				} else if (iteratingEmployee instanceof Manager) {
 					lifeTime = Manager.getLifeTime();
 				}
 
-				if (elapsedTime - iterator.getCreationTime() >= lifeTime) {
-					removeEmployee(iterator);
+				if (elapsedTime - iteratingEmployee.getCreationTime() >= lifeTime) {
+					removeEmployee(iteratingEmployee);
+					continue;
 				}
+				++i;
 			}
 
 			if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
