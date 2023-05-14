@@ -10,34 +10,6 @@ import javafx.scene.image.ImageView;
 import edu.uni.lab.utility.Texture;
 
 public class Developer extends Employee {
-/*
-	public enum HorizontalDirection {
-		NONE(0), LEFT(-1), RIGHT(1);
-		private final int value;
-
-		private HorizontalDirection(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
-	}
-
-	public enum VerticalDirection {
-		NONE(0), DOWN(-1), UP(1);
-		private final int value;
-
-		private VerticalDirection(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
-	}
- */
-
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
 	private final static Texture texture;
@@ -45,10 +17,9 @@ public class Developer extends Employee {
 	private final static SimpleDoubleProperty probabilityProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
 	private final static long trajectoryChangePeriod = 1000;
-	//private HorizontalDirection horizontalDirection;
-	//private VerticalDirection verticalDirection;
 	private long lastTrajectoryChange = getCreationTime();
 	private double velocityX, velocityY;
+	private final static double maxVelocity = 10.0;
 
 	static {
 		periodProperty = new SimpleLongProperty(5_000);
@@ -66,14 +37,16 @@ public class Developer extends Employee {
 		imageView = new ImageView(texture.getImage());
 		imageView.setX(x);
 		imageView.setY(y);
+		velocityX = getRandomVelocity();
+		velocityY = getRandomVelocity();
 	}
 
 	@Override
 	public void move() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastTrajectoryChange >= trajectoryChangePeriod) {
-			velocityX = ThreadLocalRandom.current().nextDouble();
-			velocityY = ThreadLocalRandom.current().nextDouble();
+			velocityX = getRandomVelocity();
+			velocityY = getRandomVelocity();
 			lastTrajectoryChange = currentTime;
 			//System.out.println("changed");
 		}
@@ -81,6 +54,8 @@ public class Developer extends Employee {
 		setY(getY() + velocityY);
 		//System.out.println("moved");
 	}
+
+	private double getRandomVelocity() { return ThreadLocalRandom.current().nextDouble(-maxVelocity, maxVelocity); }
 
 	public static Texture getTexture() {
 		return texture;
@@ -121,23 +96,4 @@ public class Developer extends Employee {
 	public static void setLifeTime(long lifeTime) {
 		lifeTimeProperty.setValue(lifeTime);
 	}
-
-/*
-	public HorizontalDirection getHorizontalDirection() {
-		return horizontalDirection;
-	}
-
-	public void setHorizontalDirection(HorizontalDirection horizontalDirection) {
-		this.horizontalDirection = horizontalDirection;
-	}
-
-	public VerticalDirection getVerticalDirection() {
-		return verticalDirection;
-	}
-
-	public void setVerticalDirection(VerticalDirection verticalDirection) {
-		this.verticalDirection = verticalDirection;
-	}
-
- */
 }
