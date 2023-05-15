@@ -94,6 +94,8 @@ public class MainController {
 	private Label managerAiStatusLabel;
 	@FXML
 	private Button managerAiStopButton;
+	@FXML
+	private ChoiceBox managerAiChoiceBox;
 
 	public MainController() {
 		developerAi = new DeveloperAi();
@@ -383,9 +385,31 @@ public class MainController {
 				.when(developerAi.running())
 				.then("Status: active").otherwise("Status: inactive"));
 
+		managerAiStartButton.disableProperty().bind(managerAi.running());
+		managerAiStopButton.disableProperty().bind(managerAi.running().not());
+		managerAiStatusLabel.textProperty().bind(Bindings
+				.when(managerAi.running())
+				.then("Status: active").otherwise("Status: inactive"));
+
 		developerAiChoiceBox.setItems(FXCollections
-				.observableArrayList("Minimal", "Normal", "Maximum"));
-		developerAiChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+					.observableArrayList("Minimal", "Normal", "Maximum"));
+		developerAiChoiceBox.getSelectionModel().selectedItemProperty()
+					.addListener((observable, oldValue, newValue) -> {
+			if (newValue.equals("Minimal")) {
+				//Thread.MIN_PRIORITY;
+			} else if (newValue.equals("Regular")) {
+				//Thread.NORM_PRIORITY;
+			} else if (newValue.equals("Maximum")) {
+				//Thread.MAX_PRIORITY;
+			} else {
+				//Thread.NORM_PRIORITY;
+			}
+		});
+
+		managerAiChoiceBox.setItems(FXCollections
+					.observableArrayList("Minimal", "Normal", "Maximum"));
+		managerAiChoiceBox.getSelectionModel().selectedItemProperty()
+					.addListener((observable, oldValue, newValue) -> {
 			if (newValue.equals("Minimal")) {
 				//Thread.MIN_PRIORITY;
 			} else if (newValue.equals("Regular")) {

@@ -97,7 +97,7 @@
                 <Button fx:id="developerAiStartButton" layoutX="195.0" layoutY="35.0" onAction="#onDeveloperAiStartButtonClick" prefHeight="26.0" prefWidth="125.0" text="Start" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                 <Button fx:id="developerAiStopButton" onAction="#onDeveloperAiStopButtonClick" prefHeight="26.0" prefWidth="125.0" text="Stop" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             </GridPane>
-         <VBox prefWidth="400.0" style="-fx-padding: 0 0 0 10;">
+            <VBox prefWidth="400.0" style="-fx-padding: 0 0 0 10;">
              <Label style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Priority:">
                  <font>
                      <Font size="18.0" />
@@ -107,9 +107,9 @@
                  </padding>
              </Label>
              <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" />
-         </VBox>
+            </VBox>
         </VBox>
-        <VBox fillWidth="false" layoutX="20.0" layoutY="20.0" prefHeight="290.0" prefWidth="275.0" spacing="10.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox fillWidth="false" layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="275.0" spacing="10.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <Label alignment="CENTER" prefWidth="280.0" text="Managers">
                 <font>
                     <Font name="System Bold" size="20.0" />
@@ -195,6 +195,17 @@
                 <Button fx:id="managerAiStartButton" layoutX="195.0" layoutY="35.0" onAction="#onManagerAiStartButtonClick" prefHeight="26.0" prefWidth="125.0" text="Start" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
                 <Button fx:id="managerAiStopButton" onAction="#onManagerAiStopButtonClick" prefHeight="26.0" prefWidth="125.0" text="Stop" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             </GridPane>
+            <VBox prefWidth="400.0" style="-fx-padding: 0 0 0 10;">
+                <Label style="-fx-background-color: #C30052; -fx-background-radius: 5;" text="Priority:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding>
+                </Label>
+                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" />
+            </VBox>
         </VBox>
         <GridPane prefHeight="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <columnConstraints>
