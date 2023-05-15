@@ -366,8 +366,13 @@ public class MainController {
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
 
-		developerAiStartButton.disableProperty().bind(developerAi.running().not());
 		developerAiStartButton.disableProperty().bind(developerAi.running());
+		developerAiStopButton.disableProperty().bind(developerAi.running().not());
+		developerAiStatusLabel.textProperty().bind(Bindings
+				.when(developerAi.running())
+				.then("Status: active").otherwise("Status: inactive"));
+
+
 
 		setKeyActions();
 
