@@ -10,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -83,6 +84,8 @@ public class MainController {
 	private Button developerAiStartButton;
 	@FXML
 	private Button developerAiStopButton;
+	@FXML
+	private ChoiceBox developerAiChoiceBox;
 	@FXML
 	private Button managerAiStartButton;
 	@FXML
@@ -372,7 +375,19 @@ public class MainController {
 				.when(developerAi.running())
 				.then("Status: active").otherwise("Status: inactive"));
 
-
+		developerAiChoiceBox.setItems(FXCollections
+				.observableArrayList("Minimal", "Normal", "Maximum"));
+		developerAiChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.equals("Minimal")) {
+				//Thread.MIN_PRIORITY;
+			} else if (newValue.equals("Regular")) {
+				//Thread.NORM_PRIORITY;
+			} else if (newValue.equals("Maximum")) {
+				//Thread.MAX_PRIORITY;
+			} else {
+				//Thread.NORM_PRIORITY;
+			}
+		});
 
 		setKeyActions();
 
