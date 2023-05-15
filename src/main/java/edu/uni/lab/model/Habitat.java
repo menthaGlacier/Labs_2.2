@@ -44,6 +44,7 @@ public class Habitat {
 					removeEmployee(iteratingEmployee);
 					continue;
 				}
+
 				++i;
 			}
 
@@ -106,6 +107,7 @@ public class Habitat {
 			managersCounter -= 1;
 		}
 	}
+
 	public int getDevelopersCounter() {
 		return developersCounter;
 	}

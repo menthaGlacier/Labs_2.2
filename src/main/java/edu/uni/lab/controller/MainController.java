@@ -11,6 +11,7 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -79,8 +80,24 @@ public class MainController {
 	private NumericField managerLifeTimeField;
 	@FXML
 	private ComboBox<String> managerRatioComboBox;
+	@FXML
+	private Label developerAiStatusLabel;
+	@FXML
+	private Button developerAiStartButton;
+	@FXML
+	private Button developerAiStopButton;
+	@FXML
+	private ChoiceBox developerAiChoiceBox;
+	@FXML
+	private Button managerAiStartButton;
+	@FXML
+	private Label managerAiStatusLabel;
+	@FXML
+	private Button managerAiStopButton;
 
 	public MainController() {
+		developerAi = new DeveloperAi();
+		managerAi = new ManagerAi();
 	}
 
 	@FXML
@@ -95,8 +112,6 @@ public class MainController {
 
 		timer.start();
 		isActive.setValue(true);
-		developerAi = new DeveloperAi();
-		managerAi = new ManagerAi();
 		developerAi.enable();
 		managerAi.enable();
 	}
@@ -202,6 +217,26 @@ public class MainController {
 			Manager.setRatio(parser.parse(managerRatioComboBox
 					.getSelectionModel().getSelectedItem()).doubleValue() / 100);
 		} catch (ParseException ignored) {}
+	}
+
+	@FXML
+	private void onDeveloperAiStartButtonClick() {
+		developerAi.enable();
+	}
+
+	@FXML
+	private void onDeveloperAiStopButtonClick() {
+		developerAi.disable();
+	}
+
+	@FXML
+	private void onManagerAiStartButtonClick() {
+		managerAi.enable();
+	}
+
+	@FXML
+	private void onManagerAiStopButtonClick() {
+		managerAi.disable();
 	}
 
 	@FXML
@@ -314,16 +349,16 @@ public class MainController {
 
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Developer.periodProperty()));
+						Developer.period()));
 		developerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Developer.lifeTimeProperty()));
+						Developer.lifeTime()));
 		managerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Manager.periodProperty()));
+						Manager.period()));
 		managerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Manager.lifeTimeProperty()));
+						Manager.lifeTime()));
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
@@ -341,6 +376,26 @@ public class MainController {
 							"60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
+
+		developerAiStartButton.disableProperty().bind(developerAi.running());
+		developerAiStopButton.disableProperty().bind(developerAi.running().not());
+		developerAiStatusLabel.textProperty().bind(Bindings
+				.when(developerAi.running())
+				.then("Status: active").otherwise("Status: inactive"));
+
+		developerAiChoiceBox.setItems(FXCollections
+				.observableArrayList("Minimal", "Normal", "Maximum"));
+		developerAiChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.equals("Minimal")) {
+				//Thread.MIN_PRIORITY;
+			} else if (newValue.equals("Regular")) {
+				//Thread.NORM_PRIORITY;
+			} else if (newValue.equals("Maximum")) {
+				//Thread.MAX_PRIORITY;
+			} else {
+				//Thread.NORM_PRIORITY;
+			}
+		});
 
 		setKeyActions();
 

@@ -82,7 +82,7 @@ public class Manager extends Employee {
 		return periodProperty.get();
 	}
 
-	public static SimpleLongProperty periodProperty() {
+	public static SimpleLongProperty period() {
 		return periodProperty;
 	}
 
@@ -94,7 +94,7 @@ public class Manager extends Employee {
 		return ratioProperty.getValue();
 	}
 
-	public static SimpleDoubleProperty ratioProperty() {
+	public static SimpleDoubleProperty ratio() {
 		return ratioProperty;
 	}
 
@@ -106,7 +106,7 @@ public class Manager extends Employee {
 		return lifeTimeProperty.getValue();
 	}
 
-	public static SimpleLongProperty lifeTimeProperty() {
+	public static SimpleLongProperty lifeTime() {
 		return lifeTimeProperty;
 	}
 

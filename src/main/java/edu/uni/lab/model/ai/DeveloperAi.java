@@ -9,7 +9,9 @@ public class DeveloperAi extends BaseAi {
 	protected void update() {
 		synchronized (employees.employeesList()) {
 			for (Employee iterator : employees.employeesList()) {
-				if (iterator instanceof Developer) { iterator.move(); }
+				if (iterator instanceof Developer) {
+					iterator.move();
+				}
 			}
 		}
 	}
