@@ -85,7 +85,9 @@ public class Habitat {
 
 	private void addEmployee(Employee employee) {
 		employees.add(employee);
-		habitatArea.getChildren().add(employee.getImageView());
+		synchronized (habitatArea) {
+			habitatArea.getChildren().add(employee.getImageView());
+		}
 		if (employee instanceof Developer) {
 			developersCounter += 1;
 		} else if (employee instanceof Manager) {
@@ -94,8 +96,10 @@ public class Habitat {
 	}
 
 	private void removeEmployee(Employee employee) {
-		habitatArea.getChildren().remove(employee.getImageView());
 		employees.remove(employee);
+		synchronized (habitatArea) {
+			habitatArea.getChildren().remove(employee.getImageView());
+		}
 		if (employee instanceof Developer) {
 			developersCounter -= 1;
 		} else if (employee instanceof Manager) {

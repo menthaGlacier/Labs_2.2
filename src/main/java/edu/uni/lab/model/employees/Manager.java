@@ -1,7 +1,5 @@
 package edu.uni.lab.model.employees;
 
-import edu.uni.lab.model.employees.Developer;
-import edu.uni.lab.model.employees.Employee;
 import edu.uni.lab.utility.Texture;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -9,6 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.lang.Math.*;
 
 public class Manager extends Employee {
 	private final static int MANAGER_WIDTH = 80;
@@ -17,6 +18,12 @@ public class Manager extends Employee {
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty ratioProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
+
+	private final static double minRadius = 50.0, maxRadius = 150.0;
+	private final static double maxLinearVelocity = 10.0;
+
+	private final double trajectoryRadius, circleX, circleY;
+	private double angularVelocity, currentAngle;
 
 	static {
 		periodProperty = new SimpleLongProperty(5_000);
@@ -31,6 +38,19 @@ public class Manager extends Employee {
 
 	@Override
 	public void move() {
+		currentAngle += angularVelocity;
+		double newX = circleX + trajectoryRadius * cos(currentAngle);
+		double newY = circleY + trajectoryRadius * sin(currentAngle);
+		if (newX < 0 || newX > habitatAreaWidth - getTexture().getWidth()
+				|| newY < 0 || newY > habitatAreaHeight - getTexture().getHeight()) {
+			angularVelocity = -angularVelocity;
+			currentAngle += angularVelocity * 2;
+			setX(circleX + trajectoryRadius * cos(currentAngle));
+			setY(circleY + trajectoryRadius * sin(currentAngle));
+		} else {
+			setX(newX);
+			setY(newY);
+		}
 
 	}
 
@@ -40,6 +60,18 @@ public class Manager extends Employee {
 		imageView = new ImageView(texture.getImage());
 		imageView.setX(x);
 		imageView.setY(y);
+
+		trajectoryRadius = ThreadLocalRandom.current().nextDouble(minRadius, maxRadius);
+		double direction = ThreadLocalRandom.current().nextBoolean() ? 1.0 : -1.0;
+
+		angularVelocity = direction * ThreadLocalRandom.current()
+				.nextDouble(0.1 * maxLinearVelocity, maxLinearVelocity) / trajectoryRadius;
+		double vecX = ThreadLocalRandom.current().nextDouble(-trajectoryRadius, trajectoryRadius);
+		double vecY = sqrt(trajectoryRadius*trajectoryRadius - vecX*vecX);
+
+		circleX = vecX + x;
+		circleY = vecY + y;
+		currentAngle = acos(vecX/trajectoryRadius) + PI;
 	}
 
 	public static Texture getTexture() {

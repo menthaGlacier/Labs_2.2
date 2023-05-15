@@ -2,6 +2,7 @@ package edu.uni.lab.controller;
 
 import edu.uni.lab.model.EmployeeRepository;
 import edu.uni.lab.model.ai.DeveloperAi;
+import edu.uni.lab.model.ai.ManagerAi;
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.employees.Manager;
@@ -30,6 +31,7 @@ import java.util.Arrays;
 public class MainController {
 	private Habitat habitat;
 	private DeveloperAi developerAi;
+	private ManagerAi managerAi;
 	private AnimationTimer timer;
 	private long startTime;
 	private long lastUpdateTime = 0;
@@ -94,7 +96,9 @@ public class MainController {
 		timer.start();
 		isActive.setValue(true);
 		developerAi = new DeveloperAi();
+		managerAi = new ManagerAi();
 		developerAi.enable();
+		managerAi.enable();
 	}
 
 	@FXML
@@ -104,6 +108,7 @@ public class MainController {
 		}
 
 		developerAi.disable();
+		managerAi.disable();
 		timer.stop();
 
 		if (isInfoDialogAllowed.getValue()) {
@@ -113,6 +118,7 @@ public class MainController {
 			if (!(stopSimulationProperty.getValue())) {
 				timer.start();
 				developerAi.enable();
+				managerAi.enable();
 				return;
 			}
 		}
@@ -213,6 +219,7 @@ public class MainController {
 		}
 
 		developerAi.disable();
+		managerAi.disable();
 		timer.stop();
 		dialog.setTitle("Current objects");
 		dialog.setResizable(false);
@@ -221,6 +228,7 @@ public class MainController {
 		dialog.showAndWait();
 		timer.start();
 		developerAi.enable();
+		managerAi.enable();
 	}
 
 	@FXML
