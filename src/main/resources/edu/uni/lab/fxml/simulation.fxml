@@ -106,7 +106,7 @@
                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                  </padding>
              </Label>
-             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" />
+             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" value="Default"/>
             </VBox>
         </VBox>
         <VBox fillWidth="false" layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="275.0" spacing="10.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -204,7 +204,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                     </padding>
                 </Label>
-                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" />
+                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" value="Default"/>
             </VBox>
         </VBox>
         <GridPane prefHeight="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">

@@ -8,7 +8,7 @@ public abstract class BaseAi implements Runnable {
 	protected final EmployeeRepository employees;
 	protected final BooleanProperty running;
 	private final Object runningMutex = new Object();
-	protected volatile Thread thread;
+	protected Thread thread;
 
 	public BaseAi() {
 		this.employees = EmployeeRepository.getInstance();
@@ -32,6 +32,10 @@ public abstract class BaseAi implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void setPriority(int priority) {
+		thread.setPriority(priority);
 	}
 
 	public synchronized void disable() {

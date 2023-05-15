@@ -1,6 +1,7 @@
 package edu.uni.lab.controller;
 
 import edu.uni.lab.model.EmployeeRepository;
+import edu.uni.lab.model.ai.BaseAi;
 import edu.uni.lab.model.ai.DeveloperAi;
 import edu.uni.lab.model.ai.ManagerAi;
 import edu.uni.lab.model.employees.Developer;
@@ -87,7 +88,7 @@ public class MainController {
 	@FXML
 	private Button developerAiStopButton;
 	@FXML
-	private ChoiceBox developerAiChoiceBox;
+	private ChoiceBox<String> developerAiChoiceBox;
 	@FXML
 	private Button managerAiStartButton;
 	@FXML
@@ -95,7 +96,7 @@ public class MainController {
 	@FXML
 	private Button managerAiStopButton;
 	@FXML
-	private ChoiceBox managerAiChoiceBox;
+	private ChoiceBox<String> managerAiChoiceBox;
 
 	public MainController() {
 		developerAi = new DeveloperAi();
@@ -344,6 +345,19 @@ public class MainController {
 		});
 	}
 
+	private void setupOnPriorityChoice(ChoiceBox<String> choiceBox, BaseAi ai) {
+		choiceBox.setItems(FXCollections
+				.observableArrayList("Minimal", "Normal", "Maximum"));
+		choiceBox.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+			switch ((String) newValue) {
+				case "Minimal" -> ai.setPriority(Thread.MIN_PRIORITY);
+				case "Maximum" -> ai.setPriority(Thread.MAX_PRIORITY);
+				default -> ai.setPriority(Thread.NORM_PRIORITY);
+			}
+		});
+	}
+
 	public void setup(WindowEvent windowEvent) {
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);
@@ -391,35 +405,8 @@ public class MainController {
 				.when(managerAi.running())
 				.then("Status: active").otherwise("Status: inactive"));
 
-		developerAiChoiceBox.setItems(FXCollections
-					.observableArrayList("Minimal", "Normal", "Maximum"));
-		developerAiChoiceBox.getSelectionModel().selectedItemProperty()
-					.addListener((observable, oldValue, newValue) -> {
-			if (newValue.equals("Minimal")) {
-				//Thread.MIN_PRIORITY;
-			} else if (newValue.equals("Regular")) {
-				//Thread.NORM_PRIORITY;
-			} else if (newValue.equals("Maximum")) {
-				//Thread.MAX_PRIORITY;
-			} else {
-				//Thread.NORM_PRIORITY;
-			}
-		});
-
-		managerAiChoiceBox.setItems(FXCollections
-					.observableArrayList("Minimal", "Normal", "Maximum"));
-		managerAiChoiceBox.getSelectionModel().selectedItemProperty()
-					.addListener((observable, oldValue, newValue) -> {
-			if (newValue.equals("Minimal")) {
-				//Thread.MIN_PRIORITY;
-			} else if (newValue.equals("Regular")) {
-				//Thread.NORM_PRIORITY;
-			} else if (newValue.equals("Maximum")) {
-				//Thread.MAX_PRIORITY;
-			} else {
-				//Thread.NORM_PRIORITY;
-			}
-		});
+		setupOnPriorityChoice(developerAiChoiceBox, developerAi);
+		setupOnPriorityChoice(managerAiChoiceBox, managerAi);
 
 		setKeyActions();
 
