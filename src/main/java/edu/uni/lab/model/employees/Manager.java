@@ -1,7 +1,5 @@
 package edu.uni.lab.model.employees;
 
-import edu.uni.lab.model.employees.Developer;
-import edu.uni.lab.model.employees.Employee;
 import edu.uni.lab.utility.Texture;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -50,7 +48,7 @@ public class Manager extends Employee {
 		return periodProperty.get();
 	}
 
-	public static SimpleLongProperty periodProperty() {
+	public static SimpleLongProperty period() {
 		return periodProperty;
 	}
 
@@ -62,7 +60,7 @@ public class Manager extends Employee {
 		return ratioProperty.getValue();
 	}
 
-	public static SimpleDoubleProperty ratioProperty() {
+	public static SimpleDoubleProperty ratio() {
 		return ratioProperty;
 	}
 
@@ -74,7 +72,7 @@ public class Manager extends Employee {
 		return lifeTimeProperty.getValue();
 	}
 
-	public static SimpleLongProperty lifeTimeProperty() {
+	public static SimpleLongProperty lifeTime() {
 		return lifeTimeProperty;
 	}
 

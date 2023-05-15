@@ -77,8 +77,21 @@ public class MainController {
 	private NumericField managerLifeTimeField;
 	@FXML
 	private ComboBox<String> managerRatioComboBox;
+	@FXML
+	private Label developerAiStatusLabel;
+	@FXML
+	private Button developerAiStartButton;
+	@FXML
+	private Button developerAiStopButton;
+	@FXML
+	private Button managerAiStartButton;
+	@FXML
+	private Label managerAiStatusLabel;
+	@FXML
+	private Button managerAiStopButton;
 
 	public MainController() {
+		developerAi = new DeveloperAi();
 	}
 
 	@FXML
@@ -93,7 +106,6 @@ public class MainController {
 
 		timer.start();
 		isActive.setValue(true);
-		developerAi = new DeveloperAi();
 		developerAi.enable();
 	}
 
@@ -196,6 +208,26 @@ public class MainController {
 			Manager.setRatio(parser.parse(managerRatioComboBox
 					.getSelectionModel().getSelectedItem()).doubleValue() / 100);
 		} catch (ParseException ignored) {}
+	}
+
+	@FXML
+	private void onDeveloperAiStartButtonClick() {
+		developerAi.enable();
+	}
+
+	@FXML
+	private void onDeveloperAiStopButtonClick() {
+		developerAi.disable();
+	}
+
+	@FXML
+	private void onManagerAiStartButtonClick() {
+		// TODO
+	}
+
+	@FXML
+	private void onManagerAiStopButtonClick() {
+		// TODO
 	}
 
 	@FXML
@@ -306,16 +338,16 @@ public class MainController {
 
 		developerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Developer.periodProperty()));
+						Developer.period()));
 		developerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Developer.lifeTimeProperty()));
+						Developer.lifeTime()));
 		managerPeriodLabel.textProperty()
 				.bind(Bindings.concat("Period: ",
-						Manager.periodProperty()));
+						Manager.period()));
 		managerLifeTimeLabel.textProperty()
 				.bind(Bindings.concat("Life time: ",
-						Manager.lifeTimeProperty()));
+						Manager.lifeTime()));
 
 		startSimButton.disableProperty().bind(isActive);
 		stopSimButton.disableProperty().bind(isActive.not());
@@ -333,6 +365,9 @@ public class MainController {
 							"60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
+
+		developerAiStartButton.disableProperty().bind(developerAi.running().not());
+		developerAiStartButton.disableProperty().bind(developerAi.running());
 
 		setKeyActions();
 

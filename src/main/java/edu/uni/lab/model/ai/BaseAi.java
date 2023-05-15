@@ -1,16 +1,19 @@
 package edu.uni.lab.model.ai;
 
 import edu.uni.lab.model.EmployeeRepository;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public abstract class BaseAi implements Runnable {
 	protected final EmployeeRepository employees;
-	protected volatile Thread thread;
-	protected volatile boolean running = false;
+	protected final BooleanProperty running;
 	private final Object runningMutex = new Object();
+	protected volatile Thread thread;
 
 	public BaseAi() {
 		this.employees = EmployeeRepository.getInstance();
 		this.thread = new Thread(this);
+		this.running = new SimpleBooleanProperty(false);
 		thread.start();
 	}
 
@@ -32,14 +35,20 @@ public abstract class BaseAi implements Runnable {
 	}
 
 	public synchronized void disable() {
-		running = false;
+		running.set(false);
 	}
 
-	public synchronized boolean isRunning() { return running; }
+	public synchronized BooleanProperty running() {
+		return running;
+	}
+
+	public synchronized boolean isRunning() {
+		return running.get();
+	}
 
 	public void enable() {
 		synchronized (runningMutex) {
-			running = true;
+			running.set(true);
 			runningMutex.notify();
 		}
 	}

@@ -58,7 +58,9 @@ public class Developer extends Employee {
 			velocityX *= -1.0;
 			double border = habitatAreaWidth - getTexture().getWidth();
 			setX(border + velocityX + border - getX());
-		} else { setX(getX() + velocityX); }
+		} else {
+			setX(getX() + velocityX);
+		}
 
 		if (getY() + velocityY < 0.0) {
 			velocityY *= -1.0;
@@ -67,11 +69,14 @@ public class Developer extends Employee {
 			velocityY *= -1.0;
 			double border = habitatAreaHeight - getTexture().getHeight();
 			setY(border + velocityY + border - getY());
-		} else { setY(getY() + velocityY); }
-		//System.out.println("moved");
+		} else {
+			setY(getY() + velocityY);
+		}
 	}
 
-	private double getRandomVelocity() { return ThreadLocalRandom.current().nextDouble(-maxVelocity, maxVelocity); }
+	private double getRandomVelocity() {
+		return ThreadLocalRandom.current().nextDouble(-maxVelocity, maxVelocity);
+	}
 
 	public static Texture getTexture() {
 		return texture;
@@ -81,7 +86,7 @@ public class Developer extends Employee {
 		return periodProperty.get();
 	}
 
-	public static SimpleLongProperty periodProperty() {
+	public static SimpleLongProperty period() {
 		return periodProperty;
 	}
 
@@ -93,7 +98,7 @@ public class Developer extends Employee {
 		return probabilityProperty.getValue();
 	}
 
-	public static SimpleDoubleProperty probabilityProperty() {
+	public static SimpleDoubleProperty probability() {
 		return probabilityProperty;
 	}
 
@@ -105,7 +110,7 @@ public class Developer extends Employee {
 		return lifeTimeProperty.getValue();
 	}
 
-	public static SimpleLongProperty lifeTimeProperty() {
+	public static SimpleLongProperty lifeTime() {
 		return lifeTimeProperty;
 	}
 
