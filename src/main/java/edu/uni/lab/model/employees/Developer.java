@@ -16,7 +16,9 @@ public class Developer extends Employee {
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty probabilityProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
-	private final static long trajectoryChangePeriod = 1000;
+	private final static long maxTrajectoryChangePeriod = 5000;
+	private final static long minTrajectoryChangePeriod = 100;
+	private final long trajectoryChangePeriod;
 	private long lastTrajectoryChange = getCreationTime();
 	private double velocityX, velocityY;
 	private final static double maxVelocity = 10.0;
@@ -40,6 +42,8 @@ public class Developer extends Employee {
 		imageView.setY(y);
 		velocityX = getRandomVelocity();
 		velocityY = getRandomVelocity();
+		trajectoryChangePeriod = ThreadLocalRandom.current()
+				.nextLong(minTrajectoryChangePeriod, maxTrajectoryChangePeriod);
 	}
 
 	@Override
@@ -52,10 +56,10 @@ public class Developer extends Employee {
 		}
 
 		if (getX() + velocityX < 0.0) {
-			velocityX *= -1.0;
+			velocityX = -velocityX;
 			setX(velocityX - getX());
 		} else if (getX() + velocityX > habitatAreaWidth - getTexture().getWidth()) {
-			velocityX *= -1.0;
+			velocityX = -velocityX;
 			double border = habitatAreaWidth - getTexture().getWidth();
 			setX(border + velocityX + border - getX());
 		} else {
@@ -63,10 +67,10 @@ public class Developer extends Employee {
 		}
 
 		if (getY() + velocityY < 0.0) {
-			velocityY *= -1.0;
+			velocityY = -velocityY;
 			setY(velocityY - getY());
 		} else if (getY() + velocityY > habitatAreaHeight - getTexture().getHeight()) {
-			velocityY *= -1.0;
+			velocityY = -velocityY;
 			double border = habitatAreaHeight - getTexture().getHeight();
 			setY(border + velocityY + border - getY());
 		} else {
