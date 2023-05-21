@@ -24,8 +24,11 @@ public abstract class BaseAi implements Runnable {
 		while (true) {
 			try {
 				synchronized (runningMutex) {
-					while (!isRunning()) { runningMutex.wait(); }
+					while (!isRunning()) {
+						runningMutex.wait();
+					}
 				}
+
 				update();
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

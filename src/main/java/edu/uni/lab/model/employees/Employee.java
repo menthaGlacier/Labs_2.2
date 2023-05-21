@@ -6,10 +6,11 @@ import javafx.scene.image.ImageView;
 import java.util.UUID;
 
 public abstract class Employee implements IBehaviour {
+	protected final double habitatAreaWidth;
+	protected final double habitatAreaHeight;
 	protected ImageView imageView;
 	private final long creationTime;
 	private final UUID id;
-	protected final double habitatAreaWidth, habitatAreaHeight;
 	private double x, y;
 
 	public Employee(double x, double y, long creationTime,

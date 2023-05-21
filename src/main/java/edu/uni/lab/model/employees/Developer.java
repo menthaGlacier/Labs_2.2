@@ -10,18 +10,19 @@ import javafx.scene.image.ImageView;
 import edu.uni.lab.utility.Texture;
 
 public class Developer extends Employee {
+	private final static Texture texture;
 	private final static int DEVELOPER_WIDTH = 80;
 	private final static int DEVELOPER_HEIGHT = 80;
-	private final static Texture texture;
+	private final static long maxTrajectoryChangePeriod = 5000;
+	private final static long minTrajectoryChangePeriod = 100;
+	private final static double maxVelocity = 10.0;
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty probabilityProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
-	private final static long maxTrajectoryChangePeriod = 5000;
-	private final static long minTrajectoryChangePeriod = 100;
 	private final long trajectoryChangePeriod;
 	private long lastTrajectoryChange = getCreationTime();
-	private double velocityX, velocityY;
-	private final static double maxVelocity = 10.0;
+	private double velocityX;
+	private double velocityY;
 
 	static {
 		periodProperty = new SimpleLongProperty(1_000);

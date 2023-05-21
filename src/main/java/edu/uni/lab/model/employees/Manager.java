@@ -12,18 +12,20 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.Math.*;
 
 public class Manager extends Employee {
+	private final static Texture texture;
 	private final static int MANAGER_WIDTH = 80;
 	private final static int MANAGER_HEIGHT = 80;
-	private final static Texture texture;
+	private final static double minRadius = 50.0;
+	private final static double maxRadius = 150.0;
+	private final static double maxLinearVelocity = 10.0;
 	private final static SimpleLongProperty periodProperty;
 	private final static SimpleDoubleProperty ratioProperty;
 	private final static SimpleLongProperty lifeTimeProperty;
-
-	private final static double minRadius = 50.0, maxRadius = 150.0;
-	private final static double maxLinearVelocity = 10.0;
-
-	private final double trajectoryRadius, circleX, circleY;
-	private double angularVelocity, currentAngle;
+	private final double trajectoryRadius;
+	private final double circleX;
+	private final double circleY;
+	private double angularVelocity;
+	private double currentAngle;
 
 	static {
 		periodProperty = new SimpleLongProperty(5_000);
@@ -34,6 +36,26 @@ public class Manager extends Employee {
 				.getResourceAsStream("/edu/uni/lab/images/manager.png")),
 				MANAGER_WIDTH, MANAGER_HEIGHT, false, true),
 				MANAGER_WIDTH, MANAGER_HEIGHT);
+	}
+
+	public Manager(double x, double y, long creationTime,
+				   double habitatAreaWidth, double habitatAreaHeight) {
+		super(x, y, creationTime, habitatAreaWidth, habitatAreaHeight);
+		imageView = new ImageView(texture.getImage());
+		imageView.setX(x);
+		imageView.setY(y);
+
+		trajectoryRadius = ThreadLocalRandom.current().nextDouble(minRadius, maxRadius);
+		double direction = ThreadLocalRandom.current().nextBoolean() ? 1.0 : -1.0;
+
+		angularVelocity = direction * ThreadLocalRandom.current()
+				.nextDouble(0.1 * maxLinearVelocity, maxLinearVelocity) / trajectoryRadius;
+		double vecX = ThreadLocalRandom.current().nextDouble(-trajectoryRadius, trajectoryRadius);
+		double vecY = sqrt(trajectoryRadius*trajectoryRadius - vecX * vecX);
+
+		circleX = vecX + x;
+		circleY = vecY + y;
+		currentAngle = acos(vecX/trajectoryRadius) + PI;
 	}
 
 	@Override
@@ -51,27 +73,6 @@ public class Manager extends Employee {
 			setX(newX);
 			setY(newY);
 		}
-
-	}
-
-	public Manager(double x, double y, long creationTime,
-				   double habitatAreaWidth, double habitatAreaHeight) {
-		super(x, y, creationTime, habitatAreaWidth, habitatAreaHeight);
-		imageView = new ImageView(texture.getImage());
-		imageView.setX(x);
-		imageView.setY(y);
-
-		trajectoryRadius = ThreadLocalRandom.current().nextDouble(minRadius, maxRadius);
-		double direction = ThreadLocalRandom.current().nextBoolean() ? 1.0 : -1.0;
-
-		angularVelocity = direction * ThreadLocalRandom.current()
-				.nextDouble(0.1 * maxLinearVelocity, maxLinearVelocity) / trajectoryRadius;
-		double vecX = ThreadLocalRandom.current().nextDouble(-trajectoryRadius, trajectoryRadius);
-		double vecY = sqrt(trajectoryRadius*trajectoryRadius - vecX*vecX);
-
-		circleX = vecX + x;
-		circleY = vecY + y;
-		currentAngle = acos(vecX/trajectoryRadius) + PI;
 	}
 
 	public static Texture getTexture() {

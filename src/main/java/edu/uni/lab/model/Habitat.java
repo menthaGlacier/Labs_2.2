@@ -12,7 +12,6 @@ public class Habitat {
 	public static final int PERIOD_MAX = 1_000_000;
 	public static final int LIFETIME_DEFAULT = 20_000;
 	public static final int LIFETIME_MAX = 1_000_000;
-
 	private final Pane habitatArea;
 	private final EmployeeRepository employees;
 	private int developersCounter = 0;
@@ -48,8 +47,8 @@ public class Habitat {
 				++i;
 			}
 
-			final double habitatAreaWidth = habitatArea.getWidth(),
-					habitatAreaHeight = habitatArea.getHeight();
+			final double habitatAreaWidth = habitatArea.getWidth();
+			final double habitatAreaHeight = habitatArea.getHeight();
 
 			if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
 				lastDeveloperGenerationTry = elapsedTime;
@@ -74,7 +73,7 @@ public class Habitat {
 					addEmployee(new Manager(
 							random.nextDouble(0, habitatAreaWidth
 									- Manager.getTexture().getWidth()),
-							random.nextDouble(0,habitatAreaHeight
+							random.nextDouble(0, habitatAreaHeight
 									- Manager.getTexture().getHeight()),
 							elapsedTime, habitatAreaWidth, habitatAreaHeight));
 
