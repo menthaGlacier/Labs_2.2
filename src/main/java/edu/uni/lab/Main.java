@@ -35,9 +35,11 @@ public class Main extends Application {
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
 		stage.setOnCloseRequest(event -> {
+			controller.exit();
 			Platform.exit();
 			System.exit(0);
 		});
+
 		stage.setScene(scene);
 		stage.show();
 	}

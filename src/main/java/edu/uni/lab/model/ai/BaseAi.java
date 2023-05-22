@@ -37,12 +37,12 @@ public abstract class BaseAi implements Runnable {
 		}
 	}
 
-	public void setPriority(int priority) {
-		thread.setPriority(priority);
+	public int getPriority() {
+		return thread.getPriority();
 	}
 
-	public synchronized void disable() {
-		running.set(false);
+	public void setPriority(int priority) {
+		thread.setPriority(priority);
 	}
 
 	public synchronized BooleanProperty running() {
@@ -59,4 +59,9 @@ public abstract class BaseAi implements Runnable {
 			runningMutex.notify();
 		}
 	}
+
+	public synchronized void disable() {
+		running.set(false);
+	}
+
 }

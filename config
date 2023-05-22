@@ -1,0 +1,10 @@
+developer_period=6543
+developer_probability=0.2
+developer_lifetime=543224
+developer_ai_priority=1
+developer_ai_activity=true
+manager_period=111
+manager_ratio=0.6
+manager_lifetime=453424
+manager_ai_priority=10
+manager_ai_activity=false

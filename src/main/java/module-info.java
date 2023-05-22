@@ -7,4 +7,5 @@ module edu.uni.lab {
     opens edu.uni.lab.controller to javafx.base, javafx.fxml;
     exports edu.uni.lab.utility to javafx.fxml;
     exports edu.uni.lab;
+    exports edu.uni.lab.model.ai;
 }
