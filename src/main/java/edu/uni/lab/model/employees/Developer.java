@@ -1,5 +1,6 @@
 package edu.uni.lab.model.employees;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -81,6 +82,12 @@ public class Developer extends Employee {
 
 	private double getRandomVelocity() {
 		return ThreadLocalRandom.current().nextDouble(-maxVelocity, maxVelocity);
+	}
+
+	public void resetImageView() {
+		imageView = new ImageView(texture.getImage());
+		imageView.setX(x);
+		imageView.setY(y);
 	}
 
 	public static Texture getTexture() {

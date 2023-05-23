@@ -6,7 +6,9 @@ import edu.uni.lab.model.ai.DeveloperAi;
 import edu.uni.lab.model.ai.ManagerAi;
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.Habitat;
+import edu.uni.lab.model.employees.Employee;
 import edu.uni.lab.model.employees.Manager;
+import edu.uni.lab.utility.ConfigHandler;
 import edu.uni.lab.utility.NumericField;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
@@ -21,19 +23,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 
 public class MainController {
 	private Habitat habitat;
-	private DeveloperAi developerAi;
-	private ManagerAi managerAi;
+	private final DeveloperAi developerAi;
+	private final ManagerAi managerAi;
 	private AnimationTimer timer;
 	private long startTime;
 	private long lastUpdateTime = 0;
@@ -104,8 +107,49 @@ public class MainController {
 	}
 
 	@FXML
+	private synchronized void saveObjects() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Хорошее мнение. Одна небольшая проблема. Я заложил мину в твоём доме.");
+		//fileChooser.setInitialFileName();
+		ObjectOutputStream outputStream;
+		EmployeeRepository repository = EmployeeRepository.getInstance();
+		try {
+			outputStream = new ObjectOutputStream(new FileOutputStream("i_like_cats"));
+			for (int i = 0; i < repository.employeesList().size(); i++) {
+				outputStream.writeObject(repository.employeesList().get(i));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private synchronized void loadObjects() {
+		ObjectInputStream inputStream;
+		EmployeeRepository repository = EmployeeRepository.getInstance();
+		habitat.setDevelopersCounter(0);
+		habitat.setManagersCounter(0);
+		repository.clear();
+
+		try {
+			boolean keepReading = true;
+			inputStream = new ObjectInputStream(new FileInputStream("i_like_cats"));
+			while (keepReading) {
+				try {
+					Employee employee = (Employee) inputStream.readObject();
+					employee.resetImageView();
+					habitat.addEmployee(employee);
+				} catch (EOFException e) {
+					keepReading = false;
+				}
+			}
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
 	public void startSimulation() {
-		this.habitat = new Habitat(habitatArea);
 		if (isActive.getValue()) {
 			return;
 		}
@@ -259,11 +303,13 @@ public class MainController {
 		developerAi.disable();
 		managerAi.disable();
 		timer.stop();
+
 		dialog.setTitle("Current objects");
 		dialog.setResizable(false);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(root.getScene().getWindow());
 		dialog.showAndWait();
+
 		timer.start();
 		developerAi.enable();
 		managerAi.enable();
@@ -335,6 +381,15 @@ public class MainController {
 		dialog.showAndWait();
 	}
 
+	private void onPriorityChoice(ChoiceBox<String> choiceBox, BaseAi ai) {
+		choiceBox.setItems(FXCollections.observableArrayList("1", "2", "3", "4",
+				"5", "6", "7", "8", "9", "10"));
+		choiceBox.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+			ai.setPriority(Integer.parseInt(newValue));
+		});
+	}
+
 	private void setKeyActions() {
 		root.getScene().setOnKeyReleased((KeyEvent event) -> {
 			switch (event.getCode()) {
@@ -345,20 +400,15 @@ public class MainController {
 		});
 	}
 
-	private void setupOnPriorityChoice(ChoiceBox<String> choiceBox, BaseAi ai) {
-		choiceBox.setItems(FXCollections
-				.observableArrayList("Minimal", "Normal", "Maximum"));
-		choiceBox.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> {
-			switch ((String) newValue) {
-				case "Minimal" -> ai.setPriority(Thread.MIN_PRIORITY);
-				case "Maximum" -> ai.setPriority(Thread.MAX_PRIORITY);
-				default -> ai.setPriority(Thread.NORM_PRIORITY);
-			}
-		});
-	}
-
 	public void setup(WindowEvent windowEvent) {
+		this.habitat = new Habitat(habitatArea);
+		try {
+			ConfigHandler configHandler = new ConfigHandler();
+			configHandler.load(developerAi, managerAi);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);
 		isInfoDialogAllowed = new SimpleBooleanProperty(false);
@@ -391,7 +441,9 @@ public class MainController {
 		String[] values = {"10%", "20%", "30%", "40%", "50%",
 							"60%", "70%", "80%", "90%", "100%"};
 		developerProbabilityComboBox.getItems().setAll(Arrays.asList(values));
+		developerProbabilityComboBox.setValue((int) (Developer.getProbability() * 100) + "%");
 		managerRatioComboBox.getItems().setAll(Arrays.asList(values));
+		managerRatioComboBox.setValue((int) (Manager.getRatio() * 100) + "%");
 
 		developerAiStartButton.disableProperty().bind(developerAi.running());
 		developerAiStopButton.disableProperty().bind(developerAi.running().not());
@@ -405,8 +457,10 @@ public class MainController {
 				.when(managerAi.running())
 				.then("Status: active").otherwise("Status: inactive"));
 
-		setupOnPriorityChoice(developerAiChoiceBox, developerAi);
-		setupOnPriorityChoice(managerAiChoiceBox, managerAi);
+		developerAiChoiceBox.setValue(String.valueOf(developerAi.getPriority()));
+		onPriorityChoice(developerAiChoiceBox, developerAi);
+		managerAiChoiceBox.setValue(String.valueOf(managerAi.getPriority()));
+		onPriorityChoice(managerAiChoiceBox, managerAi);
 
 		setKeyActions();
 
@@ -426,5 +480,14 @@ public class MainController {
 				}
 			}
 		};
+	}
+
+	public void exit() {
+		try {
+			ConfigHandler configHandler = new ConfigHandler();
+			configHandler.save(developerAi, managerAi);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

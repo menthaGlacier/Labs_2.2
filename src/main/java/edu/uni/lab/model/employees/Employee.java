@@ -1,17 +1,19 @@
 package edu.uni.lab.model.employees;
 
 import edu.uni.lab.model.IBehaviour;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class Employee implements IBehaviour {
+public abstract class Employee implements IBehaviour, Serializable {
 	protected final double habitatAreaWidth;
 	protected final double habitatAreaHeight;
-	protected ImageView imageView;
+	protected transient ImageView imageView;
+	protected double x, y;
 	private final long creationTime;
 	private final UUID id;
-	private double x, y;
 
 	public Employee(double x, double y, long creationTime,
 					double habitatAreaWidth, double habitatAreaHeight) {
@@ -26,6 +28,8 @@ public abstract class Employee implements IBehaviour {
 	public ImageView getImageView() {
 		return imageView;
 	}
+
+	public abstract void resetImageView();
 
 	public long getCreationTime() {
 		return creationTime;

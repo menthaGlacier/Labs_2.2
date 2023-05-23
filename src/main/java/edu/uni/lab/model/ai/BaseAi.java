@@ -30,7 +30,7 @@ public abstract class BaseAi implements Runnable {
 				}
 
 				update();
-				Thread.sleep(100);
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

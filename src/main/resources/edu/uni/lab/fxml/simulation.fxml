@@ -96,7 +96,7 @@
                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                  </padding>
              </Label>
-             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" value="Default"/>
+             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" value="5"/>
             </VBox>
         </VBox>
         <VBox fillWidth="false" layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="275.0" spacing="10.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -184,7 +184,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                     </padding>
                 </Label>
-                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" value="Default"/>
+                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" value="5"/>
             </VBox>
         </VBox>
         <GridPane prefHeight="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -254,6 +254,8 @@
     </AnchorPane>
     <MenuBar prefHeight="26.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Menu text="Simulation">
+            <MenuItem onAction="#saveObjects" text="Save objects" />
+            <MenuItem onAction="#loadObjects" text="Load objects" />
             <MenuItem onAction="#startSimulation" text="Start" />
             <MenuItem onAction="#stopSimulation" text="Stop" />
         </Menu>

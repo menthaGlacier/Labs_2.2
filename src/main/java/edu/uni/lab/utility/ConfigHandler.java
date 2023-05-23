@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ConfigHandler {
 	public void save(BaseAi developerAi, BaseAi managerAi) throws IOException {
-		FileWriter fileWriter = new FileWriter("config");
+		FileWriter fileWriter = new FileWriter("config.txt");
 
 		fileWriter.write("developer_period=" + Developer.getPeriod() + "\n");
 		fileWriter.write("developer_probability=" + Developer.getProbability() + "\n");
@@ -28,7 +28,7 @@ public class ConfigHandler {
 	}
 
 	public void load(BaseAi developerAi, BaseAi managerAi) throws IOException {
-		FileReader fileReader = new FileReader("config");
+		FileReader fileReader = new FileReader("config.txt");
 		BufferedReader reader = new BufferedReader(fileReader);
 		String readLine;
 		while ((readLine = reader.readLine()) != null) {

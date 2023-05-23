@@ -83,7 +83,7 @@ public class Habitat {
 		}
 	}
 
-	private void addEmployee(Employee employee) {
+	public void addEmployee(Employee employee) {
 		employees.add(employee);
 		synchronized (habitatArea) {
 			habitatArea.getChildren().add(employee.getImageView());
@@ -95,7 +95,7 @@ public class Habitat {
 		}
 	}
 
-	private void removeEmployee(Employee employee) {
+	public void removeEmployee(Employee employee) {
 		employees.remove(employee);
 		synchronized (habitatArea) {
 			habitatArea.getChildren().remove(employee.getImageView());
@@ -111,7 +111,15 @@ public class Habitat {
 		return developersCounter;
 	}
 
+	public void setDevelopersCounter(int developersCounter) {
+		this.developersCounter = developersCounter;
+	}
+
 	public int getManagersCounter() {
 		return managersCounter;
+	}
+
+	public void setManagersCounter(int managersCounter) {
+		this.managersCounter = managersCounter;
 	}
 }
