@@ -201,12 +201,12 @@
                 <RowConstraints maxHeight="84.0" minHeight="64.0" prefHeight="84.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="74.0" minHeight="48.0" prefHeight="54.0" vgrow="SOMETIMES" />
             </rowConstraints>
-            <Button fx:id="startSimButton" onAction="#startSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Start" GridPane.rowIndex="2">
+            <Button fx:id="startButton" onAction="#startSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Start" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button fx:id="stopSimButton" onAction="#stopSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="stopButton" onAction="#stopSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>

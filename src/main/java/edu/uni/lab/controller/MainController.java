@@ -49,9 +49,9 @@ public class MainController {
 	@FXML
 	private Pane habitatArea;
 	@FXML
-	private Button startSimButton;
+	private Button startButton;
 	@FXML
-	private Button stopSimButton;
+	private Button stopButton;
 	@FXML
 	private Button showObjectsButton;
 	@FXML
@@ -109,12 +109,17 @@ public class MainController {
 	@FXML
 	private synchronized void saveObjects() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Хорошее мнение. Одна небольшая проблема. Я заложил мину в твоём доме.");
-		//fileChooser.setInitialFileName();
+		fileChooser.setTitle("Save");
+		fileChooser.setInitialFileName("save.employees");
+		fileChooser.getExtensionFilters().add(
+				new FileChooser.ExtensionFilter("Employees", "*.employees"));
+		File file = fileChooser.showSaveDialog(root.getScene().getWindow());
+
 		ObjectOutputStream outputStream;
 		EmployeeRepository repository = EmployeeRepository.getInstance();
+
 		try {
-			outputStream = new ObjectOutputStream(new FileOutputStream("i_like_cats"));
+			outputStream = new ObjectOutputStream(new FileOutputStream(file));
 			for (int i = 0; i < repository.employeesList().size(); i++) {
 				outputStream.writeObject(repository.employeesList().get(i));
 			}
@@ -125,6 +130,14 @@ public class MainController {
 
 	@FXML
 	private synchronized void loadObjects() {
+		stopSimulation();
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Load");
+		fileChooser.getExtensionFilters().add(
+				new FileChooser.ExtensionFilter("Employees", "*.employees"));
+		File file = fileChooser.showOpenDialog(root.getScene().getWindow());
+
 		ObjectInputStream inputStream;
 		EmployeeRepository repository = EmployeeRepository.getInstance();
 		habitat.setDevelopersCounter(0);
@@ -133,7 +146,7 @@ public class MainController {
 
 		try {
 			boolean keepReading = true;
-			inputStream = new ObjectInputStream(new FileInputStream("i_like_cats"));
+			inputStream = new ObjectInputStream(new FileInputStream(file));
 			while (keepReading) {
 				try {
 					Employee employee = (Employee) inputStream.readObject();
@@ -426,8 +439,8 @@ public class MainController {
 				.bind(Bindings.concat("Life time: ",
 						Manager.lifeTime()));
 
-		startSimButton.disableProperty().bind(isActive);
-		stopSimButton.disableProperty().bind(isActive.not());
+		startButton.disableProperty().bind(isActive);
+		stopButton.disableProperty().bind(isActive.not());
 		showObjectsButton.disableProperty().bind(isActive.not());
 		timeLabel.visibleProperty().bind(isTimeToggledOn);
 		timeIdle.visibleProperty().bind(isTimeToggledOn.not());
