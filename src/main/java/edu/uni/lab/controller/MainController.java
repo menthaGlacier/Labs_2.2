@@ -397,10 +397,10 @@ public class MainController {
 	private void onPriorityChoice(ChoiceBox<String> choiceBox, BaseAi ai) {
 		choiceBox.setItems(FXCollections.observableArrayList("1", "2", "3", "4",
 				"5", "6", "7", "8", "9", "10"));
-		choiceBox.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> {
-			ai.setPriority(Integer.parseInt(newValue));
-		});
+		choiceBox.getSelectionModel()
+				.selectedItemProperty()
+				.addListener((observable, oldValue, newValue) ->
+						ai.setPriority(Integer.parseInt(newValue)));
 	}
 
 	private void setKeyActions() {

@@ -1,6 +1,7 @@
 package edu.uni.lab.model;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.employees.Employee;
@@ -13,6 +14,8 @@ public class Habitat {
 	public static final int LIFETIME_DEFAULT = 20_000;
 	public static final int LIFETIME_MAX = 1_000_000;
 	private final Pane habitatArea;
+	public final double habitatAreaWidth;
+	public final double habitatAreaHeight;
 	private final EmployeeRepository employees;
 	private int developersCounter = 0;
 	private int managersCounter = 0;
@@ -21,10 +24,10 @@ public class Habitat {
 	private long lastManagerGeneration = 0;
 	private long lastManagerGenerationTry = 0;
 
-	private final Random random = new Random();
-
 	public Habitat(Pane habitatArea) {
 		this.habitatArea = habitatArea;
+		this.habitatAreaWidth = habitatArea.getWidth();
+		this.habitatAreaHeight = habitatArea.getHeight();
 		employees = EmployeeRepository.getInstance();
 	}
 
@@ -47,19 +50,21 @@ public class Habitat {
 				++i;
 			}
 
-			final double habitatAreaWidth = habitatArea.getWidth();
-			final double habitatAreaHeight = habitatArea.getHeight();
-
 			if (elapsedTime - lastDeveloperGenerationTry >= Developer.getPeriod()) {
 				lastDeveloperGenerationTry = elapsedTime;
 				if (elapsedTime - lastDeveloperGeneration >= Developer.getPeriod()
-						&& random.nextDouble() <= Developer.getProbability()) {
+						&& ThreadLocalRandom.current()
+								.nextDouble() <= Developer.getProbability()) {
 					addEmployee(new Developer(
-							random.nextDouble() * (habitatAreaWidth
-									- Developer.getTexture().getWidth()),
-							random.nextDouble() * (habitatAreaHeight
-									- Developer.getTexture().getHeight()),
-							elapsedTime, habitatAreaWidth, habitatAreaHeight)
+							ThreadLocalRandom.current()
+									.nextDouble(0.0, habitatAreaWidth
+											- Developer.getTexture().getWidth()),
+							ThreadLocalRandom.current()
+									.nextDouble(0.0, habitatAreaHeight
+											- Developer.getTexture().getHeight()),
+							elapsedTime,
+							habitatAreaWidth,
+							habitatAreaHeight)
 					);
 
 					lastDeveloperGeneration = elapsedTime;
@@ -71,11 +76,16 @@ public class Habitat {
 				if (elapsedTime - lastManagerGeneration >= Manager.getPeriod()
 						&& managersCounter <= developersCounter * Manager.getRatio()) {
 					addEmployee(new Manager(
-							random.nextDouble(0, habitatAreaWidth
-									- Manager.getTexture().getWidth()),
-							random.nextDouble(0, habitatAreaHeight
-									- Manager.getTexture().getHeight()),
-							elapsedTime, habitatAreaWidth, habitatAreaHeight));
+							ThreadLocalRandom.current()
+									.nextDouble(0.0, habitatAreaWidth
+											- Manager.getTexture().getWidth()),
+							ThreadLocalRandom.current()
+									.nextDouble(0.0, habitatAreaHeight
+											- Manager.getTexture().getHeight()),
+							elapsedTime,
+							habitatAreaWidth,
+							habitatAreaHeight)
+					);
 
 					lastManagerGeneration = elapsedTime;
 				}
