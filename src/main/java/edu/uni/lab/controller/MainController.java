@@ -349,6 +349,25 @@ public class MainController {
 		dialog.showAndWait();
 	}
 
+	@FXML
+	private void callTerminalDialog() {
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/terminalDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new TerminalDialogController(dialog, habitat));
+
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
+		}
+
+		dialog.setTitle("Terminal");
+		dialog.setResizable(false);
+		dialog.showAndWait();
+	}
+
 	private void callInfoDialog(BooleanProperty stopSimulation) {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()

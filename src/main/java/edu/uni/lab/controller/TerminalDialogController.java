@@ -1,0 +1,154 @@
+package edu.uni.lab.controller;
+
+import edu.uni.lab.model.EmployeeRepository;
+import edu.uni.lab.model.Habitat;
+import edu.uni.lab.model.employees.Employee;
+import edu.uni.lab.model.employees.Manager;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.util.concurrent.ThreadLocalRandom;
+
+public class TerminalDialogController {
+	private final Stage stage;
+	private final Habitat habitat;
+	@FXML
+	private TextField inputTextField;
+	@FXML
+	private TextArea outputTextArea;
+
+	public TerminalDialogController(Stage stage, Habitat habitat) {
+		this.stage = stage;
+		this.habitat = habitat;
+	}
+
+	private void appendText(String message) {
+		outputTextArea.appendText(message + "\n" + ">");
+	}
+
+	private void executeHireCommand(String type, String quantity) {
+		EmployeeRepository employees = EmployeeRepository.getInstance();
+		int quantityInt;
+		try {
+			quantityInt = Integer.parseInt(quantity);
+		} catch (NumberFormatException e) {
+			quantityInt = -1;
+		}
+
+		if (type.equals("managers")) {
+			if (quantityInt >= 1) {
+				synchronized (employees.employeesList()) {
+					for (int i = 0; i < quantityInt; i++) {
+						habitat.addEmployee(new Manager(
+								ThreadLocalRandom.current()
+										.nextDouble(0.0, habitat.habitatAreaWidth
+										- Manager.getTexture().getWidth()),
+								ThreadLocalRandom.current()
+										.nextDouble(0.0, habitat.habitatAreaHeight
+										- Manager.getTexture().getHeight()),
+								System.nanoTime(),
+								habitat.habitatAreaWidth,
+								habitat.habitatAreaHeight)
+						);
+					}
+				}
+			} else {
+				appendText("Bad argument passed");
+			}
+		} else {
+			appendText("Bad argument passed");
+		}
+	}
+
+	private void executeFireCommand(String type, String quantity) {
+		EmployeeRepository employees = EmployeeRepository.getInstance();
+		if (type.equals("managers")) {
+			if (quantity.equals("all")) {
+				synchronized (employees.employeesList()) {
+					for (int i = 0; i < employees.size(); i++) {
+						Employee employee = employees.employeesList().get(i);
+						if (employee instanceof Manager) {
+							habitat.removeEmployee(employee);
+						}
+					}
+				}
+			} else {
+				appendText("Bad argument passed");
+			}
+		} else {
+			appendText("Bad argument passed");
+		}
+	}
+
+	private void executeHelpCommand() {
+		appendText(
+				"""
+				hire <employee type> <quantity> - hire QUANTITY of EMPLOYEE TYPE
+				fire <employee type> <quantity> - fire QUANTITY of EMPLOYEE TYPE
+				help - display this message
+				exit - exit terminal session
+				"""
+		);
+	}
+
+	private void executeExitCommand() {
+		stage.close();
+	}
+
+	private boolean checkAmountOfArguments(String[] tokens, int min, int max) {
+		if (tokens.length < min) {
+			appendText("Not enough arguments were passed");
+			return false;
+		}
+
+		if (tokens.length > max) {
+			appendText("Too many arguments were passed");
+			return false;
+		}
+
+		return true;
+	}
+
+	private void processCommand(String command) {
+		String[] tokens = command.split(" ");
+
+		switch (tokens[0]) {
+		case "hire" -> {
+			if (checkAmountOfArguments(tokens, 3, 3))
+				executeHireCommand(tokens[1], tokens[2]);
+		}
+		case "fire" -> {
+			if (checkAmountOfArguments(tokens, 3, 3))
+				executeFireCommand(tokens[1], tokens[2]);
+		}
+		case "help" -> {
+			if (checkAmountOfArguments(tokens, 1, 1))
+				executeHelpCommand();
+		}
+		case "exit" -> {
+			if (checkAmountOfArguments(tokens, 1, 1))
+				executeExitCommand();
+		}
+		default -> appendText("Хорошее мнение, но есть одна " +
+				"маленькая проблема. Я заложил мину в неизвестном месте " +
+				"внутри твоего дома. Каждый твой шаг - рисковый ход");
+		}
+	}
+
+	@FXML
+	private void onEnterButtonClick() {
+		String command = inputTextField.getText().trim();
+		inputTextField.clear();
+		appendText(command);
+		processCommand(command);
+	}
+
+	@FXML
+	private void initialize() {
+		outputTextArea.setEditable(false);
+		outputTextArea.setWrapText(true);
+		appendText(">Welcome to the le terminal");
+	}
+}

@@ -259,6 +259,9 @@
             <MenuItem onAction="#startSimulation" text="Start" />
             <MenuItem onAction="#stopSimulation" text="Stop" />
         </Menu>
+        <Menu text="Terminal">
+            <MenuItem onAction="#callTerminalDialog" text="New terminal session" />
+        </Menu>
         <Menu text="View">
             <MenuItem onAction="#toggleTime" text="Toggle time" />
             <MenuItem onAction="#toggleInfoDialog" text="Toggle modal window" />
