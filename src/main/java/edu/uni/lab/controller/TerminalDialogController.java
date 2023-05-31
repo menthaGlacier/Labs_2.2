@@ -72,10 +72,12 @@ public class TerminalDialogController {
 		if (type.equals("managers")) {
 			if (quantity.equals("all")) {
 				synchronized (employees.employeesList()) {
-					for (int i = 0; i < employees.size(); i++) {
+					for (int i = 0; i < employees.size();) {
 						Employee employee = employees.employeesList().get(i);
 						if (employee instanceof Manager) {
 							habitat.removeEmployee(employee);
+						} else {
+							i++;
 						}
 					}
 				}
