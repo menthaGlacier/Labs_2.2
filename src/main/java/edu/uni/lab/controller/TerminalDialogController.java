@@ -25,7 +25,11 @@ public class TerminalDialogController {
 	}
 
 	private void appendText(String message) {
-		outputTextArea.appendText(message + "\n" + ">");
+		outputTextArea.appendText(message);
+	}
+
+	private void appendTextLn(String message) {
+		appendText(message + "\n");
 	}
 
 	private void executeHireCommand(String type, String quantity) {
@@ -55,10 +59,10 @@ public class TerminalDialogController {
 					}
 				}
 			} else {
-				appendText("Bad argument passed");
+				appendTextLn("Bad argument passed");
 			}
 		} else {
-			appendText("Bad argument passed");
+			appendTextLn("Bad argument passed");
 		}
 	}
 
@@ -75,20 +79,20 @@ public class TerminalDialogController {
 					}
 				}
 			} else {
-				appendText("Bad argument passed");
+				appendTextLn("Bad argument passed");
 			}
 		} else {
-			appendText("Bad argument passed");
+			appendTextLn("Bad argument passed");
 		}
 	}
 
 	private void executeHelpCommand() {
 		appendText(
-				"""
-				hire <employee type> <quantity> - hire QUANTITY of EMPLOYEE TYPE
-				fire <employee type> <quantity> - fire QUANTITY of EMPLOYEE TYPE
-				help - display this message
-				exit - exit terminal session
+                """
+				hire <employee type> <quantity>: hire QUANTITY of TYPE
+				fire <employee type> <quantity>: fire QUANTITY of TYPE
+				help: display this message
+				exit: exit terminal session
 				"""
 		);
 	}
@@ -99,12 +103,12 @@ public class TerminalDialogController {
 
 	private boolean checkAmountOfArguments(String[] tokens, int min, int max) {
 		if (tokens.length < min) {
-			appendText("Not enough arguments were passed");
+			appendTextLn("Not enough arguments were passed");
 			return false;
 		}
 
 		if (tokens.length > max) {
-			appendText("Too many arguments were passed");
+			appendTextLn("Too many arguments were passed");
 			return false;
 		}
 
@@ -131,7 +135,7 @@ public class TerminalDialogController {
 			if (checkAmountOfArguments(tokens, 1, 1))
 				executeExitCommand();
 		}
-		default -> appendText("Хорошее мнение, но есть одна " +
+		default -> appendTextLn("Хорошее мнение, но есть одна " +
 				"маленькая проблема. Я заложил мину в неизвестном месте " +
 				"внутри твоего дома. Каждый твой шаг - рисковый ход");
 		}
@@ -141,7 +145,7 @@ public class TerminalDialogController {
 	private void onEnterButtonClick() {
 		String command = inputTextField.getText().trim();
 		inputTextField.clear();
-		appendText(command);
+		appendTextLn(">" + command);
 		processCommand(command);
 	}
 
@@ -149,6 +153,6 @@ public class TerminalDialogController {
 	private void initialize() {
 		outputTextArea.setEditable(false);
 		outputTextArea.setWrapText(true);
-		appendText(">Welcome to the le terminal");
+		appendTextLn("Welcome to the le terminal");
 	}
 }
