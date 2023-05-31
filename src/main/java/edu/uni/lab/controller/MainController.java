@@ -428,6 +428,7 @@ public class MainController {
 			case B -> startSimulation();
 			case E -> stopSimulation();
 			case T -> toggleTime();
+			case BACK_QUOTE -> callTerminalDialog();
 			}
 		});
 	}
