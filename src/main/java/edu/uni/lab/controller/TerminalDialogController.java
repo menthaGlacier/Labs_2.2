@@ -164,6 +164,6 @@ public class TerminalDialogController {
 		outputTextArea.setWrapText(true);
 		inputTextField.requestFocus();
 		outputTextArea.setFocusTraversable(false);
-		appendTextLn("Welcome to the le terminal");
+		appendTextLn("Welcome to the Le Terminal");
 	}
 }
