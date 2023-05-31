@@ -7,6 +7,7 @@ import edu.uni.lab.model.employees.Manager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -142,17 +143,25 @@ public class TerminalDialogController {
 	}
 
 	@FXML
-	private void onEnterButtonClick() {
-		String command = inputTextField.getText().trim();
-		inputTextField.clear();
-		appendTextLn(">" + command);
-		processCommand(command);
+	private void setKeyActions() {
+		inputTextField.setOnKeyReleased(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				String command = inputTextField.getText().trim();
+				inputTextField.clear();
+				appendTextLn(">" + command);
+				processCommand(command);
+			}
+		});
 	}
 
 	@FXML
 	private void initialize() {
+		setKeyActions();
+
 		outputTextArea.setEditable(false);
 		outputTextArea.setWrapText(true);
+		inputTextField.requestFocus();
+		outputTextArea.setFocusTraversable(false);
 		appendTextLn("Welcome to the le terminal");
 	}
 }
