@@ -1,6 +1,5 @@
 package edu.uni.lab.model.employees;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 

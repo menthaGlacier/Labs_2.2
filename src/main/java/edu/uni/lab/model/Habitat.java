@@ -1,6 +1,5 @@
 package edu.uni.lab.model;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import edu.uni.lab.model.employees.Developer;
@@ -115,6 +114,12 @@ public class Habitat {
 		} else if (employee instanceof Manager) {
 			managersCounter -= 1;
 		}
+	}
+
+	public void clear() {
+		employees.clear();
+		setDevelopersCounter(0);
+		setManagersCounter(0);
 	}
 
 	public int getDevelopersCounter() {

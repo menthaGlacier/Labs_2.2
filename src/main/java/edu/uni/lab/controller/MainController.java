@@ -139,10 +139,7 @@ public class MainController {
 		File file = fileChooser.showOpenDialog(root.getScene().getWindow());
 
 		ObjectInputStream inputStream;
-		EmployeeRepository repository = EmployeeRepository.getInstance();
-		habitat.setDevelopersCounter(0);
-		habitat.setManagersCounter(0);
-		repository.clear();
+		habitat.clear();
 
 		try {
 			boolean keepReading = true;
