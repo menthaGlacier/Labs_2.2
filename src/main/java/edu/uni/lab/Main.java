@@ -1,5 +1,6 @@
 package edu.uni.lab;
 
+import edu.uni.lab.client.Client;
 import edu.uni.lab.controller.MainControllerFactory;
 import edu.uni.lab.controller.MainController;
 import javafx.application.Application;
@@ -40,6 +41,8 @@ public class Main extends Application {
 			System.exit(0);
 		});
 
+		Client client = new Client();
+		client.connect("localhost", 7182);
 		stage.setScene(scene);
 		stage.show();
 	}
