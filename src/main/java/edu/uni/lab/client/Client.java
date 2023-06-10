@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Client extends Thread {
-	SimpleBooleanProperty transferingProperty = new SimpleBooleanProperty(false);
+	SimpleBooleanProperty transferringProperty = new SimpleBooleanProperty(false);
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
@@ -35,6 +35,7 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		return socket.isConnected();
 	}
 
@@ -45,7 +46,7 @@ public class Client extends Thread {
 				Object dto = in.readObject();
 
 				if (dto instanceof EmployeesRequestDto) {
-					transferingProperty.set(true);
+					transferringProperty.set(true);
 
 					synchronized (EmployeeRepository.getInstance().employeesList()) {
 						LinkedList<Employee> list, employees = EmployeeRepository.getInstance().employeesList();
@@ -55,8 +56,12 @@ public class Client extends Thread {
 								e -> e instanceof Manager :
 								e -> e instanceof Developer;
 
-						list = new LinkedList<>(employees.stream().filter(filter)
-									.collect(Collectors.toList()));
+						list = employees
+								.stream()
+								.filter(filter)
+								.collect(Collectors
+										.toCollection(LinkedList::new)
+								);
 
 						out.writeObject(new EmployeesListDto(list));
 					}
