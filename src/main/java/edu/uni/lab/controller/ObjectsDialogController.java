@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ShowObjectsDialogController {
-	private static class TableData {
+public class ObjectsDialogController {
+	static class TableData {
 		private final ObjectProperty<UUID> id;
 		private final LongProperty creationTime;
 
@@ -23,11 +23,11 @@ public class ShowObjectsDialogController {
 			this.creationTime = new SimpleLongProperty(creationTime);
 		}
 
-		public ObjectProperty<UUID> idProperty() {
+		public ObjectProperty<UUID> id() {
 			return id;
 		}
 
-		public LongProperty creationTimeProperty() {
+		public LongProperty creationTime() {
 			return creationTime;
 		}
 
@@ -50,7 +50,7 @@ public class ShowObjectsDialogController {
 	@FXML
 	private TableColumn<TableData, Long> creationTimeColumn;
 
-	public ShowObjectsDialogController(Stage stage) {
+	public ObjectsDialogController(Stage stage) {
 		this.stage = stage;
 		this.dataMap = EmployeeRepository.getInstance().getEmployeesCreationTime();
 	}
@@ -63,8 +63,8 @@ public class ShowObjectsDialogController {
 		}
 
 		tableView.setItems(items);
-		idColumn.setCellValueFactory(cell -> cell.getValue().idProperty());
-		creationTimeColumn.setCellValueFactory(cell -> cell.getValue().creationTimeProperty().asObject());
+		idColumn.setCellValueFactory(cell -> cell.getValue().id());
+		creationTimeColumn.setCellValueFactory(cell -> cell.getValue().creationTime().asObject());
 	}
 
 	@FXML
