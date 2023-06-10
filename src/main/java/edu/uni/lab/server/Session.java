@@ -27,7 +27,7 @@ public class Session implements Runnable {
 		thread.start();
 	}
 
-	public void sendObject(BaseDto object) {
+	public void sendObject(Object object) {
 		try {
 			out.writeObject(object);
 			out.flush();
@@ -37,9 +37,9 @@ public class Session implements Runnable {
 		}
 	}
 
-	public BaseDto receiveObject() {
+	public Object receiveObject() {
 		try {
-			return (BaseDto) in.readObject();
+			return in.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("Error receiving object: " + e.getMessage());
 			close();

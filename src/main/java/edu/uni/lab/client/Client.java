@@ -21,4 +21,10 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+
+	// DEBUG!!!
+	public static void main(String[] args) {
+		Client client = new Client();
+		client.connect("localhost", 7182);
+	}
 }

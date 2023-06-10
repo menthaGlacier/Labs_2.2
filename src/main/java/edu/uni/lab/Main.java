@@ -40,9 +40,7 @@ public class Main extends Application {
 			Platform.exit();
 			System.exit(0);
 		});
-
-		Client client = new Client();
-		client.connect("localhost", 7182);
+		
 		stage.setScene(scene);
 		stage.show();
 	}
