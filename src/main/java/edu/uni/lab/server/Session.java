@@ -1,15 +1,12 @@
 package edu.uni.lab.server;
 
-import edu.uni.lab.utility.dto.BaseDto;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Session implements Runnable {
+public class Session extends Thread {
 	private final Socket socket;
-	private final Thread thread;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
@@ -22,9 +19,6 @@ public class Session implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		this.thread = new Thread(this);
-		thread.start();
 	}
 
 	public void sendObject(Object object) {
@@ -58,6 +52,11 @@ public class Session implements Runnable {
 
 	@Override
 	public void run() {
-		Object data = receiveObject();
+		try {
+			while (!socket.isClosed()) {
+				Object data = in.readObject();
+			}
+
+		} catch (Exception ignored) {}
 	}
 }
