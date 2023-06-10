@@ -26,7 +26,8 @@ public class Session extends Thread {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error sending object: " + e.getMessage());
+			close();
 		}
 	}
 
