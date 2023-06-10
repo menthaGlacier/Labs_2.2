@@ -32,7 +32,8 @@ public class Session implements Runnable {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error sending object: " + e.getMessage());
+			close();
 		}
 	}
 
@@ -40,7 +41,8 @@ public class Session implements Runnable {
 		try {
 			return (BaseDto) in.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Error receiving object: " + e.getMessage());
+			close();
 		}
 
 		return null;
