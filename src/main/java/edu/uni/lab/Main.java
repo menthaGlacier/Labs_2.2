@@ -35,14 +35,14 @@ public class Main extends Application {
 		stage.setOnShown(controller::setup);
 		stage.setTitle("Simulation");
 		stage.setResizable(false);
+
 		stage.setOnCloseRequest(event -> {
 			controller.exit();
 			Platform.exit();
 			System.exit(0);
 		});
 
-		Client client = new Client();
-		client.connect("localhost", 7182);
+
 		stage.setScene(scene);
 		stage.show();
 	}

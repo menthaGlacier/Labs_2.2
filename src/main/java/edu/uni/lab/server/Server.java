@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Server {
 	private static final List<Session> sessions = new LinkedList<>();
-
+	private static int count = 0;
 	private synchronized void addSession(Session session) {
 		sessions.add(session);
 	}
@@ -17,7 +17,7 @@ public class Server {
 		sessions.remove(session);
 	}
 
-	public synchronized List<Session> getSessions() {
+	public static List<Session> getSessions() {
 		return sessions;
 	}
 
@@ -41,8 +41,16 @@ public class Server {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
-				sessions.add(new Session(clientSocket));
-				System.out.println(sessions); // DEBUG!!!
+				Session newSession = new Session(clientSocket, count++);
+				newSession.start();
+				sessions.add(newSession);
+				for (Session session : sessions) {
+					session.sendConnectedClientsIdList();
+				}
+				System.out.println("Connected: "); // DEBUG!!!
+				for (Session session : sessions) {
+					System.out.println("Session ID: " + session.getSessionId() + " IP: " + session.getIp());
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

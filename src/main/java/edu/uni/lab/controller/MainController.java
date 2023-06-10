@@ -1,5 +1,6 @@
 package edu.uni.lab.controller;
 
+import edu.uni.lab.client.Client;
 import edu.uni.lab.model.EmployeeRepository;
 import edu.uni.lab.model.ai.BaseAi;
 import edu.uni.lab.model.ai.DeveloperAi;
@@ -34,6 +35,7 @@ import java.text.ParseException;
 import java.util.Arrays;
 
 public class MainController {
+	private Client client;//!!!!!!!!!!!!!!!!!!!!!!!!!!
 	private Habitat habitat;
 	private final DeveloperAi developerAi;
 	private final ManagerAi managerAi;
@@ -426,6 +428,7 @@ public class MainController {
 			case E -> stopSimulation();
 			case T -> toggleTime();
 			case BACK_QUOTE -> callTerminalDialog();
+			case R -> client.requestEmployees("developer", 1);//DEBUG
 			}
 		});
 	}
@@ -438,6 +441,10 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		client = new Client();
+		client.setHabitat(habitat);
+		client.connect("localhost", 7182);
 
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);

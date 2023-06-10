@@ -12,4 +12,6 @@ public class EmployeesRequestDto implements Serializable {
 	}
 
 	public String getEmployeeClass() { return employeeClass; }
+
+	public int getToClientId() { return toClientId; }
 }
