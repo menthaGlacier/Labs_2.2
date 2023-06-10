@@ -7,12 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Server {
-	private final ServerSocket serverSocket;
-	private final List<Session> sessions = new LinkedList<>();
-
-	public Server(int port) throws IOException {
-		this.serverSocket = new ServerSocket(port);
-	}
+	private static final List<Session> sessions = new LinkedList<>();
 
 	private synchronized void addSession(Session session) {
 		sessions.add(session);
@@ -24,18 +19,6 @@ public class Server {
 
 	public synchronized List<Session> getSessions() {
 		return sessions;
-	}
-
-	public void operate() {
-		try {
-			while (true) {
-				Socket clientSocket = serverSocket.accept();
-				sessions.add(new Session(clientSocket));
-				System.out.println(sessions); // DEBUG!!!
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void main(String[] args) {
@@ -55,9 +38,12 @@ public class Server {
 			);
 		}
 
-		try {
-			Server server = new Server(port);
-			server.operate();
+		try (ServerSocket serverSocket = new ServerSocket(port)) {
+			while (true) {
+				Socket clientSocket = serverSocket.accept();
+				sessions.add(new Session(clientSocket));
+				System.out.println(sessions); // DEBUG!!!
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
