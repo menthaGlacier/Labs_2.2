@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Server {
+	private static final int DEFAULT_PORT = 7182;
 	private static final List<Session> sessions = new LinkedList<>();
 	private static int count = 0;
 	private synchronized void addSession(Session session) {
@@ -23,19 +24,19 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
-		int port = 7182;
+		int port = DEFAULT_PORT;
 
 		if (args.length == 1) {
 			try {
 				port = Integer.parseInt(args[0]);
 			} catch (NumberFormatException e) {
 				System.err.println("Invalid port provided. " +
-						"Using default port: " + port
+						"Using default port: " + DEFAULT_PORT
 				);
 			}
 		} else {
 			System.err.println("Invalid args provided. " +
-					"Using default port: " + port
+					"Using default port: " + DEFAULT_PORT
 			);
 		}
 
@@ -48,6 +49,7 @@ public class Server {
 				for (Session session : sessions) {
 					session.sendConnectedClientsIdList();
 				}
+
 				System.out.println("Connected: "); // DEBUG!!!
 				for (Session session : sessions) {
 					System.out.println("Session ID: " + session.getSessionId() + " IP: " + session.getIp());

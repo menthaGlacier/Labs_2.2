@@ -7,7 +7,7 @@
     <ScrollPane AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <TableView fx:id="tableView" prefHeight="345.0" prefWidth="580.0">
             <columns>
-                <TableColumn fx:id="ipColumn" prefWidth="285.0" text="IP" />
+                <TableColumn fx:id="idColumn" prefWidth="285.0" text="ID" />
                 <TableColumn fx:id="exchangeEmployeesColumn" prefWidth="285.0" text="Exchange" />
             </columns>
         </TableView>

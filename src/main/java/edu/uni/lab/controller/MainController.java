@@ -337,7 +337,7 @@ public class MainController {
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/clientsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new ClientsDialogController(dialog, new LinkedList<>()));
+				new ClientsDialogController(dialog, client, client.getConnectedClientsIds()));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -377,7 +377,7 @@ public class MainController {
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/terminalDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new TerminalDialogController(dialog, habitat));
+				new TerminalDialogController(dialog, habitat, client));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -467,7 +467,6 @@ public class MainController {
 
 		client = new Client();
 		client.setHabitat(habitat);
-		client.connect("localhost", 7182);
 
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);
@@ -547,7 +546,7 @@ public class MainController {
 			ConfigHandler configHandler = new ConfigHandler();
 			configHandler.save(developerAi, managerAi);
 			client.disconnect();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,5 +1,6 @@
 package edu.uni.lab.controller;
 
+import edu.uni.lab.client.Client;
 import edu.uni.lab.model.EmployeeRepository;
 import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.employees.Employee;
@@ -15,14 +16,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TerminalDialogController {
 	private final Stage stage;
 	private final Habitat habitat;
+	private final Client client;
+
 	@FXML
 	private TextField inputTextField;
 	@FXML
 	private TextArea outputTextArea;
 
-	public TerminalDialogController(Stage stage, Habitat habitat) {
+	public TerminalDialogController(Stage stage, Habitat habitat, Client client) {
 		this.stage = stage;
 		this.habitat = habitat;
+		this.client = client;
 	}
 
 	private void appendText(String message) {
@@ -31,6 +35,54 @@ public class TerminalDialogController {
 
 	private void appendTextLn(String message) {
 		appendText(message + "\n");
+	}
+
+	private boolean checkAmountOfArguments(String[] tokens, int min, int max) {
+		if (tokens.length < min) {
+			appendTextLn("Not enough arguments were passed");
+			return false;
+		}
+
+		if (tokens.length > max) {
+			appendTextLn("Too many arguments were passed");
+			return false;
+		}
+
+		return true;
+	}
+
+	private void executeConnectCommand(String address, String port) {
+		if (client.isConnected()) {
+			appendTextLn("Connection already established. Use \"disconnect\"");
+			return;
+		}
+
+		int portInt;
+		try {
+			portInt = Integer.parseInt(port);
+		} catch (NumberFormatException e) {
+			portInt = -1;
+		}
+
+		try {
+			client.connect(address, portInt);
+		} catch (Exception e) {
+			appendTextLn(e.getMessage());
+		}
+	}
+
+	private void executeDisconnectCommand() {
+		if (!client.isConnected()) {
+			appendTextLn("Can't disconnect: no connection was established");
+			return;
+		}
+
+		try {
+			client.disconnect();
+			appendTextLn("Disconnecting from: " + client.getAddress());
+		} catch (Exception e) {
+			appendTextLn(e.getMessage());
+		}
 	}
 
 	private void executeHireCommand(String type, String quantity) {
@@ -55,7 +107,8 @@ public class TerminalDialogController {
 										- Manager.getTexture().getHeight()),
 								System.nanoTime(),
 								habitat.habitatAreaWidth,
-								habitat.habitatAreaHeight)
+								habitat.habitatAreaHeight
+							)
 						);
 					}
 				}
@@ -92,6 +145,8 @@ public class TerminalDialogController {
 	private void executeHelpCommand() {
 		appendText(
                 """
+				connect <address> <port>: connect to ADDRESS:PORT server
+				disconnect: close established connection
 				hire <employee type> <quantity>: hire QUANTITY of TYPE
 				fire <employee type> <quantity>: fire QUANTITY of TYPE
 				help: display this message
@@ -104,24 +159,18 @@ public class TerminalDialogController {
 		stage.close();
 	}
 
-	private boolean checkAmountOfArguments(String[] tokens, int min, int max) {
-		if (tokens.length < min) {
-			appendTextLn("Not enough arguments were passed");
-			return false;
-		}
-
-		if (tokens.length > max) {
-			appendTextLn("Too many arguments were passed");
-			return false;
-		}
-
-		return true;
-	}
-
 	private void processCommand(String command) {
 		String[] tokens = command.split(" ");
 
 		switch (tokens[0]) {
+		case "connect" -> {
+			if (checkAmountOfArguments(tokens, 3, 3))
+				executeConnectCommand(tokens[1], tokens[2]);
+		}
+		case "disconnect" -> {
+			if (checkAmountOfArguments(tokens, 1, 1))
+				executeDisconnectCommand();
+		}
 		case "hire" -> {
 			if (checkAmountOfArguments(tokens, 3, 3))
 				executeHireCommand(tokens[1], tokens[2]);

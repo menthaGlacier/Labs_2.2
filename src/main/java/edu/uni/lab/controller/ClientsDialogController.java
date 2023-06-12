@@ -1,7 +1,9 @@
 package edu.uni.lab.controller;
 
 import edu.uni.lab.client.Client;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,68 +15,58 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ClientsDialogController {
 	private static class TableData {
-		private final ObjectProperty<String> ip;
-		private final ObjectProperty<Client> client;
+		private final IntegerProperty id;
 
-		public TableData(String ip, Client client) {
-			this.ip = new SimpleObjectProperty<>(ip);
-			this.client = new SimpleObjectProperty<>(client);
+		public TableData(int id) {
+			this.id = new SimpleIntegerProperty(id);
 		}
 
-		public ObjectProperty<String> ip() {
-			return ip;
+		public IntegerProperty id() {
+			return id;
 		}
 
-		public ObjectProperty<Client> client() {
-			return client;
-		}
-
-		public String getId() {
-			return ip.getValue();
-		}
-
-		public Client getClient() {
-			return client.getValue();
+		public int getId() {
+			return id.getValue();
 		}
 	}
 
 	private final Stage stage;
-	private final HashMap<String, Client> dataMap;
+	private final Client client;
+	private final List<Integer> clientsIds;
 
 	@FXML
 	private TableView<TableData> tableView;
 	@FXML
-	private TableColumn<TableData, String> ipColumn;
+	private TableColumn<TableData, Integer> idColumn;
 	@FXML
 	private TableColumn<TableData, Button> exchangeEmployeesColumn;
 
-	public ClientsDialogController(Stage stage, LinkedList<Client> clients) {
+	public ClientsDialogController(Stage stage, Client client, LinkedList<Integer> clientsIds) {
 		this.stage = stage;
-		this.dataMap = new HashMap<>();
-
-		long dud = 0; // DEBUG!!!
-		for (Client client : clients) {
-			dataMap.put(String.valueOf(dud), client);
-			dud += 1; // DEBUG!!!
-		}
+		this.client = client;
+		this.clientsIds = clientsIds;
 	}
 
 	@FXML
 	private void initialize() {
 		ObservableList<TableData> items = FXCollections.observableArrayList();
-		for (Map.Entry<String, Client> entry : dataMap.entrySet()) {
-			items.add(new TableData(entry.getKey(), entry.getValue()));
+		for (Integer id : clientsIds) {
+			items.add(new TableData(id));
 		}
 
 		tableView.setItems(items);
-		ipColumn.setCellValueFactory(cell -> cell.getValue().ip());
+		idColumn.setCellValueFactory(cell -> cell.getValue().id().asObject());
 		this.exchangeEmployeesColumn.setCellValueFactory(cell -> {
 			Button button = new Button("Exchange employees");
-			button.setOnAction(event -> {}); // TODO
+			button.setOnAction(event -> {
+				client.requestEmployees("developers", cell.getValue().getId());
+			});
+
 			return new SimpleObjectProperty<>(button);
 		});
 	}

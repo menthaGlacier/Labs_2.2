@@ -9,7 +9,6 @@ import edu.uni.lab.utility.dto.*;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 
-import java.io.IOException;
 import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,15 +17,31 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Client extends Thread {
-	SimpleBooleanProperty transferringProperty = new SimpleBooleanProperty(false);
+	private final SimpleBooleanProperty transferringProperty;
 	private Socket socket;
+	private boolean isConnected;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private Habitat habitat = null;
+	private Habitat habitat;
 	private long startTime;
 	private List<Integer> connectedClientsIds;
 
 	public Client() {
+		this.transferringProperty = new SimpleBooleanProperty(false);
+		this.isConnected = false;
+		this.habitat = null;
+	}
+
+	public boolean isConnected() {
+		return isConnected;
+	}
+
+	public String getAddress() {
+		return socket.getInetAddress().getHostName();
+	}
+
+	public List<Integer> getConnectedClientsIds() {
+		return connectedClientsIds;
 	}
 
 	public void setHabitat(Habitat habitat) {
@@ -37,16 +52,16 @@ public class Client extends Thread {
 		this.startTime = startTime;
 	}
 
-	public void connect(String address, int port) {
+	public void connect(String address, int port) throws Exception {
 		try {
 			this.socket = new Socket(address, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
+			isConnected = true;
 			start();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new Exception("Error occurred while trying to establish connection");
 		}
-		//return socket.isConnected();
 	}
 
 	@Override
@@ -57,44 +72,46 @@ public class Client extends Thread {
 
 				if (dto instanceof EmployeesRequestDto requestDto) {
 					transferringProperty.set(true);
-					System.out.println("Got request for " + requestDto.getEmployeeClass() + " from " + requestDto.getToClientId());
+					System.out.println("Got request for " +
+							requestDto.getEmployeeClass() +
+							" from " + requestDto.getToClientId()
+					);
+
 					synchronized (EmployeeRepository.getInstance().employeesList()) {
 						LinkedList<Employee> employees = EmployeeRepository.getInstance().employeesList();
 						LinkedList<EmployeeDto> dtoList = new LinkedList<>();
 
 						Predicate<Employee> filter =
 								(requestDto).getEmployeeClass().equals("manager") ?
-								e -> e instanceof Manager :
-								e -> e instanceof Developer;
+								e -> e instanceof Manager : e -> e instanceof Developer;
 
 						for (Employee employee : employees) {
 							if (filter.test(employee)) {
 								dtoList.add(employee.createDto());
 							}
 						}
-						out.writeObject(new EmployeesListDto(dtoList, requestDto.getToClientId()));
-					}
 
+						out.writeObject(new EmployeesListDto(dtoList,
+								requestDto.getToClientId()));
+					}
 				} else if (dto instanceof EmployeesListDto listDto) {
 					System.out.println("adding requested employees");
-
-						Platform.runLater(new Runnable() {
-							@Override
-							public void run() {
-								synchronized (EmployeeRepository.getInstance().employeesList()) {
-									for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
-										long creationTime = (System.nanoTime() - startTime) /  1_000_000;
-										habitat.addEmployee(employeeDto instanceof ManagerDto managerDto ?
-												new Manager((ManagerDto)employeeDto, creationTime,
-														habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
-												new Developer((DeveloperDto)employeeDto, creationTime,
-														habitat.habitatAreaWidth, habitat.habitatAreaHeight));
-									}
+					Platform.runLater(() -> {
+						synchronized (EmployeeRepository.getInstance().employeesList()) {
+							for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
+								long creationTime = (System.nanoTime() - startTime) / 1_000_000;
+								habitat.addEmployee(employeeDto instanceof ManagerDto ?
+										new Manager((ManagerDto) employeeDto, creationTime,
+											habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
+										new Developer((DeveloperDto) employeeDto, creationTime,
+											habitat.habitatAreaWidth, habitat.habitatAreaHeight)
+									);
 								}
 							}
-						});
+						}
+					);
 				} else if (dto instanceof ConnectedClientsIdListDto) {
-					connectedClientsIds = ((ConnectedClientsIdListDto)dto).idList();
+					connectedClientsIds = ((ConnectedClientsIdListDto) dto).idList();
 				}
 			}
 		} catch (Exception e) {
@@ -115,19 +132,12 @@ public class Client extends Thread {
 		}
 	}
 
-	public void disconnect() {
-		System.out.println("disconnecting");
+	public void disconnect() throws Exception {
 		try {
 			out.writeObject(new DisconnectRequestDto());
+			isConnected = false;
 		} catch (Exception e) {
-			System.out.println(e.getMessage() + " " + e.getCause());
-			e.printStackTrace();
+			throw new Exception(e.getMessage() + " " + e.getCause());
 		}
-	}
-
-	// DEBUG!!!
-	public static void main(String[] args) {
-		Client client = new Client();
-		client.connect("localhost", 7182);
 	}
 }
