@@ -25,11 +25,11 @@ public abstract class Employee implements IBehaviour, Serializable {
 		this.id = UUID.randomUUID();
 	}
 
-	public Employee(EmployeeDto employeeDto, double habitatAreaWidth, double habitatAreaHeight) {
+	public Employee(EmployeeDto employeeDto, long creationTime, double habitatAreaWidth, double habitatAreaHeight) {
 		x = employeeDto.getX();
 		y = employeeDto.getY();
-		creationTime = employeeDto.getCreationTime();
-		id = employeeDto.getId();
+		this.creationTime = creationTime;
+		this.id = UUID.randomUUID();
 		this.habitatAreaWidth = habitatAreaWidth;
 		this.habitatAreaHeight = habitatAreaHeight;
 	}

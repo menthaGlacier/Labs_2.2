@@ -49,8 +49,8 @@ public class Developer extends Employee {
 				.nextLong(minTrajectoryChangePeriod, maxTrajectoryChangePeriod);
 	}
 
-	public Developer(DeveloperDto developerDto, double habitatAreaWidth, double habitatAreaHeight) {
-		super(developerDto, habitatAreaWidth, habitatAreaHeight);
+	public Developer(DeveloperDto developerDto, long creationTime, double habitatAreaWidth, double habitatAreaHeight) {
+		super(developerDto, creationTime, habitatAreaWidth, habitatAreaHeight);
 		velocityX = developerDto.getVelocityX();
 		velocityY = developerDto.getVelocityY();
 		trajectoryChangePeriod = developerDto.getTrajectoryChangePeriod();

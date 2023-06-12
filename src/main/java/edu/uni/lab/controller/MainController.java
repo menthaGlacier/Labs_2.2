@@ -167,6 +167,7 @@ public class MainController {
 		}
 
 		startTime = System.nanoTime();
+		client.setStartTime(startTime);
 		lastUpdateTime = startTime;
 
 		timer.start();

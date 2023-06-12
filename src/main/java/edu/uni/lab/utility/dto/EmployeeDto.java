@@ -7,14 +7,10 @@ import java.util.UUID;
 
 public class EmployeeDto implements Serializable {
 	private double x, y;
-	private long creationTime;
-	private UUID id;
 
 	public EmployeeDto(Employee employee) {
 		x = employee.getX();
 		y = employee.getY();
-		creationTime = employee.getCreationTime();
-		id = employee.getId();
 	}
 
 	public double getX() {
@@ -23,14 +19,6 @@ public class EmployeeDto implements Serializable {
 
 	public double getY() {
 		return y;
-	}
-
-	public long getCreationTime() {
-		return creationTime;
-	}
-
-	public UUID getId() {
-		return id;
 	}
 
 }

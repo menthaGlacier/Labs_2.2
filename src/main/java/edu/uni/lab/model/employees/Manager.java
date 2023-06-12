@@ -61,8 +61,8 @@ public class Manager extends Employee {
 		currentAngle = acos(vecX/trajectoryRadius) + PI;
 	}
 
-	public Manager(ManagerDto managerDto, double habitatAreaWidth, double habitatAreaHeight) {
-		super(managerDto, habitatAreaWidth, habitatAreaHeight);
+	public Manager(ManagerDto managerDto, long creationTime, double habitatAreaWidth, double habitatAreaHeight) {
+		super(managerDto, creationTime, habitatAreaWidth, habitatAreaHeight);
 		trajectoryRadius = managerDto.getTrajectoryRadius();
 		angularVelocity = managerDto.getAngularVelocity();
 		circleX = managerDto.getCircleX();

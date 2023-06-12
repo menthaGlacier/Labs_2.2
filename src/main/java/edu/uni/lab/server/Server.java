@@ -1,6 +1,7 @@
 package edu.uni.lab.server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -38,7 +39,7 @@ public class Server {
 			);
 		}
 
-		try (ServerSocket serverSocket = new ServerSocket(port)) {
+		try (ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(null))) {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
 				Session newSession = new Session(clientSocket, count++);

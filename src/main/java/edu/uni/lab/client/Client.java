@@ -23,6 +23,7 @@ public class Client extends Thread {
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Habitat habitat = null;
+	private long startTime;
 	private List<Integer> connectedClientsIds;
 
 	public Client() {
@@ -30,6 +31,10 @@ public class Client extends Thread {
 
 	public void setHabitat(Habitat habitat) {
 		this.habitat = habitat;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
 	}
 
 	public void connect(String address, int port) {
@@ -81,10 +86,11 @@ public class Client extends Thread {
 							public void run() {
 								synchronized (EmployeeRepository.getInstance().employeesList()) {
 									for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
+										long creationTime = (System.nanoTime() - startTime) /  1_000_000;
 										habitat.addEmployee(employeeDto instanceof ManagerDto managerDto ?
-												new Manager((ManagerDto)employeeDto,
+												new Manager((ManagerDto)employeeDto, creationTime,
 														habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
-												new Developer((DeveloperDto)employeeDto,
+												new Developer((DeveloperDto)employeeDto, creationTime,
 														habitat.habitatAreaWidth, habitat.habitatAreaHeight));
 									}
 								}
