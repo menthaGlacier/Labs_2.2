@@ -3,6 +3,8 @@ package edu.uni.lab.model.employees;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
+import edu.uni.lab.utility.dto.DeveloperDto;
+import edu.uni.lab.utility.dto.EmployeeDto;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
@@ -45,6 +47,17 @@ public class Developer extends Employee {
 		velocityY = getRandomVelocity();
 		trajectoryChangePeriod = ThreadLocalRandom.current()
 				.nextLong(minTrajectoryChangePeriod, maxTrajectoryChangePeriod);
+	}
+
+	public Developer(DeveloperDto developerDto, double habitatAreaWidth, double habitatAreaHeight) {
+		super(developerDto, habitatAreaWidth, habitatAreaHeight);
+		velocityX = developerDto.getVelocityX();
+		velocityY = developerDto.getVelocityY();
+		trajectoryChangePeriod = developerDto.getTrajectoryChangePeriod();
+		lastTrajectoryChange = developerDto.getLastTrajectoryChange();
+		imageView = new ImageView(texture.getImage());
+		imageView.setX(x);
+		imageView.setY(y);
 	}
 
 	@Override
@@ -127,5 +140,26 @@ public class Developer extends Employee {
 
 	public static void setLifeTime(long lifeTime) {
 		lifeTimeProperty.setValue(lifeTime);
+	}
+
+	public long getTrajectoryChangePeriod() {
+		return trajectoryChangePeriod;
+	}
+
+	public long getLastTrajectoryChange() {
+		return lastTrajectoryChange;
+	}
+
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
+	}
+
+	@Override
+	public EmployeeDto createDto() {
+		return new DeveloperDto(this);
 	}
 }

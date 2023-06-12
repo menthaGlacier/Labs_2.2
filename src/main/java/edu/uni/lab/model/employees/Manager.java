@@ -1,6 +1,9 @@
 package edu.uni.lab.model.employees;
 
 import edu.uni.lab.utility.Texture;
+import edu.uni.lab.utility.dto.DeveloperDto;
+import edu.uni.lab.utility.dto.EmployeeDto;
+import edu.uni.lab.utility.dto.ManagerDto;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.image.Image;
@@ -56,6 +59,18 @@ public class Manager extends Employee {
 		circleX = vecX + x;
 		circleY = vecY + y;
 		currentAngle = acos(vecX/trajectoryRadius) + PI;
+	}
+
+	public Manager(ManagerDto managerDto, double habitatAreaWidth, double habitatAreaHeight) {
+		super(managerDto, habitatAreaWidth, habitatAreaHeight);
+		trajectoryRadius = managerDto.getTrajectoryRadius();
+		angularVelocity = managerDto.getAngularVelocity();
+		circleX = managerDto.getCircleX();
+		circleY = managerDto.getCircleY();
+		currentAngle = managerDto.getCurrentAngle();
+		imageView = new ImageView(texture.getImage());
+		imageView.setX(x);
+		imageView.setY(y);
 	}
 
 	@Override
@@ -119,5 +134,30 @@ public class Manager extends Employee {
 
 	public static void setLifeTime(long lifeTime) {
 		lifeTimeProperty.setValue(lifeTime);
+	}
+
+	public double getTrajectoryRadius() {
+		return trajectoryRadius;
+	}
+
+	public double getCircleX() {
+		return circleX;
+	}
+
+	public double getCircleY() {
+		return circleY;
+	}
+
+	public double getCurrentAngle() {
+		return currentAngle;
+	}
+
+	public double getAngularVelocity() {
+		return angularVelocity;
+	}
+
+	@Override
+	public EmployeeDto createDto() {
+		return new ManagerDto(this);
 	}
 }

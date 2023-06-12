@@ -1,6 +1,7 @@
 package edu.uni.lab.model.employees;
 
 import edu.uni.lab.model.IBehaviour;
+import edu.uni.lab.utility.dto.EmployeeDto;
 import javafx.scene.image.ImageView;
 
 import java.io.Serializable;
@@ -22,6 +23,15 @@ public abstract class Employee implements IBehaviour, Serializable {
 		this.habitatAreaWidth = habitatAreaWidth;
 		this.habitatAreaHeight = habitatAreaHeight;
 		this.id = UUID.randomUUID();
+	}
+
+	public Employee(EmployeeDto employeeDto, double habitatAreaWidth, double habitatAreaHeight) {
+		x = employeeDto.getX();
+		y = employeeDto.getY();
+		creationTime = employeeDto.getCreationTime();
+		id = employeeDto.getId();
+		this.habitatAreaWidth = habitatAreaWidth;
+		this.habitatAreaHeight = habitatAreaHeight;
 	}
 
 	public ImageView getImageView() {
@@ -58,5 +68,9 @@ public abstract class Employee implements IBehaviour, Serializable {
 		synchronized (imageView) {
 			imageView.setY(y);
 		}
+	}
+
+	public EmployeeDto createDto() {
+		return new EmployeeDto(this);
 	}
 }

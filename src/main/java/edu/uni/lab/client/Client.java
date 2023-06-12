@@ -5,9 +5,8 @@ import edu.uni.lab.model.Habitat;
 import edu.uni.lab.model.employees.Developer;
 import edu.uni.lab.model.employees.Employee;
 import edu.uni.lab.model.employees.Manager;
-import edu.uni.lab.utility.dto.ConnectedClientsIdListDto;
-import edu.uni.lab.utility.dto.EmployeesListDto;
-import edu.uni.lab.utility.dto.EmployeesRequestDto;
+import edu.uni.lab.utility.dto.*;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Client extends Thread {
 	SimpleBooleanProperty transferringProperty = new SimpleBooleanProperty(false);
@@ -56,26 +54,42 @@ public class Client extends Thread {
 					transferringProperty.set(true);
 					System.out.println("Got request for " + requestDto.getEmployeeClass() + " from " + requestDto.getToClientId());
 					synchronized (EmployeeRepository.getInstance().employeesList()) {
-						LinkedList<Employee> list, employees = EmployeeRepository.getInstance().employeesList();
+						LinkedList<Employee> employees = EmployeeRepository.getInstance().employeesList();
+						LinkedList<EmployeeDto> dtoList = new LinkedList<>();
 
 						Predicate<Employee> filter =
 								(requestDto).getEmployeeClass().equals("manager") ?
 								e -> e instanceof Manager :
 								e -> e instanceof Developer;
+//
+//						dtoList = employees.stream().filter(filter).collect(Collectors.toCollection(LinkedList::new))
+//								.stream().map(Employee::createDto).collect(Collectors.toCollection(LinkedList::new));
 
-						list = employees.stream().filter(filter).collect(Collectors.toCollection(LinkedList::new));
-
-						out.writeObject(new EmployeesListDto(list, requestDto.getToClientId()));
-					}
-
-				} else if (dto instanceof EmployeesListDto) {
-					System.out.println("adding requested employees");
-					synchronized (EmployeeRepository.getInstance().employeesList()) {
-						for (Employee employee : ((EmployeesListDto)dto).employeesList()) {
-							employee.resetImageView();
-							habitat.addEmployee(employee);
+						for (Employee employee : employees) {
+							if (filter.test(employee)) {
+								dtoList.add(employee.createDto());
+							}
 						}
+						out.writeObject(new EmployeesListDto(dtoList, requestDto.getToClientId()));
 					}
+
+				} else if (dto instanceof EmployeesListDto listDto) {
+					System.out.println("adding requested employees");
+
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								synchronized (EmployeeRepository.getInstance().employeesList()) {
+									for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
+										habitat.addEmployee(employeeDto instanceof ManagerDto managerDto ?
+												new Manager((ManagerDto)employeeDto,
+														habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
+												new Developer((DeveloperDto)employeeDto,
+														habitat.habitatAreaWidth, habitat.habitatAreaHeight));
+									}
+								}
+							}
+						});
 				} else if (dto instanceof ConnectedClientsIdListDto) {
 					connectedClientsIds = ((ConnectedClientsIdListDto)dto).idList();
 				}
