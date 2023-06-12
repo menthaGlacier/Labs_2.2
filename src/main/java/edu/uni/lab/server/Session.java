@@ -1,6 +1,7 @@
 package edu.uni.lab.server;
 
 import edu.uni.lab.utility.dto.ConnectedClientsIdListDto;
+import edu.uni.lab.utility.dto.DisconnectRequestDto;
 import edu.uni.lab.utility.dto.EmployeesListDto;
 import edu.uni.lab.utility.dto.EmployeesRequestDto;
 
@@ -71,6 +72,7 @@ public class Session extends Thread {
 				System.out.println("got some dto");
 				if (dto instanceof EmployeesRequestDto requestDto) {
 					System.out.println("Requesting " + requestDto.getEmployeeClass() + " from " + requestDto.getToClientId());
+					if (Server.getSessions().size() <= requestDto.getToClientId()) { continue; }
 					Server.getSessions().get(requestDto.getToClientId()).out.writeObject(new EmployeesRequestDto(
 							requestDto.getEmployeeClass(), sessionId));
 					out.writeObject(new EmployeesRequestDto(
@@ -79,6 +81,10 @@ public class Session extends Thread {
 				} else if (dto instanceof EmployeesListDto listDto) {
 					System.out.println("sending to " + listDto.getToClientId());
 					Server.getSessions().get(listDto.getToClientId()).out.writeObject(listDto);
+				} else if (dto instanceof DisconnectRequestDto) {
+					Server.getSessions().remove(this);
+					Server.getSessions().forEach(Session::sendConnectedClientsIdList);
+					break;
 				}
 			}
 

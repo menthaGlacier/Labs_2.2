@@ -109,13 +109,20 @@ public class Client extends Thread {
 		try {
 			EmployeesRequestDto requestDto = new EmployeesRequestDto(employeeClass, toClientId);
 			out.writeObject(requestDto);
-		} catch (Exception exception) {
-			System.out.println(exception.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
 		}
 	}
 
 	public void disconnect() {
-
+		System.out.println("disconnecting");
+		try {
+			out.writeObject(new DisconnectRequestDto());
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
+		}
 	}
 
 	// DEBUG!!!

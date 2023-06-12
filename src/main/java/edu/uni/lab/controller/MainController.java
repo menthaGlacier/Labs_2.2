@@ -546,6 +546,7 @@ public class MainController {
 		try {
 			ConfigHandler configHandler = new ConfigHandler();
 			configHandler.save(developerAi, managerAi);
+			client.disconnect();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
