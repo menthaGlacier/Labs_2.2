@@ -53,7 +53,7 @@
                     </font>
                 </Label>
                 <Button onAction="#onDeveloperLifeTimeButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="developerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
+                <NumericField fx:id="developerLifeTimeField" promptText="Enter lifetime (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -96,7 +96,7 @@
                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                  </padding>
              </Label>
-             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" value="5"/>
+             <ChoiceBox fx:id="developerAiChoiceBox" prefWidth="150.0" value="5" />
             </VBox>
         </VBox>
         <VBox fillWidth="false" layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="275.0" spacing="10.0" style="-fx-background-color: #C30052; -fx-background-radius: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -141,7 +141,7 @@
                     </font>
                 </Label>
                 <Button onAction="#onManagerLifeTimeButtonClick" prefHeight="26.0" prefWidth="80.0" text="Apply" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <NumericField fx:id="managerLifeTimeField" promptText="Enter life time (in ms)" GridPane.rowIndex="1">
+                <NumericField fx:id="managerLifeTimeField" promptText="Enter lifetime (in ms)" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -184,7 +184,7 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                     </padding>
                 </Label>
-                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" value="5"/>
+                <ChoiceBox fx:id="managerAiChoiceBox" prefWidth="150.0" value="5" />
             </VBox>
         </VBox>
         <GridPane prefHeight="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -201,17 +201,22 @@
                 <RowConstraints maxHeight="84.0" minHeight="64.0" prefHeight="84.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="74.0" minHeight="48.0" prefHeight="54.0" vgrow="SOMETIMES" />
             </rowConstraints>
+         <Button fx:id="showClientsButton" layoutX="10.0" layoutY="199.0" onAction="#callClientsDialog" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 10;" text="Show clients" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <font>
+               <Font name="System Bold" size="22.0" />
+            </font>
+         </Button>
             <Button fx:id="startButton" onAction="#startSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Start" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button fx:id="stopButton" onAction="#stopSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="stopButton" onAction="#stopSimulation" prefHeight="60.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Stop" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>
             </Button>
-            <Button fx:id="showObjectsButton" onAction="#callShowObjectsDialog" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 10;" text="Show current objects" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <Button fx:id="showObjectsButton" onAction="#callObjectsDialog" prefHeight="60.0" prefWidth="250.0" style="-fx-background-radius: 10;" text="Show current objects" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <font>
                     <Font name="System Bold" size="22.0" />
                 </font>

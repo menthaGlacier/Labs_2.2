@@ -66,9 +66,6 @@ public class Client extends Thread {
 								(requestDto).getEmployeeClass().equals("manager") ?
 								e -> e instanceof Manager :
 								e -> e instanceof Developer;
-//
-//						dtoList = employees.stream().filter(filter).collect(Collectors.toCollection(LinkedList::new))
-//								.stream().map(Employee::createDto).collect(Collectors.toCollection(LinkedList::new));
 
 						for (Employee employee : employees) {
 							if (filter.test(employee)) {
@@ -119,5 +116,11 @@ public class Client extends Thread {
 
 	public void disconnect() {
 
+	}
+
+	// DEBUG!!!
+	public static void main(String[] args) {
+		Client client = new Client();
+		client.connect("localhost", 7182);
 	}
 }

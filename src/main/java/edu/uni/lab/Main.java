@@ -42,7 +42,6 @@ public class Main extends Application {
 			System.exit(0);
 		});
 
-
 		stage.setScene(scene);
 		stage.show();
 	}

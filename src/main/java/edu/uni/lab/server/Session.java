@@ -55,16 +55,6 @@ public class Session extends Thread {
 		}
 	}
 
-//	public BaseDto receiveObject() {
-//		try {
-//			return (BaseDto) in.readObject();
-//		} catch (IOException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//	}
-
 	public void close() {
 		try {
 			socket.close();

@@ -33,6 +33,7 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class MainController {
 	private Client client;//!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -56,6 +57,8 @@ public class MainController {
 	private Button stopButton;
 	@FXML
 	private Button showObjectsButton;
+	@FXML
+	private Button showClientsButton;
 	@FXML
 	private RadioButton showTimeRadioButton;
 	@FXML
@@ -300,12 +303,12 @@ public class MainController {
 	}
 
 	@FXML
-	private void callShowObjectsDialog() {
+	private void callObjectsDialog() {
 		final Stage dialog = new Stage();
 		FXMLLoader loader = new FXMLLoader((getClass()
-				.getResource("/edu/uni/lab/fxml/showObjectsDialog.fxml")));
+				.getResource("/edu/uni/lab/fxml/objectsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new ShowObjectsDialogController(dialog));
+				new ObjectsDialogController(dialog));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -326,6 +329,25 @@ public class MainController {
 		timer.start();
 		developerAi.enable();
 		managerAi.enable();
+	}
+
+	@FXML
+	private void callClientsDialog() {
+		final Stage dialog = new Stage();
+		FXMLLoader loader = new FXMLLoader((getClass()
+				.getResource("/edu/uni/lab/fxml/clientsDialog.fxml")));
+		loader.setControllerFactory(controllerClass->
+				new ClientsDialogController(dialog, new LinkedList<>()));
+
+		try {
+			dialog.setScene(new Scene(loader.load()));
+		} catch (IOException e) {
+			throw new RuntimeException();
+		}
+
+		dialog.setTitle("Current clients");
+		dialog.setResizable(false);
+		dialog.showAndWait();
 	}
 
 	@FXML
