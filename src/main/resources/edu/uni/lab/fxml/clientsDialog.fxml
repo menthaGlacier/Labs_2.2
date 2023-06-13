@@ -13,4 +13,5 @@
         </TableView>
     </ScrollPane>
     <Button onAction="#close" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="538.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="365.0" />
+   <Button onAction="#refreshClientIds" text="Refresh" layoutX="548.0" layoutY="375.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="470.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="365.0" />
 </AnchorPane>

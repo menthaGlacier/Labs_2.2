@@ -337,7 +337,7 @@ public class MainController {
 		FXMLLoader loader = new FXMLLoader((getClass()
 				.getResource("/edu/uni/lab/fxml/clientsDialog.fxml")));
 		loader.setControllerFactory(controllerClass->
-				new ClientsDialogController(dialog, client, client.getConnectedClientsIds()));
+				new ClientsDialogController(dialog, client));
 
 		try {
 			dialog.setScene(new Scene(loader.load()));
@@ -451,7 +451,6 @@ public class MainController {
 			case E -> stopSimulation();
 			case T -> toggleTime();
 			case BACK_QUOTE -> callTerminalDialog();
-			case R -> client.requestEmployees("developer", 1);//DEBUG
 			}
 		});
 	}

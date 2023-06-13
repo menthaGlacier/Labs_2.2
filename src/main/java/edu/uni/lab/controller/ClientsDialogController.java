@@ -37,7 +37,6 @@ public class ClientsDialogController {
 
 	private final Stage stage;
 	private final Client client;
-	private final List<Integer> clientsIds;
 
 	@FXML
 	private TableView<TableData> tableView;
@@ -46,16 +45,15 @@ public class ClientsDialogController {
 	@FXML
 	private TableColumn<TableData, Button> exchangeEmployeesColumn;
 
-	public ClientsDialogController(Stage stage, Client client, List<Integer> clientsIds) {
+	public ClientsDialogController(Stage stage, Client client) {
 		this.stage = stage;
 		this.client = client;
-		this.clientsIds = clientsIds;
 	}
 
 	@FXML
 	private void initialize() {
 		ObservableList<TableData> items = FXCollections.observableArrayList();
-		for (Integer id : clientsIds) {
+		for (Integer id : client.getConnectedClientsIds()) {
 			items.add(new TableData(id));
 		}
 
@@ -69,6 +67,11 @@ public class ClientsDialogController {
 
 			return new SimpleObjectProperty<>(button);
 		});
+	}
+
+	@FXML
+	private void refreshClientIds() {
+		initialize();
 	}
 
 	@FXML
