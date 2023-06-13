@@ -20,6 +20,7 @@ public class Client extends Thread {
 	private final SimpleBooleanProperty transferringProperty;
 	private Socket socket;
 	private boolean isConnected;
+	private Object clientLock = new Object();
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Habitat habitat;
@@ -58,65 +59,86 @@ public class Client extends Thread {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 			isConnected = true;
-			start();
+			if (this.getState() == State.NEW) {
+				this.start();
+			} else {
+				synchronized (clientLock) {
+					clientLock.notify();
+				}
+			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
 			throw new Exception("Error occurred while trying to establish connection");
 		}
 	}
 
 	@Override
 	public void run() {
-		try {
-			while (!socket.isClosed()) {
-				Object dto = in.readObject();
-
-				if (dto instanceof EmployeesRequestDto requestDto) {
-					transferringProperty.set(true);
-					System.out.println("Got request for " +
-							requestDto.getEmployeeClass() +
-							" from " + requestDto.getToClientId()
-					);
-
-					synchronized (EmployeeRepository.getInstance().employeesList()) {
-						LinkedList<Employee> employees = EmployeeRepository.getInstance().employeesList();
-						LinkedList<EmployeeDto> dtoList = new LinkedList<>();
-
-						Predicate<Employee> filter =
-								(requestDto).getEmployeeClass().equals("manager") ?
-								e -> e instanceof Manager : e -> e instanceof Developer;
-
-						for (Employee employee : employees) {
-							if (filter.test(employee)) {
-								dtoList.add(employee.createDto());
-							}
-						}
-
-						out.writeObject(new EmployeesListDto(dtoList,
-								requestDto.getToClientId()));
+		while (true) {
+			synchronized (clientLock) {
+				while (!isConnected) {
+					try {
+						clientLock.wait();
+					} catch (InterruptedException e) {
+						System.out.println(e.getMessage() + " " + e.getCause());
+						e.printStackTrace();
 					}
-				} else if (dto instanceof EmployeesListDto listDto) {
-					System.out.println("adding requested employees");
-					Platform.runLater(() -> {
-						synchronized (EmployeeRepository.getInstance().employeesList()) {
-							for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
-								long creationTime = (System.nanoTime() - startTime) / 1_000_000;
-								habitat.addEmployee(employeeDto instanceof ManagerDto ?
-										new Manager((ManagerDto) employeeDto, creationTime,
-											habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
-										new Developer((DeveloperDto) employeeDto, creationTime,
-											habitat.habitatAreaWidth, habitat.habitatAreaHeight)
-									);
-								}
-							}
-						}
-					);
-				} else if (dto instanceof ConnectedClientsIdListDto) {
-					connectedClientsIds = ((ConnectedClientsIdListDto) dto).idList();
 				}
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage() + " " + e.getCause());
-			e.printStackTrace();
+
+			try {
+				while (!socket.isClosed() && isConnected) {
+					Object dto = in.readObject();
+
+					if (dto instanceof EmployeesRequestDto requestDto) {
+						transferringProperty.set(true);
+						System.out.println("Got request for " +
+								requestDto.getEmployeeClass() +
+								" from " + requestDto.getToClientId()
+						);
+
+						synchronized (EmployeeRepository.getInstance().employeesList()) {
+							LinkedList<Employee> employees = EmployeeRepository.getInstance().employeesList();
+							LinkedList<EmployeeDto> dtoList = new LinkedList<>();
+
+							Predicate<Employee> filter =
+									(requestDto).getEmployeeClass().equals("manager") ?
+											e -> e instanceof Manager : e -> e instanceof Developer;
+
+							for (Employee employee : employees) {
+								if (filter.test(employee)) {
+									dtoList.add(employee.createDto());
+								}
+							}
+
+							out.writeObject(new EmployeesListDto(dtoList,
+									requestDto.getToClientId()));
+						}
+					} else if (dto instanceof EmployeesListDto listDto) {
+						System.out.println("adding requested employees");
+						Platform.runLater(() -> {
+									synchronized (EmployeeRepository.getInstance().employeesList()) {
+										for (EmployeeDto employeeDto : listDto.employeesDtoList()) {
+											long creationTime = (System.nanoTime() - startTime) / 1_000_000;
+											habitat.addEmployee(employeeDto instanceof ManagerDto ?
+													new Manager((ManagerDto) employeeDto, creationTime,
+															habitat.habitatAreaWidth, habitat.habitatAreaHeight) :
+													new Developer((DeveloperDto) employeeDto, creationTime,
+															habitat.habitatAreaWidth, habitat.habitatAreaHeight)
+											);
+										}
+									}
+								}
+						);
+					} else if (dto instanceof ConnectedClientsIdListDto) {
+						connectedClientsIds = ((ConnectedClientsIdListDto) dto).idList();
+					}
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + " " + e.getCause());
+				e.printStackTrace();
+			}
 		}
 	}
 

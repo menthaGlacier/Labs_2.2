@@ -46,7 +46,7 @@ public class ClientsDialogController {
 	@FXML
 	private TableColumn<TableData, Button> exchangeEmployeesColumn;
 
-	public ClientsDialogController(Stage stage, Client client, LinkedList<Integer> clientsIds) {
+	public ClientsDialogController(Stage stage, Client client, List<Integer> clientsIds) {
 		this.stage = stage;
 		this.client = client;
 		this.clientsIds = clientsIds;

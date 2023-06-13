@@ -68,6 +68,8 @@ public class TerminalDialogController {
 			client.connect(address, portInt);
 		} catch (Exception e) {
 			appendTextLn(e.getMessage());
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
 		}
 	}
 

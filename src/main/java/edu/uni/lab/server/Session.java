@@ -89,8 +89,10 @@ public class Session extends Thread {
 			}
 
 		} catch (Exception e) {
-				System.out.println(e.getMessage() + " " + e.getCause());
-				e.printStackTrace();
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
+			Server.getSessions().remove(this);
+			Server.getSessions().forEach(Session::sendConnectedClientsIdList);
 		}
 	}
 }
