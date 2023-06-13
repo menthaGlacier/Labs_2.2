@@ -50,7 +50,6 @@ public class Server {
 					session.sendConnectedClientsIdList();
 				}
 
-				System.out.println("Connected: "); // DEBUG!!!
 				for (Session session : sessions) {
 					System.out.println("Session ID: " + session.getSessionId() + " IP: " + session.getIp());
 				}

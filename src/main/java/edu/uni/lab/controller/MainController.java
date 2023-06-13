@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MainController {
-	private Client client;//!!!!!!!!!!!!!!!!!!!!!!!!!!
+	private Client client;
 	private Habitat habitat;
 	private final DeveloperAi developerAi;
 	private final ManagerAi managerAi;
@@ -342,7 +342,6 @@ public class MainController {
 		try {
 			dialog.setScene(new Scene(loader.load()));
 		} catch (IOException e) {
-//			throw new RuntimeException();
 			System.out.println(e.getMessage() + " " + e.getCause());
 			e.printStackTrace();
 		}
