@@ -342,7 +342,9 @@ public class MainController {
 		try {
 			dialog.setScene(new Scene(loader.load()));
 		} catch (IOException e) {
-			throw new RuntimeException();
+//			throw new RuntimeException();
+			System.out.println(e.getMessage() + " " + e.getCause());
+			e.printStackTrace();
 		}
 
 		dialog.setTitle("Current clients");

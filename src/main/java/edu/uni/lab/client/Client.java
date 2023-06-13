@@ -20,7 +20,7 @@ public class Client extends Thread {
 	private final SimpleBooleanProperty transferringProperty;
 	private Socket socket;
 	private boolean isConnected;
-	private Object clientLock = new Object();
+	private final Object clientLock = new Object();
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Habitat habitat;
@@ -31,6 +31,7 @@ public class Client extends Thread {
 		this.transferringProperty = new SimpleBooleanProperty(false);
 		this.isConnected = false;
 		this.habitat = null;
+		connectedClientsIds = new LinkedList<>();
 	}
 
 	public boolean isConnected() {
