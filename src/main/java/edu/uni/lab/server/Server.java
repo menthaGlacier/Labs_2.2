@@ -11,13 +11,6 @@ public class Server {
 	private static final int DEFAULT_PORT = 7182;
 	private static final List<Session> sessions = new LinkedList<>();
 	private static int count = 0;
-	private synchronized void addSession(Session session) {
-		sessions.add(session);
-	}
-
-	private synchronized void removeSession(Session session) {
-		sessions.remove(session);
-	}
 
 	public static List<Session> getSessions() {
 		return sessions;
@@ -29,6 +22,7 @@ public class Server {
 		if (args.length == 1) {
 			try {
 				port = Integer.parseInt(args[0]);
+				System.out.println("Server is running using port: " + port);
 			} catch (NumberFormatException e) {
 				System.err.println("Invalid port provided. " +
 						"Using default port: " + DEFAULT_PORT

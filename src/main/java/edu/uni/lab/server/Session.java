@@ -16,7 +16,7 @@ public class Session extends Thread {
 	private final Socket socket;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-	private int sessionId;
+	private final int sessionId;
 
 	public Session(Socket socket, int sessionId) {
 		this.socket = socket;
@@ -48,9 +48,9 @@ public class Session extends Thread {
 					idList.add(session.sessionId);
 				}
 			}
+
 			out.writeObject(new ConnectedClientsIdListDto(idList));
-		}
-		catch (IOException exception){
+		} catch (IOException exception) {
 			System.out.println(exception.getMessage() + "\n" + exception.getCause());
 			exception.printStackTrace();
 		}
@@ -71,13 +71,20 @@ public class Session extends Thread {
 				Object dto = in.readObject();
 				System.out.println("got some dto");
 				if (dto instanceof EmployeesRequestDto requestDto) {
-					System.out.println("Requesting " + requestDto.getEmployeeClass() + " from " + requestDto.getToClientId());
-					if (Server.getSessions().size() <= requestDto.getToClientId()) { continue; }
-					Server.getSessions().get(requestDto.getToClientId()).out.writeObject(new EmployeesRequestDto(
-							requestDto.getEmployeeClass(), sessionId));
-					out.writeObject(new EmployeesRequestDto(
-							requestDto.getEmployeeClass().equals("manager") ?
-									"developer" : "manager", requestDto.getToClientId()));
+					System.out.println("Requesting " +
+							requestDto.getEmployeeClass() + " from " +
+							requestDto.getToClientId());
+					if (Server.getSessions().size() <= requestDto.getToClientId()) {
+						continue;
+					}
+
+					Server.getSessions().get(requestDto.getToClientId()).out
+							.writeObject(new EmployeesRequestDto(requestDto
+									.getEmployeeClass(), sessionId));
+
+					out.writeObject(new EmployeesRequestDto(requestDto
+							.getEmployeeClass().equals("manager")
+							? "developer" : "manager", requestDto.getToClientId()));
 				} else if (dto instanceof EmployeesListDto listDto) {
 					System.out.println("sending to " + listDto.getToClientId());
 					Server.getSessions().get(listDto.getToClientId()).out.writeObject(listDto);
@@ -87,7 +94,6 @@ public class Session extends Thread {
 					break;
 				}
 			}
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " " + e.getCause());
 			e.printStackTrace();

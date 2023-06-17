@@ -27,7 +27,7 @@ public class Habitat {
 		this.habitatArea = habitatArea;
 		this.habitatAreaWidth = habitatArea.getWidth();
 		this.habitatAreaHeight = habitatArea.getHeight();
-		employees = EmployeeRepository.getInstance();
+		this.employees = EmployeeRepository.getInstance();
 	}
 
 	public void update(long elapsedTime) {
