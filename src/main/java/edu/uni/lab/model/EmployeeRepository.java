@@ -31,7 +31,7 @@ public class EmployeeRepository {
 		return employeesId;
 	}
 
-	public HashMap<UUID, Long> getEmployeesCreationTime() {
+	public HashMap<UUID, Long> employeesCreationTime() {
 		return employeesCreationTime;
 	}
 

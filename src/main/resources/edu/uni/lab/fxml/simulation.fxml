@@ -259,10 +259,12 @@
     </AnchorPane>
     <MenuBar prefHeight="26.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Menu text="Simulation">
-            <MenuItem onAction="#saveObjects" text="Save objects" />
-            <MenuItem onAction="#loadObjects" text="Load objects" />
             <MenuItem onAction="#startSimulation" text="Start" />
             <MenuItem onAction="#stopSimulation" text="Stop" />
+            <MenuItem onAction="#saveObjects" text="Save objects" />
+            <MenuItem onAction="#loadObjects" text="Load objects" />
+            <MenuItem onAction="#saveObjectsToDatabase" text="Save objects to db" />
+            <MenuItem onAction="#loadObjectsFromDatabase" text="Load objects from db" />
         </Menu>
         <Menu text="Terminal">
             <MenuItem onAction="#callTerminalDialog" text="New terminal session" />

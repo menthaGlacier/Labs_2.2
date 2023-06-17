@@ -1,6 +1,7 @@
 module edu.uni.lab {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens edu.uni.lab to javafx.fxml;

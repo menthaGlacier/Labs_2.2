@@ -1,6 +1,7 @@
 package edu.uni.lab.controller;
 
 import edu.uni.lab.client.Client;
+import edu.uni.lab.database.DatabaseHandler;
 import edu.uni.lab.model.EmployeeRepository;
 import edu.uni.lab.model.ai.BaseAi;
 import edu.uni.lab.model.ai.DeveloperAi;
@@ -30,6 +31,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -131,6 +134,43 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	private synchronized void saveObjectsToDatabase() {
+		DatabaseHandler.saveEmployeesToDatabase();
+	}
+
+	@FXML
+	private synchronized void loadObjectsFromDatabase() {
+		ResultSet resultSet = DatabaseHandler.loadEmployeesFromDatabase();
+		if (resultSet == null) {
+			callErrorDialog("Failed to load object from database");
+			return;
+		}
+
+		stopSimulation();
+		habitat.clear();
+
+		try {
+			while (resultSet.next()) {
+				long creationTime = (System.nanoTime() - startTime) / 1_000_000;
+				if (resultSet.getString("type").equals("manager")) {
+					habitat.addEmployee(new Manager(resultSet.getInt("x"), resultSet.getInt("y"),
+							creationTime, habitat.habitatAreaWidth, habitat.habitatAreaHeight)
+					);
+				} else {
+					habitat.addEmployee(new Developer(resultSet.getInt("x"), resultSet.getInt("y"),
+							creationTime, habitat.habitatAreaWidth, habitat.habitatAreaHeight)
+					);
+				}
+			}
+
+			resultSet.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@FXML
@@ -468,6 +508,8 @@ public class MainController {
 		client = new Client();
 		client.setHabitat(habitat);
 
+		DatabaseHandler.connect();
+
 		isActive = new SimpleBooleanProperty(false);
 		isTimeToggledOn = new SimpleBooleanProperty(false);
 		isInfoDialogAllowed = new SimpleBooleanProperty(false);
@@ -546,6 +588,7 @@ public class MainController {
 			ConfigHandler configHandler = new ConfigHandler();
 			configHandler.save(developerAi, managerAi);
 			client.disconnect();
+			DatabaseHandler.closeDatabase();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

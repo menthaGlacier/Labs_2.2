@@ -52,7 +52,7 @@ public class ObjectsDialogController {
 
 	public ObjectsDialogController(Stage stage) {
 		this.stage = stage;
-		this.dataMap = EmployeeRepository.getInstance().getEmployeesCreationTime();
+		this.dataMap = EmployeeRepository.getInstance().employeesCreationTime();
 	}
 
 	@FXML
